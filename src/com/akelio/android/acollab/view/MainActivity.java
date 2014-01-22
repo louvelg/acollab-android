@@ -5,6 +5,8 @@ import org.apache.http.auth.AuthScope;
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.R.layout;
 import com.akelio.android.acollab.R.menu;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -27,14 +29,14 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View view){
 				
-				//AsyncHttpClient client = new AsyncHttpClient();
-				//client.setBasicAuth(editLogin.getText().toString(),editPasswd.getText().toString(), new AuthScope("https://acollab-android.acollab.com/rest/v1/login", 443, null));
-				//client.get("https://acollab-android.acollab.com/rest/v1/login", new AsyncHttpResponseHandler() {
-				    //@Override
-				    //public void onSuccess(String response) {
-				     //   System.out.println(response);
-				    //}
-				//});
+				AsyncHttpClient client = new AsyncHttpClient();
+				client.setBasicAuth(editLogin.getText().toString(),editPasswd.getText().toString(), new AuthScope("https://acollab-android.acollab.com/rest/v1/login", 443, null));
+				client.get("https://acollab-android.acollab.com/rest/v1/login", new AsyncHttpResponseHandler() {
+				    @Override
+				    public void onSuccess(String response) {
+				       System.out.println(response);
+				    }
+				});
 			}
 		});
 	}
