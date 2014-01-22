@@ -1,4 +1,8 @@
-package com.akelio.android.acollab;
+package com.akelio.android.acollab.view;
+
+import com.akelio.android.acollab.R;
+import com.akelio.android.acollab.R.layout;
+import com.akelio.android.acollab.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;
