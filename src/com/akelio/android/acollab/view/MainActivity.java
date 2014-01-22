@@ -5,8 +5,6 @@ import org.apache.http.auth.AuthScope;
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.R.layout;
 import com.akelio.android.acollab.R.menu;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import android.os.Bundle;
 import android.app.Activity;
