@@ -8,32 +8,59 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-   <EditText
-       android:id="@+id/editTextLogin"
+   <TextView
+       android:id="@+id/textViewPasswd"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_alignLeft="@+id/editTextPasswd"
-       android:layout_alignParentTop="true"
-       android:layout_alignRight="@+id/editTextPasswd"
-       android:layout_marginTop="18dp"
-       android:ems="10" />
-
-   <EditText
-       android:id="@+id/editTextPasswd"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_alignParentLeft="true"
        android:layout_below="@+id/editTextLogin"
-       android:layout_marginTop="19dp"
-       android:ems="10"
-       android:inputType="textPassword" />
+       android:layout_marginTop="16dp"
+       android:text="Password :" />
 
    <Button
        android:id="@+id/buttonLogin"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:layout_below="@+id/editTextPasswd"
-       android:layout_marginTop="33dp"
+       android:layout_alignLeft="@+id/editTextLogin"
+       android:layout_below="@+id/textViewPasswd"
+       android:layout_marginTop="86dp"
        android:text="Login" />
+
+   <EditText
+       android:id="@+id/editTextPasswd"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/textViewPasswd"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="18dp"
+       android:ems="10"
+       android:inputType="textPassword" />
+
+   <EditText
+       android:id="@+id/editTextLogin"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/textViewPasswd"
+       android:layout_below="@+id/textViewLogin"
+       android:layout_marginTop="24dp"
+       android:ems="10" />
+
+   <ImageView
+       android:id="@+id/imageViewLogo"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentTop="true"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="16dp"
+       android:src="@drawable/logo_acollab" />
+
+   <TextView
+       android:id="@+id/textViewLogin"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/editTextLogin"
+       android:layout_below="@+id/imageViewLogo"
+       android:layout_marginTop="17dp"
+       android:text="Login :" />
 
 </RelativeLayout>
