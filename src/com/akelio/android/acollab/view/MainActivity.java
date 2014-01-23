@@ -52,7 +52,7 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 						"Android");
 				System.out.println("url : " + result);
 
-				url = "https://geb.test1.acollab.com/rest/v1/login";
+				url = "http://geb.test1.acollab.com/rest/v1/login";
 
 				HttpAuthentication authHeader = new HttpBasicAuthentication(
 						"admin", "admin");
