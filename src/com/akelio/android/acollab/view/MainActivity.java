@@ -11,6 +11,7 @@ import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,22 +21,18 @@ import android.widget.EditText;
 
 import com.akelio.android.acollab.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements android.view.View.OnClickListener{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		final Button buttonSend = (Button) findViewById(R.id.buttonLogin);
+		final Button buttonUsers = (Button) findViewById(R.id.buttonUsers);
 		final EditText editLogin = (EditText) findViewById(R.id.editTextLogin);
 		final EditText editPasswd = (EditText) findViewById(R.id.editTextPasswd);
-		buttonSend.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				LoadWebPageASYNC task = new LoadWebPageASYNC();
-				task.execute(new String[] { "http://www.javacodegeeks.com" });
-			}
-		});
+		buttonSend.setOnClickListener(this);
+		buttonUsers.setOnClickListener(this);
 	}
 
 	private class LoadWebPageASYNC extends AsyncTask<String, Void, String> {
@@ -117,6 +114,20 @@ public class MainActivity extends Activity {
 
 		public void setUserId(String userId) {
 			this.userId = userId;
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()){
+			case R.id.buttonUsers:
+				Intent i = new Intent(MainActivity.this, UsersActivity.class);
+				startActivity(i);
+				break;
+			case R.id.buttonLogin:
+				LoadWebPageASYNC task = new LoadWebPageASYNC();
+				task.execute(new String[] { "http://www.javacodegeeks.com" });
+				break;
 		}
 	}
 }
