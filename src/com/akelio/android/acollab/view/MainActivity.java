@@ -11,6 +11,7 @@ import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -29,51 +30,66 @@ public class MainActivity extends Activity {
 		final EditText editLogin = (EditText) findViewById(R.id.editTextLogin);
 		final EditText editPasswd = (EditText) findViewById(R.id.editTextPasswd);
 		buttonSend.setOnClickListener(new View.OnClickListener() {
-
 			@Override
 			public void onClick(View view) {
-				String url = "https://ajax.googleapis.com/ajax/"
-						+ "services/search/web?v=1.0&q={query}";
-				System.out.println("url : " + url);
-
-				try {
-					// Create a new RestTemplate instance
-					RestTemplate restTemplate = new RestTemplate();
-					restTemplate.getMessageConverters().add(
-							new StringHttpMessageConverter());
-					String result = restTemplate.getForObject(url,
-							String.class, "Android");
-					System.out.println("url : " + result);
-
-					url = "https://geb.test1.acollab.com/rest/v1/login";
-
-					HttpAuthentication authHeader = new HttpBasicAuthentication(
-							"admin", "admin");
-					HttpHeaders requestHeaders = new HttpHeaders();
-					requestHeaders.setAuthorization(authHeader);
-					HttpEntity<?> requestEntity = new HttpEntity<Object>(
-							requestHeaders);
-
-					restTemplate = new RestTemplate();
-					restTemplate.getMessageConverters().add(
-							new StringHttpMessageConverter());
-					ResponseEntity<String> response = restTemplate.exchange(
-							url, HttpMethod.GET, requestEntity, String.class);
-					System.out.println("url : " + response.getBody());
-
-					restTemplate = new RestTemplate();
-					restTemplate.getMessageConverters().add(
-							new GsonHttpMessageConverter());
-					ResponseEntity<Login> response2 = restTemplate.exchange(
-							url, HttpMethod.GET, requestEntity, Login.class);
-					System.out.println("url : "
-							+ response2.getBody().getTenantId());
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				LoadWebPageASYNC task = new LoadWebPageASYNC();
+				task.execute(new String[] { "http://www.javacodegeeks.com" });
 			}
 		});
+	}
+
+	private class LoadWebPageASYNC extends AsyncTask<String, Void, String> {
+
+		@Override
+		protected String doInBackground(String... urls) {
+			String url = "https://ajax.googleapis.com/ajax/"
+					+ "services/search/web?v=1.0&q={query}";
+			System.out.println("url : " + url);
+
+			try {
+				// Create a new RestTemplate instance
+				RestTemplate restTemplate = new RestTemplate();
+				restTemplate.getMessageConverters().add(
+						new StringHttpMessageConverter());
+				String result = restTemplate.getForObject(url, String.class,
+						"Android");
+				System.out.println("url : " + result);
+
+				url = "https://geb.test1.acollab.com/rest/v1/login";
+
+				HttpAuthentication authHeader = new HttpBasicAuthentication(
+						"admin", "admin");
+				HttpHeaders requestHeaders = new HttpHeaders();
+				requestHeaders.setAuthorization(authHeader);
+				HttpEntity<?> requestEntity = new HttpEntity<Object>(
+						requestHeaders);
+
+				restTemplate = new RestTemplate();
+				restTemplate.getMessageConverters().add(
+						new StringHttpMessageConverter());
+				ResponseEntity<String> response = restTemplate.exchange(url,
+						HttpMethod.GET, requestEntity, String.class);
+				System.out.println("url : " + response.getBody());
+
+				restTemplate = new RestTemplate();
+				restTemplate.getMessageConverters().add(
+						new GsonHttpMessageConverter());
+				ResponseEntity<Login> response2 = restTemplate.exchange(url,
+						HttpMethod.GET, requestEntity, Login.class);
+				System.out
+						.println("url : " + response2.getBody().getTenantId());
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+
+		}
 	}
 
 	@Override
