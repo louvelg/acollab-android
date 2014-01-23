@@ -27,7 +27,7 @@
             android:name="com.akelio.android.acollab.NewsActivity"
             android:label="@string/title_activity_news" >
         </activity>
-        <activity android:name="com.akelio.android.acollab.UsersActivity"></activity> 
+        <activity android:name="com.akelio.android.acollab.view.UsersActivity"></activity> 
     </application>
 
 </manifest>
