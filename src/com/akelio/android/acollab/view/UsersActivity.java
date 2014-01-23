@@ -15,6 +15,9 @@ import org.springframework.web.client.RestTemplate;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -22,6 +25,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.akelio.android.acollab.R;
+import com.akelio.android.acollab.contract.UserContract;
+import com.akelio.android.acollab.db.DbHelper;
+import com.akelio.android.acollab.entity.UserListItem;
 
 public class UsersActivity extends Activity {
 	@Override
@@ -37,14 +43,37 @@ public class UsersActivity extends Activity {
 
 		final ArrayList<String> list = new ArrayList<String>();
 		for (int i = 0; i < values.length; ++i) {
-			list.add(values[i]);
+//			list.add(values[i]);
 		}
+
+		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+		qb.setTables(UserContract.TABLE);
+		DbHelper dbHelper = new DbHelper(this);
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
+		Cursor cursor = qb.query(db, null, null, null, null, null,
+				UserContract.DEFAULT_SORT);
+
+		if (cursor != null)
+			cursor.moveToFirst();
+
+		while (!cursor.isAfterLast()) {
+			System.out.println(cursor.getInt(0));
+
+			System.out.println(cursor.getString(1));
+			System.out.println(cursor.getString(2));
+			System.out.println(cursor.getString(3));
+			list.add(cursor.getString(2) + " " + cursor.getString(3));
+			cursor.moveToNext();
+		}
+
+		db.close();
+
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
 				android.R.layout.simple_list_item_1, list);
 		listview.setAdapter(adapter);
 
-		LoadWebPageASYNC task = new LoadWebPageASYNC();
-		task.execute();
+//		LoadWebPageASYNC task = new LoadWebPageASYNC();
+//		task.execute();
 	}
 
 	private class StableArrayAdapter extends ArrayAdapter<String> {
@@ -72,10 +101,10 @@ public class UsersActivity extends Activity {
 
 	}
 
-	private class LoadWebPageASYNC extends AsyncTask<String, Void, UserItem> {
+	private class LoadWebPageASYNC extends AsyncTask<String, Void, UserListItem> {
 
 		@Override
-		protected UserItem doInBackground(String... urls) {
+		protected UserListItem doInBackground(String... urls) {
 			String url = "http://geb.test1.acollab.com/rest/v1/users/user/2";
 			System.out.println("url : " + url);
 
@@ -90,8 +119,8 @@ public class UsersActivity extends Activity {
 				RestTemplate restTemplate = new RestTemplate();
 				restTemplate.getMessageConverters().add(
 						new GsonHttpMessageConverter());
-				ResponseEntity<UserItem> response2 = restTemplate.exchange(url,
-						HttpMethod.GET, requestEntity, UserItem.class);
+				ResponseEntity<UserListItem> response2 = restTemplate.exchange(url,
+						HttpMethod.GET, requestEntity, UserListItem.class);
 
 				System.out.println("url : "
 						+ response2.getBody().getFirstName());
@@ -105,7 +134,7 @@ public class UsersActivity extends Activity {
 		}
 
 		@Override
-		protected void onPostExecute(UserItem result) {
+		protected void onPostExecute(UserListItem result) {
 			super.onPostExecute(result);
 			Toast.makeText(UsersActivity.this,
 					result.getFirstName() + " - " + result.getLastName(),
@@ -114,70 +143,5 @@ public class UsersActivity extends Activity {
 		}
 	}
 
-	private class UserItem {
-		private String tenantId;
-		private String userId;
-		private String lastName;
-		private String firstName;
-		private String phone1;
-		private String phone2;
-		private String company;
 
-		public String getTenantId() {
-			return tenantId;
-		}
-
-		public void setTenantId(String tenantId) {
-			this.tenantId = tenantId;
-		}
-
-		public String getUserId() {
-			return userId;
-		}
-
-		public void setUserId(String userId) {
-			this.userId = userId;
-		}
-
-		public String getLastName() {
-			return lastName;
-		}
-
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
-		}
-
-		public String getFirstName() {
-			return firstName;
-		}
-
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-
-		public String getPhone1() {
-			return phone1;
-		}
-
-		public void setPhone1(String phone1) {
-			this.phone1 = phone1;
-		}
-
-		public String getPhone2() {
-			return phone2;
-		}
-
-		public void setPhone2(String phone2) {
-			this.phone2 = phone2;
-		}
-
-		public String getCompany() {
-			return company;
-		}
-
-		public void setCompany(String company) {
-			this.company = company;
-		}
-
-	}
 }

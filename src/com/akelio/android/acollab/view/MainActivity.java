@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.akelio.android.acollab.R;
+import com.akelio.android.acollab.service.ContactService;
 
 public class MainActivity extends Activity implements android.view.View.OnClickListener{
 
@@ -29,10 +30,13 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 		setContentView(R.layout.activity_main);
 		final Button buttonSend = (Button) findViewById(R.id.buttonLogin);
 		final Button buttonUsers = (Button) findViewById(R.id.buttonUsers);
+		final Button buttonRefreshContactService = (Button) findViewById(R.id.buttonRefrechContactService);
 		final EditText editLogin = (EditText) findViewById(R.id.editTextLogin);
 		final EditText editPasswd = (EditText) findViewById(R.id.editTextPasswd);
 		buttonSend.setOnClickListener(this);
 		buttonUsers.setOnClickListener(this);
+		buttonRefreshContactService.setOnClickListener(this);
+		
 	}
 
 	private class LoadWebPageASYNC extends AsyncTask<String, Void, String> {
@@ -123,6 +127,9 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 			case R.id.buttonUsers:
 				Intent i = new Intent(MainActivity.this, UsersActivity.class);
 				startActivity(i);
+				break;
+			case R.id.buttonRefrechContactService:
+				startService(new Intent(this, ContactService.class));
 				break;
 			case R.id.buttonLogin:
 				LoadWebPageASYNC task = new LoadWebPageASYNC();

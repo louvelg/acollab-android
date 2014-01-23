@@ -69,7 +69,16 @@
        android:layout_height="wrap_content"
        android:layout_alignLeft="@+id/buttonLogin"
        android:layout_below="@+id/buttonLogin"
-       android:layout_marginTop="22dp"
+       android:layout_marginTop="5dp"
        android:text="Users" />
+   
+   <Button
+       android:id="@+id/buttonRefrechContactService"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/buttonLogin"
+       android:layout_below="@+id/buttonUsers"
+       android:layout_marginTop="5dp"
+       android:text="Refresh Contact Service" />
 
 </RelativeLayout>
