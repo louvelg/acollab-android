@@ -13,29 +13,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import com.akelio.android.acollab.R;
-import com.akelio.android.acollab.contract.UserContract;
-import com.akelio.android.acollab.db.DbHelper;
-import com.akelio.android.acollab.entity.UserListItem;
-
-import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.akelio.android.acollab.R;
+import com.akelio.android.acollab.contract.UserContract;
+import com.akelio.android.acollab.db.DbHelper;
+import com.akelio.android.acollab.entity.UserListItem;
 
 
 public class UsersFragment extends Fragment{
