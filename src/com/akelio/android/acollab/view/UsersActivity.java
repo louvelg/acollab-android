@@ -20,9 +20,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.contract.UserContract;
@@ -35,16 +39,13 @@ public class UsersActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_users);
 		final ListView listview = (ListView) findViewById(R.id.listViewUsers);
-		String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-				"Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-				"Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-				"OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-				"Android", "iPhone", "WindowsMobile" };
+		ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> map;
 
 		final ArrayList<String> list = new ArrayList<String>();
-		for (int i = 0; i < values.length; ++i) {
-//			list.add(values[i]);
-		}
+		//for (int i = 0; i < values.length; ++i) {
+		//			list.add(values[i]);
+		//}
 
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		qb.setTables(UserContract.TABLE);
@@ -62,15 +63,27 @@ public class UsersActivity extends Activity {
 			System.out.println(cursor.getString(1));
 			System.out.println(cursor.getString(2));
 			System.out.println(cursor.getString(3));
-			list.add(cursor.getString(2) + " " + cursor.getString(3));
+			
+			map = new HashMap<String, String>();
+	        map.put("textViewName", cursor.getString(2));;
+	        map.put("textViewDescription", cursor.getString(3));
+	        listItem.add(map);
 			cursor.moveToNext();
 		}
 
 		db.close();
 
-		final StableArrayAdapter adapter = new StableArrayAdapter(this,
-				android.R.layout.simple_list_item_1, list);
-		listview.setAdapter(adapter);
+		SimpleAdapter mSchedule = new SimpleAdapter (this.getBaseContext(), listItem, R.layout.list_user_item, new String[] { "textViewName", "textViewDescription"}, new int[] { R.id.textViewName, R.id.textViewDescription});
+		listview.setAdapter(mSchedule);
+		
+		  
+		listview.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+				Toast.makeText(getApplicationContext(),
+					      "Click ListItem Number " + position, Toast.LENGTH_LONG)
+					      .show();
+			}
+        });
 
 //		LoadWebPageASYNC task = new LoadWebPageASYNC();
 //		task.execute();
