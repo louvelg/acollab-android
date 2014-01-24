@@ -10,9 +10,12 @@ public class UsersActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_users);
-//		UsersFragment fragment = (UsersFragment) getFragmentManager()
-//	            .findFragmentById(R.id.fragmentUsers);
+//		UsersFragment fragment = (UsersFragment) getFragmentManager().findFragmentById(R.id.fragmentUsers);
 		
+//		UsersFragment fragment = new UsersFragment(); // 
+//        getSupportFragmentManager().beginTransaction()
+//           .add(android.R.id.content, fragment,
+//              fragment.getClass().getSimpleName()).commit(); // 
 	}
 
 

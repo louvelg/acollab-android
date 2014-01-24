@@ -28,24 +28,23 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.contract.UserContract;
 import com.akelio.android.acollab.db.DbHelper;
 import com.akelio.android.acollab.entity.UserListItem;
 
+public class UsersFragment extends Fragment {
 
-public class UsersFragment extends Fragment{
-	  
 	@Override
-	  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	      Bundle savedInstanceState) {
-	    View view = inflater.inflate(R.layout.fragment_users,
-	        container, false);
-	    final ListView listview = (ListView) view.findViewById(R.id.listViewUsers);
-	    ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.fragment_users, container, false);
+		final ListView listview = (ListView) view
+				.findViewById(R.id.listViewUsers);
+		ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> map;
-
 
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		qb.setTables(UserContract.TABLE);
@@ -62,34 +61,48 @@ public class UsersFragment extends Fragment{
 			System.out.println(cursor.getString(1));
 			System.out.println(cursor.getString(2));
 			System.out.println(cursor.getString(3));
-			
+
 			map = new HashMap<String, String>();
-	        map.put("textViewName", cursor.getString(2));;
-	        map.put("textViewDescription", cursor.getString(3));
-	        listItem.add(map);
+			map.put("textViewName", cursor.getString(2));
+			;
+			map.put("textViewDescription", cursor.getString(3));
+			listItem.add(map);
 			cursor.moveToNext();
 		}
 
 		db.close();
 
-		SimpleAdapter mSchedule = new SimpleAdapter (view.getContext(), listItem, R.layout.list_user_item, new String[] { "textViewName", "textViewDescription"}, new int[] { R.id.textViewName, R.id.textViewDescription});
+		SimpleAdapter mSchedule = new SimpleAdapter(view.getContext(),
+				listItem, R.layout.list_user_item, new String[] {
+						"textViewName", "textViewDescription" }, new int[] {
+						R.id.textViewName, R.id.textViewDescription });
 		listview.setAdapter(mSchedule);
-		
-		  
+
 		listview.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-				//Toast.makeText(view.getContext(),
-				//	      "Click ListItem Number " + position, Toast.LENGTH_LONG)
-				//	      .show();
+			public void onItemClick(AdapterView<?> a, View v, int position,
+					long id) {
+				Toast.makeText(v.getContext(),
+						"Click ListItem Number " + position, Toast.LENGTH_LONG)
+						.show();
+				DetailsUsersFragment fragment = (DetailsUsersFragment) getFragmentManager()
+						.findFragmentById(R.id.fragmentUserDetails); //
+				// Is details fragment visible?
+				if (fragment != null && fragment.isVisible()) { //
+					fragment.updateView(id); //
+				} else {
+//					startActivity(new Intent(getActivity(),
+//							DetailsUsersFragment.class).putExtra(
+//							"id", id)); //
+				}
 			}
-        });
+		});
 
-//		LoadWebPageASYNC task = new LoadWebPageASYNC();
-//		task.execute();
+		// LoadWebPageASYNC task = new LoadWebPageASYNC();
+		// task.execute();
 		return view;
-		}
+	}
 
-		private class StableArrayAdapter extends ArrayAdapter<String> {
+	private class StableArrayAdapter extends ArrayAdapter<String> {
 
 		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
 
@@ -114,7 +127,8 @@ public class UsersFragment extends Fragment{
 
 	}
 
-		private class LoadWebPageASYNC extends AsyncTask<String, Void, UserListItem> {
+	private class LoadWebPageASYNC extends
+			AsyncTask<String, Void, UserListItem> {
 
 		@Override
 		protected UserListItem doInBackground(String... urls) {
@@ -132,8 +146,8 @@ public class UsersFragment extends Fragment{
 				RestTemplate restTemplate = new RestTemplate();
 				restTemplate.getMessageConverters().add(
 						new GsonHttpMessageConverter());
-				ResponseEntity<UserListItem> response2 = restTemplate.exchange(url,
-						HttpMethod.GET, requestEntity, UserListItem.class);
+				ResponseEntity<UserListItem> response2 = restTemplate.exchange(
+						url, HttpMethod.GET, requestEntity, UserListItem.class);
 
 				System.out.println("url : "
 						+ response2.getBody().getFirstName());
@@ -149,18 +163,14 @@ public class UsersFragment extends Fragment{
 		@Override
 		protected void onPostExecute(UserListItem result) {
 			super.onPostExecute(result);
-			//Toast.makeText(UsersActivity.this,
-			//		result.getFirstName() + " - " + result.getLastName(),
-			//		Toast.LENGTH_LONG).show();
+			// Toast.makeText(UsersActivity.this,
+			// result.getFirstName() + " - " + result.getLastName(),
+			// Toast.LENGTH_LONG).show();
 		}
-		}
-	
-	    
-	    
+	}
 
-
-	  public void setText(String item) {
-	    //TextView view = (TextView) getView().findViewById(R.id.text);
-	    //view.setText(item);
-	  }
+	public void setText(String item) {
+		// TextView view = (TextView) getView().findViewById(R.id.text);
+		// view.setText(item);
+	}
 }
