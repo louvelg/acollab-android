@@ -24,6 +24,7 @@ import com.akelio.android.acollab.service.ContactService;
 
 public class MainActivity extends Activity implements android.view.View.OnClickListener{
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
