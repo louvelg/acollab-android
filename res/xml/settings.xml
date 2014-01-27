@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:key="settings">
+    <EditTextPreference android:title="Login" android:key="login"/>
+    <EditTextPreference android:title="Password" android:key="password"/>
+    <EditTextPreference android:summary="Acollab url" android:title="Url" android:key="url"/>
+    
+
+</PreferenceScreen>

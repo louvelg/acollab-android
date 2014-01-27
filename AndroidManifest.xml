@@ -28,6 +28,7 @@
             android:label="@string/title_activity_news" >
         </activity>
         <activity android:name="com.akelio.android.acollab.view.UsersActivity"></activity>
+        <activity android:name="com.akelio.android.acollab.view.SettingsActivity"></activity>
         <activity android:name="com.akelio.android.acollab.view.ActivityStreamActivity"></activity>
         <service android:name="com.akelio.android.acollab.service.ContactService"/>
         <service android:name="com.akelio.android.acollab.service.ActivityStreamService"/>
