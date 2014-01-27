@@ -89,7 +89,6 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 			return null;
 		}
 

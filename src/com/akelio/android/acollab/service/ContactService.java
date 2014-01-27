@@ -89,6 +89,8 @@ public class ContactService extends IntentService {
 				values.put(UserContract.Column.COMPANY, u.getCompany());
 				db.insertWithOnConflict(UserContract.TABLE, null, values,
 						SQLiteDatabase.CONFLICT_REPLACE);
+				
+				
 			}
 
 		} catch (Exception e) {
