@@ -12,6 +12,7 @@ import com.akelio.android.acollab.R;
 public class DetailsUsersFragment extends Fragment {
 
 	private TextView firstName;
+	public static String TAG="fragmentDetailsUsersFragment";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

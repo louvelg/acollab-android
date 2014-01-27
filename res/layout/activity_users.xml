@@ -2,14 +2,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <fragment
-        android:id="@+id/fragmentUsers"
-        android:name="android.support.v4.app.ListFragment"
+    <FrameLayout
+        android:id="@+id/frameLayoutView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        class="com.akelio.android.acollab.view.UsersFragment" />
-    
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+
+    </FrameLayout>
+
 </RelativeLayout>
