@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -20,8 +21,8 @@ import com.akelio.android.acollab.entity.UserListItem;
 
 public class ContactService extends IntentService {
 
-	static final String TAG = "contactService";
-	static final String URL = "http://geb.test1.acollab.com/rest/v1/1/users";
+	static final String	TAG	= "contactService";
+	static final String	URL	= "http://geb.test1.acollab.com/rest/v1/1/users";
 
 	public ContactService() {
 		super(TAG);
@@ -34,12 +35,14 @@ public class ContactService extends IntentService {
 
 		String login = "admin";
 		String password = "admin";
-		login = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("login", "admin");
-		password = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("password", "admin");
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		password = prefs.getString("password", "admin");
+		login = prefs.getString("login", "admin");
+
+		
 		
 		try {
-			HttpAuthentication authHeader = new HttpBasicAuthentication(
-					login, password);
+			HttpAuthentication authHeader = new HttpBasicAuthentication(login, password);
 			HttpHeaders requestHeaders = new HttpHeaders();
 			requestHeaders.setAuthorization(authHeader);
 			HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
@@ -47,17 +50,15 @@ public class ContactService extends IntentService {
 			RestTemplate restTemplate = new RestTemplate();
 
 			restTemplate = new RestTemplate();
-			restTemplate.getMessageConverters().add(
-					new GsonHttpMessageConverter());
+			restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 
 			DbHelper dbHelper = new DbHelper(this);
 			SQLiteDatabase db = dbHelper.getWritableDatabase();
 			ContentValues values = new ContentValues();
 
-			ResponseEntity<UserListItem[]> res = restTemplate.exchange(URL,
-					HttpMethod.GET, requestEntity, UserListItem[].class);
+			ResponseEntity<UserListItem[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, UserListItem[].class);
 			UserListItem[] ulis = res.getBody();
-			
+
 			for (int i = 0; i < ulis.length; i++) {
 				UserListItem u = ulis[i];
 				System.out.println(u.getUsername());
@@ -69,10 +70,9 @@ public class ContactService extends IntentService {
 				values.put(UserContract.Column.PHONE2, u.getPhone2());
 				values.put(UserContract.Column.TENANT_ID, u.getTenantId());
 				values.put(UserContract.Column.COMPANY, u.getCompany());
-				db.insertWithOnConflict(UserContract.TABLE, null, values,
-						SQLiteDatabase.CONFLICT_REPLACE);
+				db.insertWithOnConflict(UserContract.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
 			}
-			
+
 			db.close();
 		} catch (Exception e) {
 			e.printStackTrace();
