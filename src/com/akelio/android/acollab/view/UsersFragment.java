@@ -84,16 +84,7 @@ public class UsersFragment extends Fragment {
 				Toast.makeText(v.getContext(),
 						"Click ListItem Number " + position, Toast.LENGTH_LONG)
 						.show();
-//				DetailsUsersFragment fragment = (DetailsUsersFragment) getFragmentManager()
-//						.findFragmentById(R.id.fragmentUserDetails); //
-//				// Is details fragment visible?
-//				if (fragment != null && fragment.isVisible()) { //
-//					fragment.updateView(id); //
-//				} else {
-////					startActivity(new Intent(getActivity(),
-////							DetailsUsersFragment.class).putExtra(
-////							"id", id)); //
-//				}
+
 			}
 		});
 
