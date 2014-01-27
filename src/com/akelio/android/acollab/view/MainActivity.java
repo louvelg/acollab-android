@@ -126,7 +126,9 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 	public void onClick(View v) {
 		switch(v.getId()){
 			case R.id.buttonUsers:
+				String frag = "UsersFragment";
 				Intent i = new Intent(MainActivity.this, UsersActivity.class);
+				i.putExtra("fragment", frag);
 				startActivity(i);
 				break;
 			case R.id.buttonRefrechContactService:

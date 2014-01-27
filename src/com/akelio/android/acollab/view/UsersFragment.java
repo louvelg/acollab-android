@@ -20,6 +20,8 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,8 @@ import com.akelio.android.acollab.entity.UserListItem;
 
 public class UsersFragment extends Fragment {
 
+	public static String TAG="fragmentUsersFragment";
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -81,24 +85,9 @@ public class UsersFragment extends Fragment {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> a, View v, int position,
 					long id) {
-				Toast.makeText(v.getContext(),
-						"Click ListItem Number " + position, Toast.LENGTH_LONG)
-						.show();
-				DetailsUsersFragment fragment = (DetailsUsersFragment) getFragmentManager()
-						.findFragmentById(R.id.fragmentUserDetails); //
-				// Is details fragment visible?
-				if (fragment != null && fragment.isVisible()) { //
-					fragment.updateView(id); //
-				} else {
-//					startActivity(new Intent(getActivity(),
-//							DetailsUsersFragment.class).putExtra(
-//							"id", id)); //
-				}
+				
 			}
 		});
-
-		// LoadWebPageASYNC task = new LoadWebPageASYNC();
-		// task.execute();
 		return view;
 	}
 

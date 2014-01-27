@@ -4,11 +4,9 @@
     android:orientation="vertical" >
 
     <ListView
-        android:id="@+id/listViewUsers"
+        android:id="@+id/listViewActivityStream"
         android:layout_width="match_parent"
-        android:layout_height="225dp" >
+        android:layout_height="wrap_content" >
     </ListView>
-
-
 
 </LinearLayout>

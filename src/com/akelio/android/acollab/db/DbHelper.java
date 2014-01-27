@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.akelio.android.acollab.contract.ActivityContract;
 import com.akelio.android.acollab.contract.UserContract;
 
 public class DbHelper extends SQLiteOpenHelper {
@@ -29,12 +30,31 @@ public class DbHelper extends SQLiteOpenHelper {
 
 		Log.d(TAG, "create user table with SQL: " + sql);
 		db.execSQL(sql);
+
+		sql = String
+				.format("create table %s (%s int primary key, %s text, %s text, %s text, %s text, %s text, %s text, %s text, %s text, %s text, %s int)",
+						ActivityContract.TABLE, ActivityContract.Column.ID,
+						ActivityContract.Column.TENANT_ID,
+						ActivityContract.Column.USER_ID,
+						ActivityContract.Column.SPACE_ID,
+						ActivityContract.Column.SPACE_NAME,
+						ActivityContract.Column.TITLE,
+						ActivityContract.Column.USER_NAME,
+						ActivityContract.Column.DATE_CREATED,
+						ActivityContract.Column.MODULE_ID,
+						ActivityContract.Column.MODULE_TYPE,
+						ActivityContract.Column.DELETED);
+
+		Log.d(TAG, "create user table with SQL: " + sql);
+		db.execSQL(sql);
+
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		Log.d(TAG, "dbHelper onUpdate");
 		db.execSQL("drop table if exists " + UserContract.TABLE);
+		db.execSQL("drop table if exists " + ActivityContract.TABLE);
 		onCreate(db);
 	}
 
