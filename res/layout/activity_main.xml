@@ -98,5 +98,13 @@
        android:layout_above="@+id/buttonRefrechContactService"
        android:layout_toRightOf="@+id/buttonUsers"
        android:text="News" />
+   
+   <Button
+       android:id="@+id/buttonSettings"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_above="@+id/buttonRefrechContactService"
+       android:layout_toRightOf="@+id/buttonActivityStream"
+       android:text="Settings" />
 
 </RelativeLayout>

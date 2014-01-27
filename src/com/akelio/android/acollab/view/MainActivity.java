@@ -32,6 +32,7 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 		setContentView(R.layout.activity_main);
 		final Button buttonSend = (Button) findViewById(R.id.buttonLogin);
 		final Button buttonUsers = (Button) findViewById(R.id.buttonUsers);
+		final Button buttonSettings = (Button) findViewById(R.id.buttonSettings);
 		final Button buttonActivityStream = (Button) findViewById(R.id.buttonActivityStream);
 		final Button buttonRefreshContactService = (Button) findViewById(R.id.buttonRefrechContactService);
 		final Button buttonRefreshActivityStreamService = (Button) findViewById(R.id.buttonRefrechActivityStreamService);
@@ -39,6 +40,7 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 		final EditText editPasswd = (EditText) findViewById(R.id.editTextPasswd);
 		buttonSend.setOnClickListener(this);
 		buttonUsers.setOnClickListener(this);
+		buttonSettings.setOnClickListener(this);
 		buttonActivityStream.setOnClickListener(this);
 		buttonRefreshContactService.setOnClickListener(this);
 		buttonRefreshActivityStreamService.setOnClickListener(this);
@@ -139,6 +141,10 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 			case R.id.buttonActivityStream:
 				System.out.println("Start buttonActivityStream");
 				startActivity(new Intent(MainActivity.this, ActivityStreamActivity.class));
+				break;
+			case R.id.buttonSettings:
+				System.out.println("Start buttonSettings");
+				startActivity(new Intent(MainActivity.this, SettingsActivity.class));
 				break;
 			case R.id.buttonRefrechContactService:
 				System.out.println("Start buttonRefrechContactService");

@@ -8,13 +8,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-
 import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.util.Log;
-
 import com.akelio.android.acollab.contract.UserContract;
 import com.akelio.android.acollab.db.DbHelper;
 import com.akelio.android.acollab.entity.UserListItem;
@@ -33,9 +32,14 @@ public class ContactService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		Log.d(TAG, "contactService launched");
 
+		String login = "admin";
+		String password = "admin";
+		login = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("login", "admin");
+		password = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("password", "admin");
+		
 		try {
 			HttpAuthentication authHeader = new HttpBasicAuthentication(
-					"admin", "admin");
+					login, password);
 			HttpHeaders requestHeaders = new HttpHeaders();
 			requestHeaders.setAuthorization(authHeader);
 			HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
@@ -68,6 +72,8 @@ public class ContactService extends IntentService {
 				db.insertWithOnConflict(UserContract.TABLE, null, values,
 						SQLiteDatabase.CONFLICT_REPLACE);
 			}
+			
+			db.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
