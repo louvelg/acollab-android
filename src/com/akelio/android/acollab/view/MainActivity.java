@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.akelio.android.acollab.R;
+import com.akelio.android.acollab.service.ActivityStreamService;
 import com.akelio.android.acollab.service.ContactService;
 
 public class MainActivity extends Activity implements android.view.View.OnClickListener{
@@ -31,12 +32,16 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 		setContentView(R.layout.activity_main);
 		final Button buttonSend = (Button) findViewById(R.id.buttonLogin);
 		final Button buttonUsers = (Button) findViewById(R.id.buttonUsers);
+		final Button buttonActivityStream = (Button) findViewById(R.id.buttonActivityStream);
 		final Button buttonRefreshContactService = (Button) findViewById(R.id.buttonRefrechContactService);
+		final Button buttonRefreshActivityStreamService = (Button) findViewById(R.id.buttonRefrechActivityStreamService);
 		final EditText editLogin = (EditText) findViewById(R.id.editTextLogin);
 		final EditText editPasswd = (EditText) findViewById(R.id.editTextPasswd);
 		buttonSend.setOnClickListener(this);
 		buttonUsers.setOnClickListener(this);
+		buttonActivityStream.setOnClickListener(this);
 		buttonRefreshContactService.setOnClickListener(this);
+		buttonRefreshActivityStreamService.setOnClickListener(this);
 		
 	}
 
@@ -126,15 +131,27 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 	public void onClick(View v) {
 		switch(v.getId()){
 			case R.id.buttonUsers:
+				System.out.println("clic buttonUsers");
 				String frag = "UsersFragment";
 				Intent i = new Intent(MainActivity.this, UsersActivity.class);
 				i.putExtra("fragment", frag);
 				startActivity(i);
+				startActivity(new Intent(MainActivity.this, UsersActivity.class));
+				break;
+			case R.id.buttonActivityStream:
+				System.out.println("Start buttonActivityStream");
+				startActivity(new Intent(MainActivity.this, ActivityStreamActivity.class));
 				break;
 			case R.id.buttonRefrechContactService:
+				System.out.println("Start buttonRefrechContactService");
 				startService(new Intent(this, ContactService.class));
 				break;
+			case R.id.buttonRefrechActivityStreamService:
+				System.out.println("Start buttonRefrechActivityStreamService");
+				startService(new Intent(this, ActivityStreamService.class));
+				break;
 			case R.id.buttonLogin:
+				System.out.println("Start buttonLogin");
 				LoadWebPageASYNC task = new LoadWebPageASYNC();
 				task.execute(new String[] { "http://www.javacodegeeks.com" });
 				break;

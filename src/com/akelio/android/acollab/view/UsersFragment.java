@@ -85,7 +85,6 @@ public class UsersFragment extends Fragment {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> a, View v, int position,
 					long id) {
-				
 			}
 		});
 		return view;
