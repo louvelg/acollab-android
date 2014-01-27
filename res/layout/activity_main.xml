@@ -60,7 +60,7 @@
        android:layout_height="wrap_content"
        android:layout_alignLeft="@+id/editTextLogin"
        android:layout_below="@+id/imageViewLogo"
-       android:layout_marginTop="17dp"
+       android:layout_marginTop="5dp"
        android:text="Login :" />
 
    <Button
@@ -69,7 +69,7 @@
        android:layout_height="wrap_content"
        android:layout_alignLeft="@+id/buttonLogin"
        android:layout_below="@+id/buttonLogin"
-       android:layout_marginTop="5dp"
+       android:layout_marginTop="2dp"
        android:text="Users" />
    
    <Button
@@ -78,7 +78,24 @@
        android:layout_height="wrap_content"
        android:layout_alignLeft="@+id/buttonLogin"
        android:layout_below="@+id/buttonUsers"
-       android:layout_marginTop="5dp"
+       android:layout_marginTop="2dp"
        android:text="Refresh Contact Service" />
+   
+   <Button
+       android:id="@+id/buttonRefrechActivityStreamService"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/buttonLogin"
+       android:layout_below="@+id/buttonRefrechContactService"
+       android:layout_marginTop="2dp"
+       android:text="Refresh Activity Stream Service" />
+
+   <Button
+       android:id="@+id/buttonActivityStream"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_above="@+id/buttonRefrechContactService"
+       android:layout_toRightOf="@+id/buttonUsers"
+       android:text="News" />
 
 </RelativeLayout>
