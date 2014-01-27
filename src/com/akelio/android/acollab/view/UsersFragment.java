@@ -81,9 +81,6 @@ public class UsersFragment extends Fragment {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> a, View v, int position,
 					long id) {
-				Toast.makeText(v.getContext(),
-						"Click ListItem Number " + position, Toast.LENGTH_LONG)
-						.show();
 
 			}
 		});
