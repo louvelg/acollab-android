@@ -8,20 +8,19 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-
 import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
 import com.akelio.android.acollab.contract.ActivityContract;
 import com.akelio.android.acollab.db.DbHelper;
 import com.akelio.android.acollab.entity.ActivityItem;
 
 public class ActivityStreamService extends IntentService {
 
-	static final String TAG = "activityStreamService";
+	static final String	TAG	= "activityStreamService";
+	static final String	URL	= "http://geb.test1.acollab.com/rest/v1/news";
 
 	public ActivityStreamService() {
 		super(TAG);
@@ -33,27 +32,23 @@ public class ActivityStreamService extends IntentService {
 		Log.d(TAG, "activityStreamService launched");
 		System.out.println("activityStreamService launched");
 		try {
-			HttpAuthentication authHeader = new HttpBasicAuthentication(
-					"admin", "admin");
+			HttpAuthentication authHeader = new HttpBasicAuthentication("admin", "admin");
 			HttpHeaders requestHeaders = new HttpHeaders();
 			requestHeaders.setAuthorization(authHeader);
 			HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
 
 			RestTemplate restTemplate = new RestTemplate();
-			String url = "http://geb.test1.acollab.com/rest/v1/news";
 			restTemplate = new RestTemplate();
-			restTemplate.getMessageConverters().add(
-					new GsonHttpMessageConverter());
+			restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 			DbHelper dbHelper = new DbHelper(this);
 			SQLiteDatabase db = dbHelper.getWritableDatabase();
 			ContentValues values = new ContentValues();
 
-			ResponseEntity<ActivityItem[]> res = restTemplate.exchange(url,
-					HttpMethod.GET, requestEntity, ActivityItem[].class);
+			ResponseEntity<ActivityItem[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, ActivityItem[].class);
 			ActivityItem[] ulis = res.getBody();
-			
+
 			db.execSQL("delete from " + ActivityContract.TABLE);
-			
+
 			int i = 0;
 			for (i = 0; i < ulis.length; i++) {
 				ActivityItem a = ulis[i];
@@ -69,9 +64,8 @@ public class ActivityStreamService extends IntentService {
 				values.put(ActivityContract.Column.MODULE_ID, a.getModuleId());
 				values.put(ActivityContract.Column.MODULE_TYPE, a.getModuleType());
 				values.put(ActivityContract.Column.DATE_CREATED, a.getDateCreated());
-				
-				db.insertWithOnConflict(ActivityContract.TABLE, null, values,
-						SQLiteDatabase.CONFLICT_REPLACE);
+
+				db.insertWithOnConflict(ActivityContract.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
 			}
 			System.out.println("Nb activity : " + i);
 
