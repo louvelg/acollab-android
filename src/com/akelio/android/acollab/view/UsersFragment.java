@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ import com.akelio.android.acollab.entity.UserListItem;
 public class UsersFragment extends Fragment {
 
 	public static String TAG="fragmentUsersFragment";
-	
+	private DetailsUsersFragment mDetailsUserFragment ;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -85,8 +86,22 @@ public class UsersFragment extends Fragment {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> a, View v, int position,
 					long id) {
-			}
-		});
+							List<Fragment> list = getFragmentManager().getFragments();
+							System.out.println("test");
+							for (Fragment f : list) {
+								
+								System.out.println(f.getFragmentManager());
+							}
+							mDetailsUserFragment = new DetailsUsersFragment();
+							if(mDetailsUserFragment !=null ){
+							
+	                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+	                        ft.replace(R.id.frameLayoutView, mDetailsUserFragment);
+	                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+	                        ft.commit();
+							}
+				}
+			});
 		return view;
 	}
 
