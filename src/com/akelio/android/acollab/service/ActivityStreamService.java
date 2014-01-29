@@ -9,14 +9,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.contract.ActivityContract;
 import com.akelio.android.acollab.db.DbHelper;
 import com.akelio.android.acollab.entity.ActivityItem;
 import com.akelio.android.acollab.utils.NetworkUtils;
+import com.akelio.android.acollab.view.ActivityStreamActivity;
 
 public class ActivityStreamService extends IntentService {
 
@@ -72,6 +78,20 @@ public class ActivityStreamService extends IntentService {
 				}
 				System.out.println("Nb activity : " + i);
 				db.close();
+
+				NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+				Intent launchIntent = new Intent(getApplicationContext(), ActivityStreamActivity.class);
+				PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, launchIntent, 0);
+
+				// Create notification with the time it was fired
+				Notification note = new Notification(R.drawable.logo_acollab_android_24, "Something Happened", System.currentTimeMillis());
+				// Set notification information
+				note.setLatestEventInfo(getApplicationContext(), "We're Finished!", "Click Here!", contentIntent);
+				note.defaults |= Notification.DEFAULT_SOUND;
+				note.flags |= Notification.FLAG_AUTO_CANCEL;
+
+				manager.notify(15, note);
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
