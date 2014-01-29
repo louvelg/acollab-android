@@ -35,6 +35,7 @@
         <activity android:name="com.akelio.android.acollab.view.ActivityStreamActivity" />
 
         <service android:name="com.akelio.android.acollab.service.ContactService" />
+        <service android:name="com.akelio.android.acollab.service.SpaceService" />
         <service android:name="com.akelio.android.acollab.service.ActivityStreamService" />
 
         <receiver android:name="com.akelio.android.acollab.receiver.ActivityStreamReceiver" 

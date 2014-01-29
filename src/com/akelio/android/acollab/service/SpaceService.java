@@ -68,7 +68,7 @@ public class SpaceService extends IntentService {
 					values.put(SpaceContract.Column.NAME, u.getName());
 					values.put(SpaceContract.Column.TENANT_ID, u.getTenantId());
 					values.put(SpaceContract.Column.APPLICATIONS, StringUtils.collectionToCommaDelimitedString(u.getApplications()));
-					db.insertWithOnConflict(UserContract.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+					db.insertWithOnConflict(SpaceContract.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
 				}
 				db.close();
 			} catch (Exception e) {

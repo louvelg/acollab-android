@@ -92,6 +92,15 @@
        android:text="Refresh Activity Stream Service" />
 
    <Button
+       android:id="@+id/buttonRefrechSpaceService"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/buttonLogin"
+       android:layout_below="@+id/buttonRefrechActivityStreamService"
+       android:layout_marginTop="2dp"
+       android:text="Refresh Space Service" />
+
+   <Button
        android:id="@+id/buttonActivityStream"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"

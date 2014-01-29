@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -18,10 +17,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.service.ActivityStreamService;
 import com.akelio.android.acollab.service.ContactService;
+import com.akelio.android.acollab.service.SpaceService;
 
 public class MainActivity extends Activity implements android.view.View.OnClickListener{
 
@@ -35,6 +34,7 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 		final Button buttonSettings = (Button) findViewById(R.id.buttonSettings);
 		final Button buttonActivityStream = (Button) findViewById(R.id.buttonActivityStream);
 		final Button buttonRefreshContactService = (Button) findViewById(R.id.buttonRefrechContactService);
+		final Button buttonRefreshSpaceService = (Button) findViewById(R.id.buttonRefrechSpaceService);
 		final Button buttonRefreshActivityStreamService = (Button) findViewById(R.id.buttonRefrechActivityStreamService);
 		final EditText editLogin = (EditText) findViewById(R.id.editTextLogin);
 		final EditText editPasswd = (EditText) findViewById(R.id.editTextPasswd);
@@ -43,6 +43,7 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 		buttonSettings.setOnClickListener(this);
 		buttonActivityStream.setOnClickListener(this);
 		buttonRefreshContactService.setOnClickListener(this);
+		buttonRefreshSpaceService.setOnClickListener(this);
 		buttonRefreshActivityStreamService.setOnClickListener(this);
 		
 	}
@@ -149,6 +150,10 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 			case R.id.buttonRefrechContactService:
 				System.out.println("Start buttonRefrechContactService");
 				startService(new Intent(this, ContactService.class));
+				break;
+			case R.id.buttonRefrechSpaceService:
+				System.out.println("Start buttonRefrechSpaceService");
+				startService(new Intent(this, SpaceService.class));
 				break;
 			case R.id.buttonRefrechActivityStreamService:
 				System.out.println("Start buttonRefrechActivityStreamService");
