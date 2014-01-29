@@ -68,7 +68,7 @@ public class ActivityStreamService extends IntentService {
 				db.insertWithOnConflict(ActivityContract.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
 			}
 			System.out.println("Nb activity : " + i);
-
+			db.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

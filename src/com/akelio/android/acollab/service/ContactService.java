@@ -38,8 +38,6 @@ public class ContactService extends IntentService {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		password = prefs.getString("password", "admin");
 		login = prefs.getString("login", "admin");
-
-		
 		
 		try {
 			HttpAuthentication authHeader = new HttpBasicAuthentication(login, password);
