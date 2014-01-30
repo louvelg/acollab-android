@@ -28,9 +28,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.akelio.android.acollab.NewsActivity"
-            android:label="@string/title_activity_news" />
+            android:name="com.akelio.android.acollab.NewsActivity"></activity>
         <activity android:name="com.akelio.android.acollab.view.UsersActivity" />
+        <activity android:name="com.akelio.android.acollab.view.UsersAct"></activity>
         <activity android:name="com.akelio.android.acollab.view.SettingsActivity" />
         <activity android:name="com.akelio.android.acollab.view.ActivityStreamActivity" />
 

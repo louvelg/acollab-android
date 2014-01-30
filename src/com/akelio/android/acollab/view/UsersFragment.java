@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -38,16 +39,20 @@ import com.akelio.android.acollab.contract.UserContract;
 import com.akelio.android.acollab.db.DbHelper;
 import com.akelio.android.acollab.entity.UserListItem;
 
-public class UsersFragment extends Fragment {
+public class UsersFragment extends ListFragment {
 
 	public static String TAG="fragmentUsersFragment";
 	private DetailsUsersFragment mDetailsUserFragment ;
+	OnArticleSelectedListener mListener;
+
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_users, container, false);
 		final ListView listview = (ListView) view
-				.findViewById(R.id.listViewUsers);
+				.findViewById(R.id.list_fragment);
+		View listView = getActivity().findViewById(R.id.list_fragment);
 		ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> map;
 
@@ -61,15 +66,11 @@ public class UsersFragment extends Fragment {
 			cursor.moveToFirst();
 
 		while (!cursor.isAfterLast()) {
-			System.out.println(cursor.getInt(0));
 
-			System.out.println(cursor.getString(1));
-			System.out.println(cursor.getString(2));
-			System.out.println(cursor.getString(3));
 
 			map = new HashMap<String, String>();
 			map.put("textViewName", cursor.getString(2));
-			;
+			
 			map.put("textViewDescription", cursor.getString(3));
 			listItem.add(map);
 			cursor.moveToNext();
@@ -86,25 +87,40 @@ public class UsersFragment extends Fragment {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> a, View v, int position,
 					long id) {
-							List<Fragment> list = getFragmentManager().getFragments();
-							System.out.println("test");
-							for (Fragment f : list) {
-								
-								System.out.println(f.getFragmentManager());
-							}
-							mDetailsUserFragment = new DetailsUsersFragment();
-							if(mDetailsUserFragment !=null ){
+							//List<Fragment> list = getFragmentManager().getFragments();
 							
-	                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-	                        ft.replace(R.id.frameLayoutView, mDetailsUserFragment);
-	                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-	                        ft.commit();
-							}
+							//mDetailsUserFragment = new DetailsUsersFragment();
+							//if(mDetailsUserFragment !=null ){
+							
+	                        //FragmentTransaction ft = getFragmentManager().beginTransaction();
+	                        //ft.replace(R.id.frameLayoutView, mDetailsUserFragment);
+	                        //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+	                        //ft.commit();
+							//}
+						
+							//mListener.onArticleSelected();
+
+							
 				}
 			});
 		return view;
 	}
 
+	// Container Activity must implement this interface
+    public interface OnArticleSelectedListener {
+        public void onArticleSelected();
+    }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnArticleSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnArticleSelectedListener");
+        }
+    }
+
+    
 	private class StableArrayAdapter extends ArrayAdapter<String> {
 
 		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
@@ -166,14 +182,7 @@ public class UsersFragment extends Fragment {
 		@Override
 		protected void onPostExecute(UserListItem result) {
 			super.onPostExecute(result);
-			// Toast.makeText(UsersActivity.this,
-			// result.getFirstName() + " - " + result.getLastName(),
-			// Toast.LENGTH_LONG).show();
 		}
 	}
 
-	public void setText(String item) {
-		// TextView view = (TextView) getView().findViewById(R.id.text);
-		// view.setText(item);
-	}
 }
