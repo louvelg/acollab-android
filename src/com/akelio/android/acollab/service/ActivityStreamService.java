@@ -49,12 +49,13 @@ public class ActivityStreamService extends IntentService {
 				RestTemplate restTemplate = new RestTemplate();
 				restTemplate = new RestTemplate();
 				restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
-				DbHelper dbHelper = new DbHelper(this);
-				SQLiteDatabase db = dbHelper.getWritableDatabase();
-				ContentValues values = new ContentValues();
 
 				ResponseEntity<ActivityItem[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, ActivityItem[].class);
 				ActivityItem[] ulis = res.getBody();
+				
+				DbHelper dbHelper = new DbHelper(this);
+				SQLiteDatabase db = dbHelper.getWritableDatabase();
+				ContentValues values = new ContentValues();
 
 				db.execSQL("delete from " + ActivityContract.TABLE);
 

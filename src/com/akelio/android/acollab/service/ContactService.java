@@ -52,11 +52,11 @@ public class ContactService extends IntentService {
 				restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 
 				DbHelper dbHelper = new DbHelper(this);
-				SQLiteDatabase db = dbHelper.getWritableDatabase();
 				ContentValues values = new ContentValues();
 
 				ResponseEntity<UserListItem[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, UserListItem[].class);
 				UserListItem[] ulis = res.getBody();
+				SQLiteDatabase db = dbHelper.getWritableDatabase();
 
 				for (int i = 0; i < ulis.length; i++) {
 					UserListItem u = ulis[i];
