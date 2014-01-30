@@ -41,7 +41,7 @@ public class UsersFrag extends ListFragment {
     // The container Activity must implement this interface so the frag can deliver messages
     public interface OnUserSelectedListener {
         /** Called by HeadlinesFragment when a list item is selected */
-        public void onUserSelected(int position);
+        public void onUserSelected(int position, View view);
     }
 
     @Override
@@ -68,9 +68,10 @@ public class UsersFrag extends ListFragment {
 
 
 			map = new HashMap<String, String>();
-			map.put("textViewName", cursor.getString(2));
-			
-			map.put("textViewDescription", cursor.getString(3));
+			map.put("textViewName", cursor.getString(cursor.getColumnIndex(UserContract.Column.FIRST_NAME))+" "+cursor.getString(cursor.getColumnIndex(UserContract.Column.LAST_NAME)));
+			map.put("textViewCompanyName", cursor.getString(cursor.getColumnIndex(UserContract.Column.COMPANY)) );
+			map.put("textViewNumber", cursor.getString(cursor.getColumnIndex(UserContract.Column.PHONE1)) );
+			map.put("textViewInvisible", cursor.getString(cursor.getColumnIndex(UserContract.Column.ID)) );
 			listItem.add(map);
 			cursor.moveToNext();
 		}
@@ -81,8 +82,8 @@ public class UsersFrag extends ListFragment {
         
         SimpleAdapter mSchedule = new SimpleAdapter(mContext,
 				listItem, R.layout.list_user_item, new String[] {
-						"textViewName", "textViewDescription" }, new int[] {
-						R.id.textViewName, R.id.textViewDescription });
+						"textViewName", "textViewCompanyName", "textViewNumber", "textViewInvisible" }, new int[] {
+						R.id.textViewName, R.id.textViewCompanyName, R.id.textViewNumber, R.id.textViewInvisible });
         // Create an array adapter for the list view, using the Ipsum headlines array
         setListAdapter(mSchedule);
         
@@ -117,8 +118,7 @@ public class UsersFrag extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         // Notify the parent activity of selected item
-        mCallback.onUserSelected(position);
-        
+        mCallback.onUserSelected(position, v);
         // Set the item as checked to be highlighted when in two-pane layout
         getListView().setItemChecked(position, true);
     }
