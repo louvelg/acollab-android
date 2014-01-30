@@ -5,6 +5,7 @@ import com.akelio.android.acollab.R;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 
 
 public class UsersAct extends FragmentActivity implements UsersFrag.OnUserSelectedListener{
@@ -38,7 +39,7 @@ public class UsersAct extends FragmentActivity implements UsersFrag.OnUserSelect
         }
     }
 
-	public void onUserSelected(int position) {
+	public void onUserSelected(int position, View view) {
         // The user selected the headline of an article from the HeadlinesFragment
 
         // Capture the user fragment from the activity layout
@@ -70,4 +71,5 @@ public class UsersAct extends FragmentActivity implements UsersFrag.OnUserSelect
             transaction.commit();
         }
 	}
+
 }

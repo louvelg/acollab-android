@@ -22,11 +22,31 @@
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/textViewDescription"
+        android:id="@+id/textViewCompanyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageViewUser"
         android:layout_alignLeft="@+id/textViewName"
         android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textViewInvisible"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewName"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="24dp"
+        android:text="TextView3" />
+
+    <TextView
+        android:id="@+id/textViewNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewCompanyName"
+        android:layout_alignBottom="@+id/textViewCompanyName"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="22dp"
+        android:text="TextView4" />
 
 </RelativeLayout>

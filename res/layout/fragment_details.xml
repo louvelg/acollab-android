@@ -1,32 +1,54 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:layout_height="fill_parent" >
 
     <TextView
         android:id="@+id/textViewFirstname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@+id/imageView1"
+        android:text="TextViewName" />
 
-    <TextView
-        android:id="@+id/textViewSurname"
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewFirstname"
+        android:layout_marginLeft="26dp"
+        android:src="@drawable/ic_launcher" />
 
     <TextView
-        android:id="@+id/textViewPhone"
+        android:id="@+id/textViewCompanyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_alignBottom="@+id/textViewNumber"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_marginBottom="22dp"
+        android:text="TextViewCompany" />
+
+    <TextView
+        android:id="@+id/textViewNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewCompanyName"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginTop="57dp"
+        android:text="TextViewNumber" />
 
     <Button
         android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textViewCompanyName"
+        android:layout_marginRight="26dp"
+        android:layout_marginTop="28dp"
         android:clickable="true"
         android:onClick="goToUsers"
         android:text="Back" />
-
-</LinearLayout>
+    
+</RelativeLayout>
