@@ -17,7 +17,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import com.akelio.android.acollab.contract.SpaceContract;
-import com.akelio.android.acollab.contract.UserContract;
 import com.akelio.android.acollab.db.DbHelper;
 import com.akelio.android.acollab.entity.SpaceItem;
 import com.akelio.android.acollab.utils.NetworkUtils;
@@ -53,12 +52,12 @@ public class SpaceService extends IntentService {
 				restTemplate = new RestTemplate();
 				restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 
+				ResponseEntity<SpaceItem[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, SpaceItem[].class);
+				SpaceItem[] ulis = res.getBody();
+
 				DbHelper dbHelper = new DbHelper(this);
 				SQLiteDatabase db = dbHelper.getWritableDatabase();
 				ContentValues values = new ContentValues();
-
-				ResponseEntity<SpaceItem[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, SpaceItem[].class);
-				SpaceItem[] ulis = res.getBody();
 
 				db.execSQL("delete from " + SpaceContract.TABLE);
 				for (int i = 0; i < ulis.length; i++) {
