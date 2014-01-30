@@ -134,7 +134,7 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 			case R.id.buttonUsers:
 				System.out.println("clic buttonUsers");
 				String frag = "UsersFragment";
-				Intent i = new Intent(MainActivity.this, UsersActivity.class);
+				Intent i = new Intent(MainActivity.this, UsersAct.class);
 				i.putExtra("fragment", frag);
 				startActivity(i);
 				break;

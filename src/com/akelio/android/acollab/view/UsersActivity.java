@@ -8,8 +8,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.akelio.android.acollab.R;
+import com.akelio.android.acollab.view.UsersFragment.OnArticleSelectedListener;
 
-public class UsersActivity extends FragmentActivity {
+public class UsersActivity extends FragmentActivity implements OnArticleSelectedListener{
 	
 	
 	private DetailsUsersFragment mDetailsUserFragment;
@@ -51,7 +52,7 @@ public class UsersActivity extends FragmentActivity {
             // We can also animate the changing of fragment
             ft.setCustomAnimations(android.R.anim.slide_in_left,
                     android.R.anim.slide_out_right);
-            ft.replace(R.id.frameLayoutView, fragment);
+            ft.replace(R.id.fragment_container, fragment);
             ft.commit();
     }
         
@@ -61,6 +62,12 @@ public class UsersActivity extends FragmentActivity {
     public void goToUsersDetails(View v) {
             showFragment(this.mDetailsUserFragment);
     }
+
+	@Override
+	public void onArticleSelected() {
+		// TODO Auto-generated method stub
+		showFragment(this.mDetailsUserFragment);		
+	}
 
 
 }
