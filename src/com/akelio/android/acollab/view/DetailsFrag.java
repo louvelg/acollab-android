@@ -15,9 +15,18 @@
  */
 package com.akelio.android.acollab.view;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.akelio.android.acollab.R;
+import com.akelio.android.acollab.contract.UserContract;
+import com.akelio.android.acollab.db.DbHelper;
 
 import android.support.v4.app.Fragment;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,17 +63,45 @@ public class DetailsFrag extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             // Set article based on argument passed in
-        	updateDetailsUserView(args.getInt(ARG_POSITION));
-        } else if (mCurrentPosition != -1) {
+        	updateDetailsUserView(args.getString(ARG_POSITION));
+       // } else if (mCurrentPosition != -1) {
             // Set article based on saved instance state defined during onCreateView
-        	updateDetailsUserView(mCurrentPosition);
+       // 	updateDetailsUserView(mCurrentPosition);
         }
     }
 
-    public void updateDetailsUserView(int position) {
-        TextView username = (TextView) getActivity().findViewById(R.id.userName);
-        username.setText(Ipsum.Articles[position]);
-        mCurrentPosition = position;
+    public void updateDetailsUserView(String idValue) {
+        //TextView username = (TextView) getActivity().findViewById(R.id.user);
+        //username.setText(Ipsum.Articles[position]);
+        //mCurrentPosition = position;
+        //-----------------CONNEXION DATABASE------------------
+        //View view = inflater.inflate(R.layout.list_users, container, false);
+        Context mContext = getActivity();
+        ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
+        System.out.println(idValue);
+		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+		qb.setTables(UserContract.TABLE);
+		DbHelper dbHelper = new DbHelper(mContext);
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
+		Cursor cursor = qb.query(db, null, "_id="+idValue, null, null, null,
+				UserContract.DEFAULT_SORT);
+		if (cursor != null)
+			cursor.moveToFirst();
+
+		while (!cursor.isAfterLast()) {
+			
+			TextView name = (TextView)  getActivity().findViewById(R.id.textViewFirstname);
+			
+			name.setText(cursor.getColumnIndex(UserContract.Column.FIRST_NAME));
+			//map = new HashMap<String, String>();
+			//map.put("textViewName", cursor.getString(cursor.getColumnIndex(UserContract.Column.FIRST_NAME))+" "+cursor.getString(cursor.getColumnIndex(UserContract.Column.LAST_NAME)));
+			//map.put("textViewCompanyName", cursor.getString(cursor.getColumnIndex(UserContract.Column.COMPANY)) );
+			//map.put("textViewNumber", cursor.getString(cursor.getColumnIndex(UserContract.Column.PHONE1)) );
+			//map.put("textViewInvisible", cursor.getString(cursor.getColumnIndex(UserContract.Column.ID)) );
+			//listItem.add(map);
+			//cursor.moveToNext();
+		}
+		//-------------------------------------------------------<
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.TextView;
 
 
 public class UsersAct extends FragmentActivity implements UsersFrag.OnUserSelectedListener{
@@ -45,12 +46,13 @@ public class UsersAct extends FragmentActivity implements UsersFrag.OnUserSelect
         // Capture the user fragment from the activity layout
         DetailsFrag userFrag = (DetailsFrag)
                 getSupportFragmentManager().findFragmentById(R.id.details_fragment);
-
+        TextView id = (TextView) view.findViewById(R.id.textViewInvisible);
+        String idValue = (String) id.getText();
         if (userFrag != null) {
             // If article frag is available, we're in two-pane layout...
 
             // Call a method in the ArticleFragment to update its content
-            userFrag.updateDetailsUserView(position);
+            userFrag.updateDetailsUserView(idValue);
 
         } else {
             // If the frag is not available, we're in the one-pane layout and must swap frags...
