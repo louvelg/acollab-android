@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import android.app.IntentService;
 import android.content.ContentValues;
@@ -15,26 +16,27 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import com.akelio.android.acollab.contract.SpaceContract;
 import com.akelio.android.acollab.contract.UserContract;
 import com.akelio.android.acollab.db.DbHelper;
-import com.akelio.android.acollab.entity.UserListItem;
+import com.akelio.android.acollab.entity.SpaceItem;
 import com.akelio.android.acollab.utils.NetworkUtils;
 
-public class ContactService extends IntentService {
+public class SpaceService extends IntentService {
 
-	static final String	TAG	= "contactService";
-	static final String	URL	= "http://geb.test1.acollab.com/rest/v1/1/users";
+	static final String	TAG	= "spaceService";
+	static final String	URL	= "http://geb.test1.acollab.com/rest/v1/1/user/spaces";
 
-	public ContactService() {
+	public SpaceService() {
 		super(TAG);
-		Log.d(TAG, "contactService start");
+		Log.d(TAG, "spaceService start");
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		Log.d(TAG, "contactService launched");
+		Log.d(TAG, "spaceService launched");
 
-		if (NetworkUtils.isWifiReachable(getApplicationContext())) {
+		if (NetworkUtils.isNetworkReachable(getApplicationContext())) {
 			String login = "admin";
 			String password = "admin";
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -55,35 +57,31 @@ public class ContactService extends IntentService {
 				SQLiteDatabase db = dbHelper.getWritableDatabase();
 				ContentValues values = new ContentValues();
 
-				ResponseEntity<UserListItem[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, UserListItem[].class);
-				UserListItem[] ulis = res.getBody();
+				ResponseEntity<SpaceItem[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, SpaceItem[].class);
+				SpaceItem[] ulis = res.getBody();
 
+				db.execSQL("delete from " + SpaceContract.TABLE);
 				for (int i = 0; i < ulis.length; i++) {
-					UserListItem u = ulis[i];
-					// System.out.println(u.getUsername());
-					values.clear();
-					values.put(UserContract.Column.ID, u.getUserId());
-					values.put(UserContract.Column.FIRST_NAME, u.getFirstName());
-					values.put(UserContract.Column.LAST_NAME, u.getLastName());
-					values.put(UserContract.Column.PHONE1, u.getPhone1());
-					values.put(UserContract.Column.PHONE2, u.getPhone2());
-					values.put(UserContract.Column.TENANT_ID, u.getTenantId());
-					values.put(UserContract.Column.COMPANY, u.getCompany());
-					db.insertWithOnConflict(UserContract.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+					SpaceItem u = ulis[i];
+					values.clear(); //
+					values.put(SpaceContract.Column.ID, u.getSpaceId());
+					values.put(SpaceContract.Column.NAME, u.getName());
+					values.put(SpaceContract.Column.TENANT_ID, u.getTenantId());
+					values.put(SpaceContract.Column.APPLICATIONS, StringUtils.collectionToCommaDelimitedString(u.getApplications()));
+					db.insertWithOnConflict(SpaceContract.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
 				}
-
 				db.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else {
-			Log.d(TAG, "contactService no wifi reachable");
+			Log.d(TAG, "spaceService no network reachable");
 		}
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		Log.d(TAG, "contactService stop");
+		Log.d(TAG, "spaceService stop");
 	}
 }
