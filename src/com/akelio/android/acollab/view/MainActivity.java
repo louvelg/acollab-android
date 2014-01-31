@@ -22,15 +22,15 @@ import com.akelio.android.acollab.service.ActivityStreamService;
 import com.akelio.android.acollab.service.ContactService;
 import com.akelio.android.acollab.service.SpaceService;
 
-public class MainActivity extends Activity implements android.view.View.OnClickListener{
+public class MainActivity extends Activity implements android.view.View.OnClickListener {
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		final Button buttonSend = (Button) findViewById(R.id.buttonLogin);
 		final Button buttonUsers = (Button) findViewById(R.id.buttonUsers);
+		final Button buttonMenu = (Button) findViewById(R.id.buttonMenu);
 		final Button buttonSettings = (Button) findViewById(R.id.buttonSettings);
 		final Button buttonActivityStream = (Button) findViewById(R.id.buttonActivityStream);
 		final Button buttonRefreshContactService = (Button) findViewById(R.id.buttonRefrechContactService);
@@ -40,54 +40,45 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 		final EditText editPasswd = (EditText) findViewById(R.id.editTextPasswd);
 		buttonSend.setOnClickListener(this);
 		buttonUsers.setOnClickListener(this);
+		buttonMenu.setOnClickListener(this);
 		buttonSettings.setOnClickListener(this);
 		buttonActivityStream.setOnClickListener(this);
 		buttonRefreshContactService.setOnClickListener(this);
 		buttonRefreshSpaceService.setOnClickListener(this);
 		buttonRefreshActivityStreamService.setOnClickListener(this);
-		
+
 	}
 
 	private class LoadWebPageASYNC extends AsyncTask<String, Void, String> {
 
 		@Override
 		protected String doInBackground(String... urls) {
-			String url = "https://ajax.googleapis.com/ajax/"
-					+ "services/search/web?v=1.0&q={query}";
+			String url = "https://ajax.googleapis.com/ajax/" + "services/search/web?v=1.0&q={query}";
 			System.out.println("url : " + url);
 
 			try {
 				// Create a new RestTemplate instance
 				RestTemplate restTemplate = new RestTemplate();
-				restTemplate.getMessageConverters().add(
-						new StringHttpMessageConverter());
-				String result = restTemplate.getForObject(url, String.class,
-						"Android");
+				restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+				String result = restTemplate.getForObject(url, String.class, "Android");
 				System.out.println("url : " + result);
 
 				url = "http://geb.test1.acollab.com/rest/v1/login";
 
-				HttpAuthentication authHeader = new HttpBasicAuthentication(
-						"admin", "admin");
+				HttpAuthentication authHeader = new HttpBasicAuthentication("admin", "admin");
 				HttpHeaders requestHeaders = new HttpHeaders();
 				requestHeaders.setAuthorization(authHeader);
-				HttpEntity<?> requestEntity = new HttpEntity<Object>(
-						requestHeaders);
+				HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
 
 				restTemplate = new RestTemplate();
-				restTemplate.getMessageConverters().add(
-						new StringHttpMessageConverter());
-				ResponseEntity<String> response = restTemplate.exchange(url,
-						HttpMethod.GET, requestEntity, String.class);
+				restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+				ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
 				System.out.println("url : " + response.getBody());
 
 				restTemplate = new RestTemplate();
-				restTemplate.getMessageConverters().add(
-						new GsonHttpMessageConverter());
-				ResponseEntity<Login> response2 = restTemplate.exchange(url,
-						HttpMethod.GET, requestEntity, Login.class);
-				System.out
-						.println("url : " + response2.getBody().getTenantId());
+				restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
+				ResponseEntity<Login> response2 = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Login.class);
+				System.out.println("url : " + response2.getBody().getTenantId());
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -109,8 +100,8 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 	}
 
 	public class Login {
-		private String tenantId;
-		private String userId;
+		private String	tenantId;
+		private String	userId;
 
 		public String getTenantId() {
 			return tenantId;
@@ -131,7 +122,7 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 
 	@Override
 	public void onClick(View v) {
-		switch(v.getId()){
+		switch (v.getId()) {
 			case R.id.buttonUsers:
 				System.out.println("clic buttonUsers");
 				String frag = "UsersFragment";
@@ -146,6 +137,10 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 			case R.id.buttonSettings:
 				System.out.println("Start buttonSettings");
 				startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+				break;
+			case R.id.buttonMenu:
+				System.out.println("Start buttonMenu");
+				startActivity(new Intent(MainActivity.this, MenuTestActivity.class));
 				break;
 			case R.id.buttonRefrechContactService:
 				System.out.println("Start buttonRefrechContactService");

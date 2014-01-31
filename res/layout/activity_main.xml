@@ -74,6 +74,15 @@
        android:text="Users" />
    
    <Button
+       android:id="@+id/buttonMenu"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_above="@+id/buttonActivityStream"
+       android:layout_toRightOf="@+id/buttonLogin"
+       android:layout_marginTop="2dp"
+       android:text="Menu" />
+   
+   <Button
        android:id="@+id/buttonRefrechContactService"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
