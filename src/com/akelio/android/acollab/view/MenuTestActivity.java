@@ -1,5 +1,4 @@
 package com.akelio.android.acollab.view;
-
 import java.util.Locale;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -7,14 +6,10 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,9 +17,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.akelio.android.acollab.R;
 
-public class MenuTestActivity extends FragmentActivity {
+
+public class MenuTestActivity extends SherlockFragmentActivity {
 	private DrawerLayout			mDrawerLayout;
 	private ListView				mDrawerList;
 	private ActionBarDrawerToggle	mDrawerToggle;
@@ -51,7 +51,7 @@ public class MenuTestActivity extends FragmentActivity {
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //		getActionBar().setHomeButtonEnabled(true);
 
 		// ActionBarDrawerToggle ties together the the proper interactions
@@ -63,13 +63,13 @@ public class MenuTestActivity extends FragmentActivity {
 		R.string.drawer_close /* "close drawer" description for accessibility */
 		) {
 			public void onDrawerClosed(View view) {
-				getActionBar().setTitle(mTitle);
-				invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+				getSupportActionBar().setTitle(mTitle);
+//				invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
 			}
 
 			public void onDrawerOpened(View drawerView) {
-				getActionBar().setTitle(mDrawerTitle);
-				invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+				getSupportActionBar().setTitle(mDrawerTitle);
+//				invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -81,7 +81,7 @@ public class MenuTestActivity extends FragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
+		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.main, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -99,13 +99,13 @@ public class MenuTestActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// The action bar home/up action should open or close the drawer.
 		// ActionBarDrawerToggle will take care of this.
-		if (mDrawerToggle.onOptionsItemSelected(item)) { return true; }
+//		if (mDrawerToggle.onOptionsItemSelected(item)) { return true; }
 		// Handle action buttons
 		switch (item.getItemId()) {
 			case R.id.action_websearch:
 				// create intent to perform web search for this planet
 				Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-				intent.putExtra(SearchManager.QUERY, getActionBar().getTitle());
+				intent.putExtra(SearchManager.QUERY, getSupportActionBar().getTitle());
 				// catch event that there's no activity to handle intent
 				if (intent.resolveActivity(getPackageManager()) != null) {
 					startActivity(intent);
@@ -145,7 +145,7 @@ public class MenuTestActivity extends FragmentActivity {
 	@Override
 	public void setTitle(CharSequence title) {
 		mTitle = title;
-		getActionBar().setTitle(mTitle);
+		getSupportActionBar().setTitle(mTitle);
 	}
 
 	/**
