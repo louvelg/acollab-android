@@ -38,7 +38,7 @@ public class UsersFrag extends ListFragment {
     // The container Activity must implement this interface so the frag can deliver messages
     public interface OnUserSelectedListener {
         /** Called by HeadlinesFragment when a list item is selected */
-        public void onUserSelected(int position, View view);
+        public void onUserSelected(int position, ListView l);
     }
 
     @Override
@@ -115,8 +115,12 @@ public class UsersFrag extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         // Notify the parent activity of selected item
-        mCallback.onUserSelected(position, v);
+        mCallback.onUserSelected(position, l);
         // Set the item as checked to be highlighted when in two-pane layout
-        getListView().setItemChecked(position, true);
+        //getListView().setItemChecked(position, true);
+        
+    	HashMap obj =(HashMap) l.getItemAtPosition(position);
+    	String nbRecup = (String) obj.get("textViewNumber");
+        //Toast.makeText(getActivity(), "" + position + "\nnuméro : " + nbRecup, Toast.LENGTH_SHORT).show();
     }
 }
