@@ -34,7 +34,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class DetailsFrag extends Fragment {
-    final static String ARG_POSITION = "position";
+    final static String ARG_IDVALUE = "idValue";
     int mCurrentPosition = -1;
 
     @Override
@@ -45,7 +45,7 @@ public class DetailsFrag extends Fragment {
         // the previous article selection set by onSaveInstanceState().
         // This is primarily necessary when in the two-pane layout.
         if (savedInstanceState != null) {
-            mCurrentPosition = savedInstanceState.getInt(ARG_POSITION);
+            mCurrentPosition = savedInstanceState.getInt(ARG_IDVALUE);
         }
 
         // Inflate the layout for this fragment
@@ -63,7 +63,7 @@ public class DetailsFrag extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             // Set article based on argument passed in
-        	updateDetailsUserView(args.getString(ARG_POSITION));
+        	updateDetailsUserView(args.getString(ARG_IDVALUE));
        // } else if (mCurrentPosition != -1) {
             // Set article based on saved instance state defined during onCreateView
        // 	updateDetailsUserView(mCurrentPosition);
@@ -76,6 +76,9 @@ public class DetailsFrag extends Fragment {
         //mCurrentPosition = position;
         //-----------------CONNEXION DATABASE------------------
         //View view = inflater.inflate(R.layout.list_users, container, false);
+    	TextView name = (TextView)  getActivity().findViewById(R.id.textViewFirstname);
+    	TextView company = (TextView)  getActivity().findViewById(R.id.textViewCompanyName);
+    	TextView number = (TextView)  getActivity().findViewById(R.id.textViewNumber);
         Context mContext = getActivity();
         ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
         System.out.println(idValue);
@@ -88,11 +91,13 @@ public class DetailsFrag extends Fragment {
 		if (cursor != null)
 			cursor.moveToFirst();
 
-		while (!cursor.isAfterLast()) {
+		//while (!cursor.isAfterLast()) {
 			
-			TextView name = (TextView)  getActivity().findViewById(R.id.textViewFirstname);
 			
-			name.setText(cursor.getColumnIndex(UserContract.Column.FIRST_NAME));
+			
+			name.setText(cursor.getString(cursor.getColumnIndex(UserContract.Column.FIRST_NAME))+" "+cursor.getString(cursor.getColumnIndex(UserContract.Column.LAST_NAME)));
+			number.setText(cursor.getString(cursor.getColumnIndex(UserContract.Column.PHONE1)));
+			company.setText(cursor.getString(cursor.getColumnIndex(UserContract.Column.COMPANY)));
 			//map = new HashMap<String, String>();
 			//map.put("textViewName", cursor.getString(cursor.getColumnIndex(UserContract.Column.FIRST_NAME))+" "+cursor.getString(cursor.getColumnIndex(UserContract.Column.LAST_NAME)));
 			//map.put("textViewCompanyName", cursor.getString(cursor.getColumnIndex(UserContract.Column.COMPANY)) );
@@ -100,7 +105,7 @@ public class DetailsFrag extends Fragment {
 			//map.put("textViewInvisible", cursor.getString(cursor.getColumnIndex(UserContract.Column.ID)) );
 			//listItem.add(map);
 			//cursor.moveToNext();
-		}
+		//}
 		//-------------------------------------------------------<
     }
 
@@ -109,6 +114,6 @@ public class DetailsFrag extends Fragment {
         super.onSaveInstanceState(outState);
 
         // Save the current article selection in case we need to recreate the fragment
-        outState.putInt(ARG_POSITION, mCurrentPosition);
+        outState.putInt(ARG_IDVALUE, mCurrentPosition);
     }
 }

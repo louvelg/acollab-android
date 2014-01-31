@@ -1,12 +1,16 @@
 package com.akelio.android.acollab.view;
 
+import java.util.HashMap;
+
 import com.akelio.android.acollab.R;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class UsersAct extends FragmentActivity implements UsersFrag.OnUserSelectedListener{
@@ -40,14 +44,14 @@ public class UsersAct extends FragmentActivity implements UsersFrag.OnUserSelect
         }
     }
 
-	public void onUserSelected(int position, View view) {
+	public void onUserSelected(int position, ListView l) {
         // The user selected the headline of an article from the HeadlinesFragment
 
         // Capture the user fragment from the activity layout
         DetailsFrag userFrag = (DetailsFrag)
                 getSupportFragmentManager().findFragmentById(R.id.details_fragment);
-        TextView id = (TextView) view.findViewById(R.id.textViewInvisible);
-        String idValue = (String) id.getText();
+        HashMap obj =(HashMap) l.getItemAtPosition(position);
+    	String idValue = (String) obj.get("textViewInvisible");
         if (userFrag != null) {
             // If article frag is available, we're in two-pane layout...
 
@@ -60,7 +64,7 @@ public class UsersAct extends FragmentActivity implements UsersFrag.OnUserSelect
             // Create fragment and give it an argument for the selected article
             DetailsFrag newFragment = new DetailsFrag();
             Bundle args = new Bundle();
-            args.putInt(DetailsFrag.ARG_POSITION, position);
+            args.putString(DetailsFrag.ARG_IDVALUE, idValue);
             newFragment.setArguments(args);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
