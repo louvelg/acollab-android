@@ -27,12 +27,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.akelio.android.acollab.NewsActivity"></activity>
+        <activity android:name="com.akelio.android.acollab.NewsActivity"/>
         <activity android:name="com.akelio.android.acollab.view.UsersActivity" />
-        <activity android:name="com.akelio.android.acollab.view.UsersAct"></activity>
+        <activity android:name="com.akelio.android.acollab.view.UsersAct"/>
         <activity android:name="com.akelio.android.acollab.view.SettingsActivity" />
         <activity android:name="com.akelio.android.acollab.view.ActivityStreamActivity" />
-
+		<activity android:name="com.akelio.android.acollab.view.MenuTestActivity" />
+        
         <service android:name="com.akelio.android.acollab.service.ContactService" />
         <service android:name="com.akelio.android.acollab.service.SpaceService" />
         <service android:name="com.akelio.android.acollab.service.ActivityStreamService" />

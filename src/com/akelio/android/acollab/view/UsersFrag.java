@@ -17,11 +17,6 @@ package com.akelio.android.acollab.view;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import com.akelio.android.acollab.R;
-import com.akelio.android.acollab.contract.UserContract;
-import com.akelio.android.acollab.db.DbHelper;
-
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
@@ -31,9 +26,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import com.akelio.android.acollab.R;
+import com.akelio.android.acollab.contract.UserContract;
+import com.akelio.android.acollab.db.DbHelper;
 
 public class UsersFrag extends ListFragment {
     OnUserSelectedListener mCallback;
