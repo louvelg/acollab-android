@@ -32,7 +32,7 @@ import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.contract.UserContract;
 import com.akelio.android.acollab.db.DbHelper;
 
-public class UsersFrag extends ListFragment {
+public class FragmentListUsers extends ListFragment {
     OnUserSelectedListener mCallback;
 
     // The container Activity must implement this interface so the frag can deliver messages

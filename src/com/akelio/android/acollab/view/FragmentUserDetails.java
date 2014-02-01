@@ -33,7 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class DetailsFrag extends Fragment {
+public class FragmentUserDetails extends Fragment {
     final static String ARG_IDVALUE = "idValue";
     int mCurrentPosition = -1;
 
@@ -49,7 +49,7 @@ public class DetailsFrag extends Fragment {
         }
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.details_view, container, false);
+        return inflater.inflate(R.layout.fragment_details_user, container, false);
     }
 
     @Override

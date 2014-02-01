@@ -13,12 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class UsersAct extends FragmentActivity implements UsersFrag.OnUserSelectedListener{
+public class ActivityListUsers extends FragmentActivity implements FragmentListUsers.OnUserSelectedListener{
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_users);
+        setContentView(R.layout.fragment_list_users);
 
         // Check whether the activity is using the layout version with
         // the fragment_container FrameLayout. If so, we must add the first fragment
@@ -32,7 +32,7 @@ public class UsersAct extends FragmentActivity implements UsersFrag.OnUserSelect
             }
 
             // Create an instance of ExampleFragment
-            UsersFrag firstFragment = new UsersFrag();
+            FragmentListUsers firstFragment = new FragmentListUsers();
 
             // In case this activity was started with special instructions from an Intent,
             // pass the Intent's extras to the fragment as arguments
@@ -48,7 +48,7 @@ public class UsersAct extends FragmentActivity implements UsersFrag.OnUserSelect
         // The user selected the headline of an article from the HeadlinesFragment
 
         // Capture the user fragment from the activity layout
-        DetailsFrag userFrag = (DetailsFrag)
+        FragmentUserDetails userFrag = (FragmentUserDetails)
                 getSupportFragmentManager().findFragmentById(R.id.details_fragment);
         HashMap obj =(HashMap) l.getItemAtPosition(position);
     	String idValue = (String) obj.get("textViewInvisible");
@@ -62,9 +62,9 @@ public class UsersAct extends FragmentActivity implements UsersFrag.OnUserSelect
             // If the frag is not available, we're in the one-pane layout and must swap frags...
 
             // Create fragment and give it an argument for the selected article
-            DetailsFrag newFragment = new DetailsFrag();
+            FragmentUserDetails newFragment = new FragmentUserDetails();
             Bundle args = new Bundle();
-            args.putString(DetailsFrag.ARG_IDVALUE, idValue);
+            args.putString(FragmentUserDetails.ARG_IDVALUE, idValue);
             newFragment.setArguments(args);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
