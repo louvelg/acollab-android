@@ -28,17 +28,15 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		final Button buttonSend = (Button) findViewById(R.id.buttonLogin);
+		
 		final Button buttonUsers = (Button) findViewById(R.id.buttonUsers);
+		final Button buttonLogin = (Button) findViewById(R.id.buttonLogin);
 		final Button buttonMenu = (Button) findViewById(R.id.buttonMenu);
 		final Button buttonSettings = (Button) findViewById(R.id.buttonSettings);
 		final Button buttonActivityStream = (Button) findViewById(R.id.buttonActivityStream);
 		final Button buttonRefreshContactService = (Button) findViewById(R.id.buttonRefrechContactService);
 		final Button buttonRefreshSpaceService = (Button) findViewById(R.id.buttonRefrechSpaceService);
 		final Button buttonRefreshActivityStreamService = (Button) findViewById(R.id.buttonRefrechActivityStreamService);
-		final EditText editLogin = (EditText) findViewById(R.id.editTextLogin);
-		final EditText editPasswd = (EditText) findViewById(R.id.editTextPasswd);
-		buttonSend.setOnClickListener(this);
 		buttonUsers.setOnClickListener(this);
 		buttonMenu.setOnClickListener(this);
 		buttonSettings.setOnClickListener(this);
@@ -46,50 +44,7 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 		buttonRefreshContactService.setOnClickListener(this);
 		buttonRefreshSpaceService.setOnClickListener(this);
 		buttonRefreshActivityStreamService.setOnClickListener(this);
-
-	}
-
-	private class LoadWebPageASYNC extends AsyncTask<String, Void, String> {
-
-		@Override
-		protected String doInBackground(String... urls) {
-			String url = "https://ajax.googleapis.com/ajax/" + "services/search/web?v=1.0&q={query}";
-			System.out.println("url : " + url);
-
-			try {
-				// Create a new RestTemplate instance
-				RestTemplate restTemplate = new RestTemplate();
-				restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-				String result = restTemplate.getForObject(url, String.class, "Android");
-				System.out.println("url : " + result);
-
-				url = "http://geb.test1.acollab.com/rest/v1/login";
-
-				HttpAuthentication authHeader = new HttpBasicAuthentication("admin", "admin");
-				HttpHeaders requestHeaders = new HttpHeaders();
-				requestHeaders.setAuthorization(authHeader);
-				HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
-
-				restTemplate = new RestTemplate();
-				restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-				ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
-				System.out.println("url : " + response.getBody());
-
-				restTemplate = new RestTemplate();
-				restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
-				ResponseEntity<Login> response2 = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Login.class);
-				System.out.println("url : " + response2.getBody().getTenantId());
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-
-		}
+		buttonLogin.setOnClickListener(this);
 	}
 
 	@Override
@@ -99,30 +54,14 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 		return true;
 	}
 
-	public class Login {
-		private String	tenantId;
-		private String	userId;
-
-		public String getTenantId() {
-			return tenantId;
-		}
-
-		public void setTenantId(String tenantId) {
-			this.tenantId = tenantId;
-		}
-
-		public String getUserId() {
-			return userId;
-		}
-
-		public void setUserId(String userId) {
-			this.userId = userId;
-		}
-	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+			case R.id.buttonLogin:
+				Intent iLogin = new Intent(MainActivity.this, ActivityLogin.class);
+				startActivity(iLogin);
+				break;
 			case R.id.buttonUsers:
 				System.out.println("clic buttonUsers");
 				String frag = "UsersFragment";
@@ -154,11 +93,7 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 				System.out.println("Start buttonRefrechActivityStreamService");
 				startService(new Intent(this, ActivityStreamService.class));
 				break;
-			case R.id.buttonLogin:
-				System.out.println("Start buttonLogin");
-				LoadWebPageASYNC task = new LoadWebPageASYNC();
-				task.execute(new String[] { "http://www.javacodegeeks.com" });
-				break;
+			
 		}
 	}
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+  <TextView
+       android:id="@+id/textViewPasswd"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/editTextPasswd"
+       android:layout_below="@+id/editTextLogin"
+       android:layout_marginTop="5dp"
+       android:text="Password :" />
+
+   <Button
+       android:id="@+id/buttonConnexion"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/editTextLogin"
+       android:layout_below="@+id/textViewPasswd"
+       android:layout_marginTop="40dp"
+       android:text="Login" />
+    <EditText
+       android:id="@+id/editTextPasswd"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/textViewPasswd"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="5dp"
+       android:ems="10"
+       android:inputType="textPassword" />
+
+   <EditText
+       android:id="@+id/editTextLogin"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/textViewPasswd"
+       android:layout_below="@+id/textViewLogin"
+       android:layout_marginTop="5dp"
+       android:ems="10" />
+
+   <ImageView
+       android:id="@+id/imageViewLogo"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentTop="true"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="2dp"
+       android:src="@drawable/logo_acollab1" />
+
+   <TextView
+       android:id="@+id/textViewLogin"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/editTextLogin"
+       android:layout_below="@+id/imageViewLogo"
+       android:layout_marginTop="5dp"
+       android:text="Login :" />
+   
+    
+</RelativeLayout>
