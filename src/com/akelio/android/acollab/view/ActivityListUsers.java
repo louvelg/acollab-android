@@ -1,16 +1,11 @@
 package com.akelio.android.acollab.view;
 
 import java.util.HashMap;
-
-import com.akelio.android.acollab.R;
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import com.akelio.android.acollab.R;
 
 
 public class ActivityListUsers extends FragmentActivity implements FragmentListUsers.OnUserSelectedListener{

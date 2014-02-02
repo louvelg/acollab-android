@@ -15,23 +15,19 @@
  */
 package com.akelio.android.acollab.view;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import com.akelio.android.acollab.R;
-import com.akelio.android.acollab.contract.UserContract;
-import com.akelio.android.acollab.db.DbHelper;
-
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.akelio.android.acollab.R;
+import com.akelio.android.acollab.contract.UserContract;
+import com.akelio.android.acollab.db.DbHelper;
 
 public class FragmentUserDetails extends Fragment {
     final static String ARG_IDVALUE = "idValue";
@@ -80,7 +76,6 @@ public class FragmentUserDetails extends Fragment {
     	TextView company = (TextView)  getActivity().findViewById(R.id.textViewCompanyName);
     	TextView number = (TextView)  getActivity().findViewById(R.id.textViewNumber);
         Context mContext = getActivity();
-        ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
         System.out.println(idValue);
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		qb.setTables(UserContract.TABLE);

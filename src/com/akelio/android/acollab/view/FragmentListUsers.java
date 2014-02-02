@@ -119,8 +119,8 @@ public class FragmentListUsers extends ListFragment {
         // Set the item as checked to be highlighted when in two-pane layout
         //getListView().setItemChecked(position, true);
         
-    	HashMap obj =(HashMap) l.getItemAtPosition(position);
-    	String nbRecup = (String) obj.get("textViewNumber");
+//    	HashMap obj =(HashMap) l.getItemAtPosition(position);
+//    	String nbRecup = (String) obj.get("textViewNumber");
         //Toast.makeText(getActivity(), "" + position + "\nnuméro : " + nbRecup, Toast.LENGTH_SHORT).show();
     }
 }
