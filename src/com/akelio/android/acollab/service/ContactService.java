@@ -16,6 +16,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import com.akelio.android.acollab.contract.UserContract;
+import com.akelio.android.acollab.dao.UserDAO;
 import com.akelio.android.acollab.db.DbHelper;
 import com.akelio.android.acollab.entity.User;
 import com.akelio.android.acollab.utils.NetworkUtils;
@@ -24,6 +25,7 @@ public class ContactService extends IntentService {
 
 	static final String	TAG	= "contactService";
 	static final String	URL	= "http://geb.test1.acollab.com/rest/v1/1/users";
+	private UserDAO		userDAO;
 
 	public ContactService() {
 		super(TAG);
@@ -33,8 +35,8 @@ public class ContactService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		Log.d(TAG, "contactService launched");
-
 		if (NetworkUtils.isNetworkReachable(getApplicationContext())) {
+			userDAO = new UserDAO(this);
 			String login = "admin";
 			String password = "admin";
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -51,28 +53,29 @@ public class ContactService extends IntentService {
 				restTemplate = new RestTemplate();
 				restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 
-				DbHelper dbHelper = new DbHelper(this);
-				ContentValues values = new ContentValues();
+//				DbHelper dbHelper = new DbHelper(this);
+//				ContentValues values = new ContentValues();
 
 				ResponseEntity<User[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, User[].class);
 				User[] ulis = res.getBody();
-				SQLiteDatabase db = dbHelper.getWritableDatabase();
+//				SQLiteDatabase db = dbHelper.getWritableDatabase();
 
 				for (int i = 0; i < ulis.length; i++) {
 					User u = ulis[i];
 					// System.out.println(u.getUsername());
-					values.clear();
-					values.put(UserContract.Column.ID, u.getUserId());
-					values.put(UserContract.Column.FIRST_NAME, u.getFirstName());
-					values.put(UserContract.Column.LAST_NAME, u.getLastName());
-					values.put(UserContract.Column.PHONE1, u.getPhone1());
-					values.put(UserContract.Column.PHONE2, u.getPhone2());
-					values.put(UserContract.Column.TENANT_ID, u.getTenantId());
-					values.put(UserContract.Column.COMPANY, u.getCompany());
-					db.insertWithOnConflict(UserContract.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+					userDAO.createUser(ulis[i]);
+//					values.clear();
+//					values.put(UserContract.Column.ID, u.getUserId());
+//					values.put(UserContract.Column.FIRST_NAME, u.getFirstName());
+//					values.put(UserContract.Column.LAST_NAME, u.getLastName());
+//					values.put(UserContract.Column.PHONE1, u.getPhone1());
+//					values.put(UserContract.Column.PHONE2, u.getPhone2());
+//					values.put(UserContract.Column.TENANT_ID, u.getTenantId());
+//					values.put(UserContract.Column.COMPANY, u.getCompany());
+//					db.insertWithOnConflict(UserContract.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
 				}
-
-				db.close();
+				userDAO.close();
+//				db.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
