@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import com.akelio.android.acollab.contract.ActivityContract;
+import com.akelio.android.acollab.contract.MainContract;
 import com.akelio.android.acollab.contract.SpaceContract;
 import com.akelio.android.acollab.contract.UserContract;
 
@@ -13,7 +14,7 @@ public class DbHelper extends SQLiteOpenHelper {
 	static final String	TAG	= "dbHelper";
 
 	public DbHelper(Context context) {
-		super(context, UserContract.DB_NAME, null, UserContract.DB_VERSION);
+		super(context, MainContract.DB_NAME, null, MainContract.DB_VERSION);
 	}
 
 	@Override

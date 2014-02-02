@@ -34,7 +34,7 @@ public class ContactService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		Log.d(TAG, "contactService launched");
 
-		if (NetworkUtils.isWifiReachable(getApplicationContext())) {
+		if (NetworkUtils.isNetworkReachable(getApplicationContext())) {
 			String login = "admin";
 			String password = "admin";
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

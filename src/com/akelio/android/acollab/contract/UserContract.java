@@ -3,8 +3,6 @@ package com.akelio.android.acollab.contract;
 import android.provider.BaseColumns;
 
 public class UserContract {
-	public static final String DB_NAME = "user.db";
-	public static final int DB_VERSION = 3;
 	public static final String TABLE = "user";
 	public static final String DEFAULT_SORT = Column.LAST_NAME + " ASC";
 
