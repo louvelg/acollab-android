@@ -1,6 +1,6 @@
 package com.akelio.android.acollab.entity;
 
-public class ActivityItem {
+public class Activity {
 	private String activityId;
 	private String tenantId;
 	private String title;

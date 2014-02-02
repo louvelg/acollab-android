@@ -2,7 +2,7 @@ package com.akelio.android.acollab.entity;
 
 import java.util.List;
 
-public class SpaceItem {
+public class Space {
 	private String spaceId;
 	private String tenantId;
 	private String name;

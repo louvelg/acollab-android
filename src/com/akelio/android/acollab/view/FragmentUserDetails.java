@@ -68,7 +68,6 @@ public class FragmentUserDetails extends Fragment {
 
     public void updateDetailsUserView(String idValue) {
         //TextView username = (TextView) getActivity().findViewById(R.id.user);
-        //username.setText(Ipsum.Articles[position]);
         //mCurrentPosition = position;
         //-----------------CONNEXION DATABASE------------------
         //View view = inflater.inflate(R.layout.list_users, container, false);

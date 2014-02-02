@@ -22,7 +22,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
@@ -74,17 +73,14 @@ public class FragmentListUsers extends ListFragment {
 		}
 		//-------------------------------------------------------
         // We need to use a different list item layout for devices older than Honeycomb
-        int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
-                android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
+//        int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
+//                android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
         
         SimpleAdapter mSchedule = new SimpleAdapter(mContext,
 				listItem, R.layout.list_user_item, new String[] {
 						"textViewName", "textViewCompanyName", "textViewNumber", "textViewInvisible" }, new int[] {
 						R.id.textViewName, R.id.textViewCompanyName, R.id.textViewNumber, R.id.textViewInvisible });
-        // Create an array adapter for the list view, using the Ipsum headlines array
         setListAdapter(mSchedule);
-        
-        //setListAdapter(new ArrayAdapter<String>(getActivity(), layout, Ipsum.Headlines));
     }
 
     @Override

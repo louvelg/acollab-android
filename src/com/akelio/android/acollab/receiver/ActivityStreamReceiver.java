@@ -18,9 +18,6 @@ public class ActivityStreamReceiver extends BroadcastReceiver {
 		Log.d("BootReceiver", "onReceived");
 		context.startService(new Intent(context, ActivityStreamService.class));
 
-//		Toast.makeText(context,
-//				"Receiver ActivityStream ", Toast.LENGTH_LONG)
-//				.show();
 		PendingIntent operation = PendingIntent.getService(context, -1, new Intent(context, ActivityStreamService.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -31,7 +28,7 @@ public class ActivityStreamReceiver extends BroadcastReceiver {
 			Log.d(TAG, "cancelling repeat operation");
 		} else {
 			Calendar c = Calendar.getInstance();
-			alarmManager.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(), c.getTimeInMillis() + 10000, operation);
+			alarmManager.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(), c.getTimeInMillis() + 60000, operation);
 			Log.d(TAG, "setting repeat operation for: " + interval);
 		}
 	}

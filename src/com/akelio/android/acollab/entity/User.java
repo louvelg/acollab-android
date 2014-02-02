@@ -1,6 +1,6 @@
 package com.akelio.android.acollab.entity;
 
-public class UserListItem {
+public class User {
 	private String userId;
 	private String tenantId;
 	private String lastName;

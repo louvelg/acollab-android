@@ -20,7 +20,7 @@ import android.util.Log;
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.contract.ActivityContract;
 import com.akelio.android.acollab.db.DbHelper;
-import com.akelio.android.acollab.entity.ActivityItem;
+import com.akelio.android.acollab.entity.Activity;
 import com.akelio.android.acollab.utils.NetworkUtils;
 import com.akelio.android.acollab.view.ActivityStreamActivity;
 
@@ -50,8 +50,8 @@ public class ActivityStreamService extends IntentService {
 				restTemplate = new RestTemplate();
 				restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 
-				ResponseEntity<ActivityItem[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, ActivityItem[].class);
-				ActivityItem[] ulis = res.getBody();
+				ResponseEntity<Activity[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, Activity[].class);
+				Activity[] ulis = res.getBody();
 				
 				DbHelper dbHelper = new DbHelper(this);
 				SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -61,7 +61,7 @@ public class ActivityStreamService extends IntentService {
 
 				int i = 0;
 				for (i = 0; i < ulis.length; i++) {
-					ActivityItem a = ulis[i];
+					Activity a = ulis[i];
 					values.clear(); //
 					values.put(ActivityContract.Column.ID, a.getActivityId());
 					values.put(ActivityContract.Column.TENANT_ID, a.getTenantId());

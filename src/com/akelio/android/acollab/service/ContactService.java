@@ -17,7 +17,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import com.akelio.android.acollab.contract.UserContract;
 import com.akelio.android.acollab.db.DbHelper;
-import com.akelio.android.acollab.entity.UserListItem;
+import com.akelio.android.acollab.entity.User;
 import com.akelio.android.acollab.utils.NetworkUtils;
 
 public class ContactService extends IntentService {
@@ -54,12 +54,12 @@ public class ContactService extends IntentService {
 				DbHelper dbHelper = new DbHelper(this);
 				ContentValues values = new ContentValues();
 
-				ResponseEntity<UserListItem[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, UserListItem[].class);
-				UserListItem[] ulis = res.getBody();
+				ResponseEntity<User[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, User[].class);
+				User[] ulis = res.getBody();
 				SQLiteDatabase db = dbHelper.getWritableDatabase();
 
 				for (int i = 0; i < ulis.length; i++) {
-					UserListItem u = ulis[i];
+					User u = ulis[i];
 					// System.out.println(u.getUsername());
 					values.clear();
 					values.put(UserContract.Column.ID, u.getUserId());
