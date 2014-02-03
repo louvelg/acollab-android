@@ -8,11 +8,8 @@ public class ActivityStreamActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		System.out.println("start activityStreamActivity");
 		super.onCreate(savedInstanceState);
-		ActivityStreamFragment fragment = new ActivityStreamFragment(); // 
-        getSupportFragmentManager().beginTransaction()
-           .add(android.R.id.content, fragment,
-              fragment.getClass().getSimpleName()).commit(); // 
+		ActivityStreamFragment fragment = new ActivityStreamFragment();
+		getSupportFragmentManager().beginTransaction().add(android.R.id.content, fragment, fragment.getClass().getSimpleName()).commit();
 	}
-
 
 }

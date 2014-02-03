@@ -32,7 +32,6 @@ public class ActivityLogin extends Activity implements android.view.View.OnClick
 		password = (EditText) findViewById(R.id.editTextPasswd);
 		buttonSend = (Button) findViewById(R.id.buttonLogin);
 		buttonSend.setOnClickListener(this);
-
 	}
 
 	@Override
