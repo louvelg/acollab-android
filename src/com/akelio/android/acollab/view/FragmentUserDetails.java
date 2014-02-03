@@ -68,18 +68,6 @@ public class FragmentUserDetails extends Fragment {
 		TextView company = (TextView) getActivity().findViewById(R.id.textViewCompanyName);
 		TextView number = (TextView) getActivity().findViewById(R.id.textViewNumber);
 		System.out.println(idValue);
-//		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-//		qb.setTables(UserContract.TABLE);
-//		DbHelper dbHelper = new DbHelper(mContext);
-//		SQLiteDatabase db = dbHelper.getReadableDatabase();
-//		Cursor cursor = qb.query(db, null, "_id=" + idValue, null, null, null, UserContract.DEFAULT_SORT);
-//		if (cursor != null) cursor.moveToFirst();
-//
-//		name.setText(cursor.getString(cursor.getColumnIndex(UserContract.Column.FIRST_NAME)) + " " + cursor.getString(cursor.getColumnIndex(UserContract.Column.LAST_NAME)));
-//		number.setText(cursor.getString(cursor.getColumnIndex(UserContract.Column.PHONE1)));
-//		company.setText(cursor.getString(cursor.getColumnIndex(UserContract.Column.COMPANY)));
-//		db.close();
-
 		User user = userDAO.getUser(idValue);
 		userDAO.close();
 		name.setText(user.getUsername());

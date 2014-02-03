@@ -3,6 +3,4 @@
     <EditTextPreference android:title="Login" android:key="login"/>
     <EditTextPreference android:title="Password" android:key="password"/>
     <EditTextPreference android:summary="Acollab url" android:title="Url" android:key="url"/>
-    
-
 </PreferenceScreen>

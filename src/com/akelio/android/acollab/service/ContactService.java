@@ -9,15 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import android.app.IntentService;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import com.akelio.android.acollab.contract.UserContract;
 import com.akelio.android.acollab.dao.UserDAO;
-import com.akelio.android.acollab.db.DbHelper;
 import com.akelio.android.acollab.entity.User;
 import com.akelio.android.acollab.utils.NetworkUtils;
 
