@@ -40,7 +40,6 @@ public class ActivityLogin extends Activity implements android.view.View.OnClick
 		switch (v.getId()) {
 			case R.id.buttonLogin:
 				login(v);
-
 				break;
 		}
 	}
