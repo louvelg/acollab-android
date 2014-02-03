@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#FFF">
     
   <TextView
        android:id="@+id/textViewPasswd"
@@ -13,13 +14,14 @@
        android:text="Password :" />
 
    <Button
-       android:id="@+id/buttonConnexion"
+       android:id="@+id/buttonLogin"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_alignLeft="@+id/editTextLogin"
        android:layout_below="@+id/textViewPasswd"
-       android:layout_marginTop="40dp"
+       android:layout_marginTop="60dp"
        android:text="Login" />
+   
     <EditText
        android:id="@+id/editTextPasswd"
        android:layout_width="wrap_content"
@@ -54,7 +56,7 @@
        android:layout_height="wrap_content"
        android:layout_alignLeft="@+id/editTextLogin"
        android:layout_below="@+id/imageViewLogo"
-       android:layout_marginTop="5dp"
+       android:layout_marginTop="20dp"
        android:text="Login :" />
    
     

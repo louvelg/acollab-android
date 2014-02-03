@@ -28,7 +28,7 @@
         </activity>
         <activity android:name="com.akelio.android.acollab.NewsActivity"/>
         <activity android:name="com.akelio.android.acollab.view.ActivityListUsers"/>
-        <activity android:name="com.akelio.android.acollab.view.ActivityLogin"/>
+        <activity android:name="com.akelio.android.acollab.view.ActivityLogin" android:noHistory="true"/>
         <activity android:name="com.akelio.android.acollab.view.SettingsActivity" />
         <activity android:name="com.akelio.android.acollab.view.ActivityStreamActivity" />
 		<activity android:name="com.akelio.android.acollab.view.MenuTestActivity" />
