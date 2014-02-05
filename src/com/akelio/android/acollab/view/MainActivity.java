@@ -79,7 +79,7 @@ public class MainActivity extends AbstractNavDrawerActivity{
 	            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentUserDetails()).commit();
 	            break;
 	        case 103:
-	            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
+	            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentUserDetails()).commit();
 	            break;
 		 }
 	}
