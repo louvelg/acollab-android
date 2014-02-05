@@ -15,7 +15,7 @@
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
-
+	<string name="users_info_details">hard</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>

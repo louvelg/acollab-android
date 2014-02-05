@@ -76,7 +76,7 @@ public class MainActivity extends AbstractNavDrawerActivity{
 		// TODO Auto-generated method stub
 		 switch ((int)id) {
 	        case 102:
-	            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentUserDetails()).commit();
+	            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new UserMainFragment()).commit();
 	            break;
 	        case 103:
 	            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentUserDetails()).commit();
