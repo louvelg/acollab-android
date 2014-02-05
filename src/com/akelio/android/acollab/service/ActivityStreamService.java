@@ -19,7 +19,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.contract.ActivityContract;
-import com.akelio.android.acollab.dao.ActivityDAO;
+import com.akelio.android.acollab.dao.UserDAO;
 import com.akelio.android.acollab.db.DbHelper;
 import com.akelio.android.acollab.entity.Activity;
 import com.akelio.android.acollab.utils.NetworkUtils;
@@ -30,7 +30,7 @@ public class ActivityStreamService extends IntentService {
 	static final String	TAG	= "activityStreamService";
 	static final String	URL	= "http://geb.test1.acollab.com/rest/v1/news";
 
-	private ActivityDAO	activityDAO;
+	//private ActivityDAO	activityDAO;
 
 	public ActivityStreamService() {
 		super(TAG);
@@ -44,7 +44,7 @@ public class ActivityStreamService extends IntentService {
 
 		if (NetworkUtils.isNetworkReachable(getApplicationContext())) {
 			try {
-				activityDAO = new ActivityDAO(this);
+				//activityDAO = new ActivityDAO(this);
 
 				HttpAuthentication authHeader = new HttpBasicAuthentication("admin", "admin");
 				HttpHeaders requestHeaders = new HttpHeaders();
@@ -60,16 +60,16 @@ public class ActivityStreamService extends IntentService {
 
 				ContentValues values = new ContentValues();
 				
-				activityDAO.deleteAllActivity();
+				//activityDAO.deleteAllActivity();
 				
 				int i = 0;
-				for (i = 0; i < ulis.length; i++) {
-					Activity a = ulis[i];
-					values.clear(); //
-					activityDAO.createActivity(a);
-				}
-				System.out.println("Nb activity : " + i);
-				activityDAO.close();
+				//for (i = 0; i < ulis.length; i++) {
+				//	Activity a = ulis[i];
+				//	values.clear(); //
+				//	activityDAO.createActivity(a);
+				//}
+				//System.out.println("Nb activity : " + i);
+				//activityDAO.close();
 
 				NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 				Intent launchIntent = new Intent(getApplicationContext(), ActivityStreamActivity.class);
