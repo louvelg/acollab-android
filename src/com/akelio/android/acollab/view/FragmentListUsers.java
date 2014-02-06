@@ -36,28 +36,21 @@ import com.akelio.android.acollab.entity.User;
 
 public class FragmentListUsers extends ListFragment {
 	OnUserSelectedListener	mCallback;
-
 	private UserDAO			userDAO;
-	private boolean dualPanel;
+	private boolean 		dualPanel;
 	
 	public interface OnUserSelectedListener {
 		public void onUserSelected(int position, ListView l);
 	}
-	//---------------Rajouter pour le drawer--------------------
+	
 	public static FragmentListUsers newInstance() {
 		FragmentListUsers frag = new FragmentListUsers();
-	// Bundle args = new Bundle();
-	// frag.setArguments(args);
+		Bundle args = new Bundle();
+		frag.setArguments(args);
 	return frag;
 	}
-	//----------------------------------------------------------
+	
 
-//	@Override
-//	public void onCreate(Bundle savedInstanceState) {
-//		super.onCreate(savedInstanceState);
-//
-//		
-//	}
 
 	@Override
 	public void onStart() {
@@ -67,31 +60,16 @@ public class FragmentListUsers extends ListFragment {
 		}
 	}
 
-//	@Override
-//	public void onAttach(Activity activity) {
-//		super.onAttach(activity);
-//
-//		// This makes sure that the container activity has implemented
-//		// the callback interface. If not, it throws an exception.
-//		try {
-//			mCallback = (OnUserSelectedListener) activity;
-//		} catch (ClassCastException e) {
-//			throw new ClassCastException(activity.toString() + " must implement OnHeadlineSelectedListener");
-//		}
-//	}
-
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		//mCallback.onUserSelected(position, l);
 		HashMap obj =(HashMap) l.getItemAtPosition(position);
     	String idValue = (String) obj.get("textViewInvisible");
-		//Uri detailUri = Uri.parse(idValue);
-		FriendDetailFragment detailFragment = FriendDetailFragment
-				.newInstance(idValue);
+		FragmentUserDetails detailFragment = FragmentUserDetails.newInstance(idValue);
 		if (!this.dualPanel) {
 			FragmentHelper.initFragmentWithBackstack(detailFragment,
 					R.id.usermain_fragment, this.getParentFragment()
 							.getChildFragmentManager());
+			
 		} else {
 			FragmentHelper.initFragment(detailFragment,
 					R.id.userdetail_fragment, this.getParentFragment()

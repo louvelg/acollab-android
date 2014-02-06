@@ -58,6 +58,5 @@
        android:layout_below="@+id/imageViewLogo"
        android:layout_marginTop="20dp"
        android:text="Login :" />
-   
     
 </RelativeLayout>

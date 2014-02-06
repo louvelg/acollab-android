@@ -51,7 +51,7 @@ public class ActivityListUsers extends FragmentActivity implements FragmentListU
             // If article frag is available, we're in two-pane layout...
 
             // Call a method in the ArticleFragment to update its content
-            userFrag.updateDetailsUserView(idValue);
+           // userFrag.updateDetailsUserView(idValue);
 
         } else {
             // If the frag is not available, we're in the one-pane layout and must swap frags...

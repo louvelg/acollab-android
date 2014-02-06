@@ -1,5 +1,7 @@
  	package com.akelio.android.acollab.view;
 
+import com.akelio.android.acollab.R;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,7 +15,8 @@ public class FragmentHelper {
 	public static void initFragment(Fragment frag, int container,
 			FragmentManager fm) {
 		FragmentTransaction ft = fm.beginTransaction();
-		ft.add(container, frag);
+		ft.replace(container, frag);
+		//ft.add(container, frag);
 		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 		ft.commit();
 	}
@@ -26,10 +29,13 @@ public class FragmentHelper {
 	public static void initFragmentWithBackstack(Fragment frag, int container,
 			FragmentManager fm) {
 		FragmentTransaction ft = fm.beginTransaction();
-		ft.add(container, frag);
+		Fragment f = fm.findFragmentById(container);
+		ft.replace(container, frag);
+		//ft.add(container, frag);
 		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 		ft.addToBackStack(null);
 		ft.commit();
+		
 	}
 
 	/**
