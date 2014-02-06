@@ -1,7 +1,10 @@
 package com.akelio.android.acollab.view;
 
 import com.akelio.android.acollab.R;
+import com.akelio.android.acollab.dao.UserDAO;
+import com.akelio.android.acollab.entity.User;
 
+import android.graphics.Path.FillType;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,14 +16,17 @@ import android.widget.TextView;
 
 public class FriendDetailFragment extends Fragment {
 
-	private Uri detailUri;
+	private String detailUri;
 
-	private TextView nameField;
+	private TextView name;
 
-	private TextView jobField;
+	private TextView company;
+	
+	private TextView number; 
 
 	private ImageView faceField;
 
+	private UserDAO		userDAO;
 	/**
 	 * @return
 	 */
@@ -33,10 +39,11 @@ public class FriendDetailFragment extends Fragment {
 	 * @param detailUri
 	 * @return
 	 */
-	public static FriendDetailFragment newInstance(Uri detailUri) {
+	public static FriendDetailFragment newInstance(String detailUri) {
 		FriendDetailFragment frag = new FriendDetailFragment();
 		Bundle args = new Bundle();
-		//args.putParcelable(FriendContentProvider.CONTENT_ITEM_TYPE, detailUri);
+		
+		args.putString("detailUri", detailUri);
 		frag.setArguments(args);
 		return frag;
 	}
@@ -54,66 +61,54 @@ public class FriendDetailFragment extends Fragment {
 
 		View mainView = inflater.inflate(R.layout.frienddetail, container,
 				false);
+		name = (TextView) mainView.findViewById(R.id.friend_name_label);
+		company = (TextView) mainView.findViewById(R.id.friend_name_value);
+		number = (TextView) mainView.findViewById(R.id.friend_job);
 //		this.nameField = (TextView) mainView
 //				.findViewById(R.id.friend_name_value);
 //		this.jobField = (TextView) mainView.findViewById(R.id.friend_job_value);
 //		this.faceField = (ImageView) mainView
 //				.findViewById(R.id.friend_face_value);
 //
-//		this.detailUri = (savedInstanceState == null) ? null
+//	this.detailUri = (savedInstanceState == null) ? null
 //				: (Uri) savedInstanceState
-//						.getParcelable(FriendContentProvider.CONTENT_ITEM_TYPE);
-//
-//		Bundle extras = getArguments();
-//		if (extras != null && this.detailUri == null) {
-//
-//			this.detailUri = extras
-//					.getParcelable(FriendContentProvider.CONTENT_ITEM_TYPE);
-//		}
-//
-//		if (this.detailUri != null) {
-//			fillData(this.detailUri);
-//		}
-//
+//						.getParcelable("detailUri");
+
+		Bundle extras = getArguments();
+		if (extras != null && this.detailUri == null) {
+
+			this.detailUri = extras
+					.getString("detailUri");
+		}
+
+		if (this.detailUri != null) {
+			fillData(this.detailUri);
+		}
+
 		return mainView;
 	}
 
 	/**
 	 * @param uri
 	 */
-	private void fillData(Uri uri) {
-//		String[] projection = { FriendContentProvider.NAME_COLUMN,
-//				FriendContentProvider.JOB_COLUMN,
-//				FriendContentProvider.FACE_COLUMN };
-//		Cursor cursor = this.getActivity().getContentResolver()
-//				.query(uri, projection, null, null, null);
-//		if (cursor != null) {
-//			try {
-//				cursor.moveToFirst();
-//
-//				this.nameField.setText(CursorUtils.getString(
-//						FriendContentProvider.NAME_COLUMN, cursor));
-//				this.jobField.setText(CursorUtils.getString(
-//						FriendContentProvider.JOB_COLUMN, cursor));
-//
-//				String faceImg = CursorUtils.getString(
-//						FriendContentProvider.FACE_COLUMN, cursor);
-//				this.faceField.setImageDrawable(ResourceUtils
-//						.getDrawableByName(faceImg, this.getActivity()));
-//
-//			} finally {
-//				cursor.close();
-//			}
-//		}
+	private void fillData(String uri) {
+		
+		//String idValue = uri.toString();
+		userDAO = new UserDAO(getActivity());
+		User user = userDAO.getUser(uri);
+		userDAO.close();
+		name.setText(user.getUsername());
+		number.setText(user.getPhone1());
+		company.setText(user.getCompany());
 	}
 
 	/**
 	 * @param selectedItemUri
 	 */
-	public void update(Uri selectedItemUri) {
-		this.detailUri = selectedItemUri;
-		fillData(this.detailUri);
-	}
+	//public void update(Uri selectedItemUri) {
+	//	this.detailUri = selectedItemUri;
+	//	fillData(this.detailUri);
+	//}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -122,7 +117,7 @@ public class FriendDetailFragment extends Fragment {
 //				this.detailUri);
 	}
 
-	public Uri getDetailUri() {
+	public String getDetailUri() {
 		return detailUri;
 	}
 }

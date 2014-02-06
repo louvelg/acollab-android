@@ -83,9 +83,11 @@ public class FragmentListUsers extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		//mCallback.onUserSelected(position, l);
-		Uri detailUri = Uri.parse("toto");
+		HashMap obj =(HashMap) l.getItemAtPosition(position);
+    	String idValue = (String) obj.get("textViewInvisible");
+		//Uri detailUri = Uri.parse(idValue);
 		FriendDetailFragment detailFragment = FriendDetailFragment
-				.newInstance(detailUri);
+				.newInstance(idValue);
 		if (!this.dualPanel) {
 			FragmentHelper.initFragmentWithBackstack(detailFragment,
 					R.id.usermain_fragment, this.getParentFragment()
