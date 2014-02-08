@@ -7,70 +7,65 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.ListView;
 import com.akelio.android.acollab.R;
 
-
-public class ActivityListUsers extends FragmentActivity implements FragmentListUsers.OnUserSelectedListener{
+public class ActivityListUsers extends FragmentActivity implements FragmentListUsers.OnUserSelectedListener {
 
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_list_users);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.fragment_list_users);
 
-        // Check whether the activity is using the layout version with
-        // the fragment_container FrameLayout. If so, we must add the first fragment
-        if (findViewById(R.id.fragment_container) != null) {
+		// Check whether the activity is using the layout version with
+		// the fragment_container FrameLayout. If so, we must add the first fragment
+		if (findViewById(R.id.fragment_container) != null) {
 
-            // However, if we're being restored from a previous state,
-            // then we don't need to do anything and should return or else
-            // we could end up with overlapping fragments.
-            if (savedInstanceState != null) {
-                return;
-            }
+			// However, if we're being restored from a previous state,
+			// then we don't need to do anything and should return or else
+			// we could end up with overlapping fragments.
+			if (savedInstanceState != null) { return; }
 
-            // Create an instance of ExampleFragment
-            FragmentListUsers firstFragment = new FragmentListUsers();
+			// Create an instance of ExampleFragment
+			FragmentListUsers firstFragment = new FragmentListUsers();
 
-            // In case this activity was started with special instructions from an Intent,
-            // pass the Intent's extras to the fragment as arguments
-            firstFragment.setArguments(getIntent().getExtras());
+			// In case this activity was started with special instructions from an Intent,
+			// pass the Intent's extras to the fragment as arguments
+			firstFragment.setArguments(getIntent().getExtras());
 
-            // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, firstFragment).commit();
-        }
-    }
+			// Add the fragment to the 'fragment_container' FrameLayout
+			getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, firstFragment).commit();
+		}
+	}
 
 	public void onUserSelected(int position, ListView l) {
-        // The user selected the headline of an article from the HeadlinesFragment
+		// The user selected the headline of an article from the HeadlinesFragment
 
-        // Capture the user fragment from the activity layout
-        FragmentUserDetails userFrag = (FragmentUserDetails)
-                getSupportFragmentManager().findFragmentById(R.id.details_fragment);
-        HashMap obj =(HashMap) l.getItemAtPosition(position);
-    	String idValue = (String) obj.get("textViewInvisible");
-        if (userFrag != null) {
-            // If article frag is available, we're in two-pane layout...
+		// Capture the user fragment from the activity layout
+		FragmentUserDetails userFrag = (FragmentUserDetails) getSupportFragmentManager().findFragmentById(R.id.details_fragment);
+		HashMap obj = (HashMap) l.getItemAtPosition(position);
+		String idValue = (String) obj.get("textViewInvisible");
+		if (userFrag != null) {
+			// If article frag is available, we're in two-pane layout...
 
-            // Call a method in the ArticleFragment to update its content
-           // userFrag.updateDetailsUserView(idValue);
+			// Call a method in the ArticleFragment to update its content
+			// userFrag.updateDetailsUserView(idValue);
 
-        } else {
-            // If the frag is not available, we're in the one-pane layout and must swap frags...
+		} else {
+			// If the frag is not available, we're in the one-pane layout and must swap frags...
 
-            // Create fragment and give it an argument for the selected article
-            FragmentUserDetails newFragment = new FragmentUserDetails();
-            Bundle args = new Bundle();
-            args.putString(FragmentUserDetails.ARG_IDVALUE, idValue);
-            newFragment.setArguments(args);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			// Create fragment and give it an argument for the selected article
+			FragmentUserDetails newFragment = new FragmentUserDetails();
+			Bundle args = new Bundle();
+			args.putString(FragmentUserDetails.ARG_IDVALUE, idValue);
+			newFragment.setArguments(args);
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-            // Replace whatever is in the fragment_container view with this fragment,
-            // and add the transaction to the back stack so the user can navigate back
-            transaction.replace(R.id.fragment_container, newFragment);
-            transaction.addToBackStack(null);
+			// Replace whatever is in the fragment_container view with this fragment,
+			// and add the transaction to the back stack so the user can navigate back
+			transaction.replace(R.id.fragment_container, newFragment);
+			transaction.addToBackStack(null);
 
-            // Commit the transaction
-            transaction.commit();
-        }
+			// Commit the transaction
+			transaction.commit();
+		}
 	}
 
 }

@@ -1,4 +1,4 @@
- 	package com.akelio.android.acollab.view;
+package com.akelio.android.acollab.view;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,11 +10,10 @@ public class FragmentHelper {
 	 * @param container
 	 * @param fm
 	 */
-	public static void initFragment(Fragment frag, int container,
-			FragmentManager fm) {
+	public static void initFragment(Fragment frag, int container, FragmentManager fm) {
 		FragmentTransaction ft = fm.beginTransaction();
 		ft.replace(container, frag);
-		//ft.add(container, frag);
+		// ft.add(container, frag);
 		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 		ft.commit();
 	}
@@ -24,16 +23,15 @@ public class FragmentHelper {
 	 * @param container
 	 * @param fm
 	 */
-	public static void initFragmentWithBackstack(Fragment frag, int container,
-			FragmentManager fm) {
+	public static void initFragmentWithBackstack(Fragment frag, int container, FragmentManager fm) {
 		FragmentTransaction ft = fm.beginTransaction();
 		Fragment f = fm.findFragmentById(container);
 		ft.replace(container, frag);
-		//ft.add(container, frag);
+		// ft.add(container, frag);
 		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 		ft.addToBackStack(null);
 		ft.commit();
-		
+
 	}
 
 	/**
@@ -41,8 +39,7 @@ public class FragmentHelper {
 	 * @param container2
 	 * @param fm
 	 */
-	public static void swapFragment(int container1, int container2,
-			FragmentManager fm) {
+	public static void swapFragment(int container1, int container2, FragmentManager fm) {
 
 		Fragment f1 = fm.findFragmentById(container1);
 		Fragment f2 = fm.findFragmentById(container2);

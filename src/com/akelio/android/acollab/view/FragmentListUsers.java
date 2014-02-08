@@ -33,20 +33,18 @@ import com.akelio.android.acollab.entity.User;
 public class FragmentListUsers extends ListFragment {
 	OnUserSelectedListener	mCallback;
 	private UserDAO			userDAO;
-	private boolean 		dualPanel;
-	
+	private boolean			dualPanel;
+
 	public interface OnUserSelectedListener {
 		public void onUserSelected(int position, ListView l);
 	}
-	
+
 	public static FragmentListUsers newInstance() {
 		FragmentListUsers frag = new FragmentListUsers();
 		Bundle args = new Bundle();
 		frag.setArguments(args);
-	return frag;
+		return frag;
 	}
-	
-
 
 	@Override
 	public void onStart() {
@@ -58,28 +56,24 @@ public class FragmentListUsers extends ListFragment {
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		HashMap obj =(HashMap) l.getItemAtPosition(position);
-    	String idValue = (String) obj.get("textViewInvisible");
+		HashMap obj = (HashMap) l.getItemAtPosition(position);
+		String idValue = (String) obj.get("textViewInvisible");
 		FragmentUserDetails detailFragment = FragmentUserDetails.newInstance(idValue);
 		if (!this.dualPanel) {
-			FragmentHelper.initFragmentWithBackstack(detailFragment,
-					R.id.usermain_fragment, this.getParentFragment()
-							.getChildFragmentManager());
-			
+			FragmentHelper.initFragmentWithBackstack(detailFragment, R.id.usermain_fragment, this.getParentFragment().getChildFragmentManager());
+
 		} else {
-			FragmentHelper.initFragment(detailFragment,
-					R.id.userdetail_fragment, this.getParentFragment()
-							.getChildFragmentManager());
+			FragmentHelper.initFragment(detailFragment, R.id.userdetail_fragment, this.getParentFragment().getChildFragmentManager());
 		}
 	}
-	
+
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View mainView = inflater.inflate(R.layout.friendlist, container, false);
 		fillData();
 		return mainView;
 	}
+
 	private void fillData() {
 		userDAO = new UserDAO(getActivity());
 		List<User> users = userDAO.getUsers();
@@ -100,12 +94,11 @@ public class FragmentListUsers extends ListFragment {
 				new int[] { R.id.textViewName, R.id.textViewCompanyName, R.id.textViewNumber, R.id.textViewInvisible });
 		this.setListAdapter(mSchedule);
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		this.dualPanel = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 	}
-	
-	
+
 }
