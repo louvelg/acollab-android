@@ -1,14 +1,16 @@
 package com.akelio.android.acollab.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.util.StringUtils;
 
-public class Space {
-	private String spaceId;
-	private String tenantId;
-	private String name;
-	private List<String> applications;
+public class Space implements Serializable {
+	private static final long	serialVersionUID	= -8049476985770209700L;
+	private String				spaceId;
+	private String				tenantId;
+	private String				name;
+	private List<String>		applications;
 
 	public String getTenantId() {
 		return tenantId;
@@ -49,5 +51,4 @@ public class Space {
 		}
 	}
 
-	
 }

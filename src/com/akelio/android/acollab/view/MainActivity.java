@@ -1,5 +1,6 @@
 package com.akelio.android.acollab.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import com.akelio.android.acollab.R;
@@ -13,8 +14,6 @@ public class MainActivity extends AbstractNavDrawerActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		
 
 		// setContentView(R.layout.activity_main);
 
@@ -46,29 +45,30 @@ public class MainActivity extends AbstractNavDrawerActivity {
 	@Override
 	protected NavDrawerActivityConfiguration getNavDrawerConfiguration() {
 
-//		NavDrawerItem[] menu = new NavDrawerItem[] { NavMenuSection.create(100, "MENU"), NavMenuItem.create(101, "Login", "navdrawer_friends", false, this),
-//				NavMenuItem.create(102, "Users", "navdrawer_airport", true, this), NavMenuItem.create(103, "Settings", "navdrawer_airport", true, this),
-//				NavMenuItem.create(104, "Activity stream", "navdrawer_airport", true, this), NavMenuSection.create(200, "ESPACE DE TRAVAIL"),
-//				NavMenuItem.create(202, "Espace 1", "navdrawer_rating", false, this), NavMenuItem.create(203, "Espace 2", "navdrawer_eula", false, this),
-//				NavMenuItem.create(204, "Quit", "navdrawer_quit", false, this) };
+		// NavDrawerItem[] menu = new NavDrawerItem[] { NavMenuSection.create(100, "MENU"), NavMenuItem.create(101, "Login", "navdrawer_friends", false, this),
+		// NavMenuItem.create(102, "Users", "navdrawer_airport", true, this), NavMenuItem.create(103, "Settings", "navdrawer_airport", true, this),
+		// NavMenuItem.create(104, "Activity stream", "navdrawer_airport", true, this), NavMenuSection.create(200, "ESPACE DE TRAVAIL"),
+		// NavMenuItem.create(202, "Espace 1", "navdrawer_rating", false, this), NavMenuItem.create(203, "Espace 2", "navdrawer_eula", false, this),
+		// NavMenuItem.create(204, "Quit", "navdrawer_quit", false, this) };
 		spaceDAO = new SpaceDAO(getApplicationContext());
 		this.spaces = spaceDAO.getSpaces();
 		spaceDAO.close();
-		NavDrawerItem[] menuSpaces = new NavDrawerItem[this.spaces.size() + 7];
-		menuSpaces[0] = NavMenuSection.create(100, "MENU");
-		menuSpaces[1] = NavMenuItem.create(101, "Login", "navdrawer_friends", false, this);
-		menuSpaces[2] = NavMenuItem.create(102, "Users", "navdrawer_airport", true, this);
-		menuSpaces[3] = NavMenuItem.create(103, "Settings", "navdrawer_airport", true, this);
-		menuSpaces[4] = NavMenuItem.create(104, "Activity stream", "navdrawer_airport", true, this);
-		menuSpaces[5] = NavMenuSection.create(200, "ESPACE DE TRAVAIL");
-		int  i = 6;
+
+		int nbFixMenu = 6;
+
+		NavDrawerItem[] menuSpaces = new NavDrawerItem[this.spaces.size() + nbFixMenu];
+		menuSpaces[0] = NavMenuSection.create(-1, "MENU");
+		menuSpaces[1] = NavMenuItem.create(-2, "Users", "navdrawer_airport", true, this);
+		menuSpaces[2] = NavMenuItem.create(-3, "Settings", "navdrawer_airport", true, this);
+		menuSpaces[3] = NavMenuItem.create(-4, "Activity stream", "navdrawer_airport", true, this);
+		menuSpaces[4] = NavMenuSection.create(-5, "MES ESPACES");
+		int i = nbFixMenu - 1;
 		for (Space space : this.spaces) {
-			menuSpaces[i] = NavMenuItem.create(Integer.valueOf(space.getSpaceId()), space.getName(), "navdrawer_rating", false, this);
+			menuSpaces[i] = NavMenuItem.create(Integer.valueOf(space.getSpaceId()), space.getName(), "navdrawer_rating", true, this);
 			i++;
 		}
-		menuSpaces[i] = NavMenuItem.create(204, "Quit", "navdrawer_quit", false, this);
-		
-		
+		menuSpaces[i] = NavMenuItem.create(-nbFixMenu, "Quit", "navdrawer_quit", false, this);
+
 		NavDrawerActivityConfiguration navDrawerActivityConfiguration = new NavDrawerActivityConfiguration();
 		navDrawerActivityConfiguration.setMainLayout(R.layout.activity_main);
 		navDrawerActivityConfiguration.setDrawerLayoutId(R.id.drawer_layout);
@@ -83,16 +83,38 @@ public class MainActivity extends AbstractNavDrawerActivity {
 
 	@Override
 	protected void onNavItemSelected(int id) {
-		switch ((int) id) {
-			case 102:
-				getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new UserMainFragment()).commit();
-				break;
-			case 103:
-				getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentUserDetails()).commit();
-				break;
-			case 104:
-				getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ActivityStreamFragment()).commit();
-				break;
+
+		if (id < 0) {
+
+			switch ((int) id) {
+				case -2:
+					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new UserMainFragment()).commit();
+					break;
+				case -3:
+					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentUserDetails()).commit();
+					break;
+				case -4:
+					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ActivityStreamFragment()).commit();
+					break;
+				case -6:
+					Intent intent = new Intent(Intent.ACTION_MAIN);
+					intent.addCategory(Intent.CATEGORY_HOME);
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					startActivity(intent);
+					finish();
+					break;
+			}
+		} else {
+			spaceDAO = new SpaceDAO(getApplicationContext());
+			Space space = spaceDAO.getSpace(String.valueOf(id));
+			spaceDAO.close();
+			if (space != null) {
+				SpaceBoardFragment frag = new SpaceBoardFragment();
+				Bundle args = new Bundle();
+				args.putSerializable("space", space);
+				frag.setArguments(args);
+				getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, frag).commit();
+			}
 		}
 	}
 }
