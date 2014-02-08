@@ -1,5 +1,6 @@
 package com.akelio.android.acollab.view;
 
+import java.util.List;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.akelio.android.acollab.R;
+import com.akelio.android.acollab.entity.Space;
 
 public abstract class AbstractNavDrawerActivity extends FragmentActivity {
 
@@ -23,6 +25,8 @@ public abstract class AbstractNavDrawerActivity extends FragmentActivity {
 
 	private CharSequence					mDrawerTitle;
 	private CharSequence					mTitle;
+
+	protected List<Space>					spaces;
 
 	private NavDrawerActivityConfiguration	navConf;
 

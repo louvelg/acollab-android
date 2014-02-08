@@ -3,12 +3,19 @@ package com.akelio.android.acollab.view;
 import android.os.Bundle;
 import android.view.Menu;
 import com.akelio.android.acollab.R;
+import com.akelio.android.acollab.dao.SpaceDAO;
+import com.akelio.android.acollab.entity.Space;
 
 public class MainActivity extends AbstractNavDrawerActivity {
+
+	private SpaceDAO	spaceDAO;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		
+
 		// setContentView(R.layout.activity_main);
 
 		// final Button buttonUsers = (Button) findViewById(R.id.buttonUsers);
@@ -38,22 +45,39 @@ public class MainActivity extends AbstractNavDrawerActivity {
 
 	@Override
 	protected NavDrawerActivityConfiguration getNavDrawerConfiguration() {
-		NavDrawerItem[] menu = new NavDrawerItem[] { NavMenuSection.create(100, "MENU"), NavMenuItem.create(101, "Login", "navdrawer_friends", false, this),
-				NavMenuItem.create(102, "Users", "navdrawer_airport", true, this), 
-				NavMenuItem.create(103, "Settings", "navdrawer_airport", true, this),
-				NavMenuItem.create(104, "Activity stream", "navdrawer_airport", true, this),
-				NavMenuSection.create(200, "ESPACE DE TRAVAIL"), NavMenuItem.create(202, "Espace 1", "navdrawer_rating", false, this),
-				NavMenuItem.create(203, "Espace 2", "navdrawer_eula", false, this), NavMenuItem.create(204, "Quit", "navdrawer_quit", false, this) };
 
+//		NavDrawerItem[] menu = new NavDrawerItem[] { NavMenuSection.create(100, "MENU"), NavMenuItem.create(101, "Login", "navdrawer_friends", false, this),
+//				NavMenuItem.create(102, "Users", "navdrawer_airport", true, this), NavMenuItem.create(103, "Settings", "navdrawer_airport", true, this),
+//				NavMenuItem.create(104, "Activity stream", "navdrawer_airport", true, this), NavMenuSection.create(200, "ESPACE DE TRAVAIL"),
+//				NavMenuItem.create(202, "Espace 1", "navdrawer_rating", false, this), NavMenuItem.create(203, "Espace 2", "navdrawer_eula", false, this),
+//				NavMenuItem.create(204, "Quit", "navdrawer_quit", false, this) };
+		spaceDAO = new SpaceDAO(getApplicationContext());
+		this.spaces = spaceDAO.getSpaces();
+		spaceDAO.close();
+		NavDrawerItem[] menuSpaces = new NavDrawerItem[this.spaces.size() + 7];
+		menuSpaces[0] = NavMenuSection.create(100, "MENU");
+		menuSpaces[1] = NavMenuItem.create(101, "Login", "navdrawer_friends", false, this);
+		menuSpaces[2] = NavMenuItem.create(102, "Users", "navdrawer_airport", true, this);
+		menuSpaces[3] = NavMenuItem.create(103, "Settings", "navdrawer_airport", true, this);
+		menuSpaces[4] = NavMenuItem.create(104, "Activity stream", "navdrawer_airport", true, this);
+		menuSpaces[5] = NavMenuSection.create(200, "ESPACE DE TRAVAIL");
+		int  i = 6;
+		for (Space space : this.spaces) {
+			menuSpaces[i] = NavMenuItem.create(Integer.valueOf(space.getSpaceId()), space.getName(), "navdrawer_rating", false, this);
+			i++;
+		}
+		menuSpaces[i] = NavMenuItem.create(204, "Quit", "navdrawer_quit", false, this);
+		
+		
 		NavDrawerActivityConfiguration navDrawerActivityConfiguration = new NavDrawerActivityConfiguration();
 		navDrawerActivityConfiguration.setMainLayout(R.layout.activity_main);
 		navDrawerActivityConfiguration.setDrawerLayoutId(R.id.drawer_layout);
 		navDrawerActivityConfiguration.setLeftDrawerId(R.id.left_drawer);
-		navDrawerActivityConfiguration.setNavItems(menu);
+		navDrawerActivityConfiguration.setNavItems(menuSpaces);
 		navDrawerActivityConfiguration.setDrawerShadow(R.drawable.drawer_shadow);
 		navDrawerActivityConfiguration.setDrawerOpenDesc(R.string.drawer_open);
 		navDrawerActivityConfiguration.setDrawerCloseDesc(R.string.drawer_close);
-		navDrawerActivityConfiguration.setBaseAdapter(new NavDrawerAdapter(this, R.layout.navdrawer_item, menu));
+		navDrawerActivityConfiguration.setBaseAdapter(new NavDrawerAdapter(this, R.layout.navdrawer_item, menuSpaces));
 		return navDrawerActivityConfiguration;
 	}
 
