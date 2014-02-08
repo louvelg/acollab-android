@@ -1,6 +1,8 @@
 package com.akelio.android.acollab.entity;
 
+import java.util.ArrayList;
 import java.util.List;
+import org.springframework.util.StringUtils;
 
 public class Space {
 	private String spaceId;
@@ -40,4 +42,12 @@ public class Space {
 		this.applications = applications;
 	}
 
+	public void setApplications(String applications) {
+		this.applications = new ArrayList<String>();
+		for (String s : StringUtils.commaDelimitedListToStringArray(applications)) {
+			this.applications.add(s);
+		}
+	}
+
+	
 }
