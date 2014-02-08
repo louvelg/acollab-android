@@ -32,7 +32,7 @@ public class SpaceBoardFragment extends Fragment implements android.view.View.On
 		switch (v.getId()) {
 			case R.id.buttonProject:
 				System.out.println("clic buttonProject");
-				getFragmentManager().beginTransaction().replace(R.id.content_frame, new ActivityStreamFragment()).commit();
+				getFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentListTaskList()).commit();
 				break;
 		}
 	}
