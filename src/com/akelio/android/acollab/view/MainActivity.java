@@ -39,7 +39,9 @@ public class MainActivity extends AbstractNavDrawerActivity {
 	@Override
 	protected NavDrawerActivityConfiguration getNavDrawerConfiguration() {
 		NavDrawerItem[] menu = new NavDrawerItem[] { NavMenuSection.create(100, "MENU"), NavMenuItem.create(101, "Login", "navdrawer_friends", false, this),
-				NavMenuItem.create(102, "Users", "navdrawer_airport", true, this), NavMenuItem.create(103, "Settings", "navdrawer_airport", true, this),
+				NavMenuItem.create(102, "Users", "navdrawer_airport", true, this), 
+				NavMenuItem.create(103, "Settings", "navdrawer_airport", true, this),
+				NavMenuItem.create(104, "Activity stream", "navdrawer_airport", true, this),
 				NavMenuSection.create(200, "ESPACE DE TRAVAIL"), NavMenuItem.create(202, "Espace 1", "navdrawer_rating", false, this),
 				NavMenuItem.create(203, "Espace 2", "navdrawer_eula", false, this), NavMenuItem.create(204, "Quit", "navdrawer_quit", false, this) };
 
@@ -63,6 +65,9 @@ public class MainActivity extends AbstractNavDrawerActivity {
 				break;
 			case 103:
 				getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentUserDetails()).commit();
+				break;
+			case 104:
+				getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ActivityStreamFragment()).commit();
 				break;
 		}
 	}
