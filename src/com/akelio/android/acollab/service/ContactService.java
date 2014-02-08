@@ -57,7 +57,6 @@ public class ContactService extends IntentService {
 //				SQLiteDatabase db = dbHelper.getWritableDatabase();
 
 				for (int i = 0; i < ulis.length; i++) {
-					User u = ulis[i];
 					// System.out.println(u.getUsername());
 					userDAO.createUser(ulis[i]);
 //					values.clear();

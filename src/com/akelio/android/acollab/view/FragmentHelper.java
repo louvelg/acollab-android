@@ -1,7 +1,5 @@
  	package com.akelio.android.acollab.view;
 
-import com.akelio.android.acollab.R;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;

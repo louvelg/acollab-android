@@ -3,7 +3,6 @@ package com.akelio.android.acollab.view;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,10 +13,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.dao.ActivityDAO;
-import com.akelio.android.acollab.dao.UserDAO;
 import com.akelio.android.acollab.entity.Activity;
 
 public class ActivityStreamFragment extends Fragment {
