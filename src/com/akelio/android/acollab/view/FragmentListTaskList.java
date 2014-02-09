@@ -17,8 +17,19 @@ package com.akelio.android.acollab.view;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.springframework.http.HttpAuthentication;
+import org.springframework.http.HttpBasicAuthentication;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +37,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import com.akelio.android.acollab.R;
+import com.akelio.android.acollab.entity.TaskList;
 
 public class FragmentListTaskList extends ListFragment {
+	static final String		URL	= "http://geb.test1.acollab.com/rest/v1/1/project/1/tasklists";
 	OnUserSelectedListener	mCallback;
 	private boolean			dualPanel;
 
@@ -71,23 +84,87 @@ public class FragmentListTaskList extends ListFragment {
 	}
 
 	private void fillData() {
-		ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
-		
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("textViewName", "Liste 1");
-		listItem.add(map);
-		map = new HashMap<String, String>();
-		map.put("textViewName", "Liste 2");
-		listItem.add(map);
-		
-		SimpleAdapter mSchedule = new SimpleAdapter(getActivity(), listItem, R.layout.list_tasklist_item, new String[] { "textViewName" }, new int[] { R.id.textViewName });
-		this.setListAdapter(mSchedule);
+		new BigCalcul().execute();
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		this.dualPanel = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+	}
+
+	private class BigCalcul extends AsyncTask<Void, Integer, Void> {
+
+		ArrayList<HashMap<String, String>>	listItem	= new ArrayList<HashMap<String, String>>();
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+//			Toast.makeText(getActivity(), "Début du traitement asynchrone", Toast.LENGTH_LONG).show();
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			super.onProgressUpdate(values);
+			// Mise à jour de la ProgressBar
+			// mProgressBar.setProgress(values[0]);
+		}
+
+		@Override
+		protected Void doInBackground(Void... arg0) {
+
+			int progress;
+			for (progress = 0; progress <= 100; progress++) {
+				for (int i = 0; i < 1000000; i++) {}
+				// la méthode publishProgress met à jour l'interface en invoquant la méthode onProgressUpdate
+				publishProgress(progress);
+				progress++;
+			}
+
+			HashMap<String, String> map = null;
+			TaskList[] tl = getTaskList();
+			if (tl != null) {
+				for (TaskList taskList : tl) {
+					map = new HashMap<String, String>();
+					map.put("textViewName", taskList.getTitle());
+					listItem.add(map);
+				}
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			SimpleAdapter mSchedule = new SimpleAdapter(getActivity(), listItem, R.layout.list_tasklist_item, new String[] { "textViewName" }, new int[] { R.id.textViewName });
+			
+			getListView().setAdapter(mSchedule);
+//			FragmentListTaskList.this.setListAdapter(mSchedule);
+//			Toast.makeText(getActivity(), "Le traitement asynchrone est terminé", Toast.LENGTH_LONG).show();
+		}
+
+		public TaskList[] getTaskList() {
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+			String password = prefs.getString("password", "admin");
+			String login = prefs.getString("login", "admin");
+			try {
+				HttpAuthentication authHeader = new HttpBasicAuthentication(login, password);
+				HttpHeaders requestHeaders = new HttpHeaders();
+				requestHeaders.setAuthorization(authHeader);
+				HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+
+				RestTemplate restTemplate = new RestTemplate();
+
+				restTemplate = new RestTemplate();
+				restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
+
+				ResponseEntity<TaskList[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, TaskList[].class);
+				return res.getBody();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
 	}
 
 }
