@@ -32,8 +32,8 @@ public class FragmentHelper {
 		Fragment f = fm.findFragmentById(container);
 		ft.replace(container, frag);
 		//ft.add(container, frag);
-		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 		ft.addToBackStack(null);
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 		ft.commit();
 		
 	}
