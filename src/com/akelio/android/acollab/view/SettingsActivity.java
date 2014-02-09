@@ -1,8 +1,8 @@
 package com.akelio.android.acollab.view;
 
-import com.akelio.android.acollab.R;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import com.akelio.android.acollab.R;
 
 public class SettingsActivity extends PreferenceActivity {
 	@Override

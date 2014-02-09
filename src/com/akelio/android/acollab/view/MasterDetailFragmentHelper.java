@@ -2,7 +2,6 @@ package com.akelio.android.acollab.view;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,52 +9,48 @@ import android.support.v4.app.FragmentTransaction;
 
 public class MasterDetailFragmentHelper {
 
-	public static MasterDetailFragments getCurrentFragments( int masterView, int detailView, Class<? extends Fragment> detailClass,
-FragmentManager fm ) {
+	public static MasterDetailFragments getCurrentFragments(int masterView, int detailView, Class<? extends Fragment> detailClass, FragmentManager fm) {
 		MasterDetailFragments masterDetailFragments = new MasterDetailFragments();
 
-		//---------------sans Fragment dans l'Arraylist----------------
+		// ---------------sans Fragment dans l'Arraylist----------------
 		List<Fragment> fragmentToRemove = new ArrayList<Fragment>();
-		//-------------------------------------------------------------
+		// -------------------------------------------------------------
 		Fragment frag1 = fm.findFragmentById(masterView);
-		if ( frag1 != null ) {
-			if ( detailClass.isAssignableFrom(frag1.getClass())) {
-			masterDetailFragments.detail = frag1;
+		if (frag1 != null) {
+			if (detailClass.isAssignableFrom(frag1.getClass())) {
+				masterDetailFragments.detail = frag1;
 
-			fm.popBackStackImmediate();
-			fragmentToRemove.add(frag1);
-		
-			frag1 = fm.findFragmentById(masterView);
-			masterDetailFragments.master = frag1;
-			fragmentToRemove.add(frag1);
-			}
-			else {
+				fm.popBackStackImmediate();
+				fragmentToRemove.add(frag1);
+
+				frag1 = fm.findFragmentById(masterView);
+				masterDetailFragments.master = frag1;
+				fragmentToRemove.add(frag1);
+			} else {
 				masterDetailFragments.master = frag1;
 				fragmentToRemove.add(frag1);
 			}
 		}
 
 		Fragment frag2 = fm.findFragmentById(detailView);
-		if ( frag2 != null ) {
+		if (frag2 != null) {
 			fragmentToRemove.add(frag2);
-			if ( masterDetailFragments.detail == null ) {
-				masterDetailFragments.detail = frag2 ;
+			if (masterDetailFragments.detail == null) {
+				masterDetailFragments.detail = frag2;
 			}
-		}	
-	
+		}
+
 		FragmentTransaction ft = fm.beginTransaction();
-		for( Fragment f : fragmentToRemove ) {
+		for (Fragment f : fragmentToRemove) {
 			ft.remove(f);
 		}
 		ft.commit();
 		fm.executePendingTransactions();
-	
-		return masterDetailFragments ;
+
+		return masterDetailFragments;
 	}
 
-	public static void initFragments(MasterDetailFragments fragments,
-			int masterView, int detailView, Configuration configuration,
-			FragmentManager fm) {
+	public static void initFragments(MasterDetailFragments fragments, int masterView, int detailView, Configuration configuration, FragmentManager fm) {
 		boolean dualPanel = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE;
 
 		if (dualPanel) {

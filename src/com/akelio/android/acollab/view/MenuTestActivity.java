@@ -1,4 +1,5 @@
 package com.akelio.android.acollab.view;
+
 import java.util.Locale;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -23,7 +24,6 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.akelio.android.acollab.R;
 
-
 public class MenuTestActivity extends SherlockFragmentActivity {
 	private DrawerLayout			mDrawerLayout;
 	private ListView				mDrawerList;
@@ -31,7 +31,7 @@ public class MenuTestActivity extends SherlockFragmentActivity {
 
 	private CharSequence			mDrawerTitle;
 	private CharSequence			mTitle;
-	
+
 	private String[]				mPlanetTitles;
 
 	@Override
@@ -52,7 +52,7 @@ public class MenuTestActivity extends SherlockFragmentActivity {
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		//getActionBar().setHomeButtonEnabled(true);
+		// getActionBar().setHomeButtonEnabled(true);
 
 		// ActionBarDrawerToggle ties together the the proper interactions
 		// between the sliding drawer and the action bar app icon
@@ -64,12 +64,12 @@ public class MenuTestActivity extends SherlockFragmentActivity {
 		) {
 			public void onDrawerClosed(View view) {
 				getSupportActionBar().setTitle(mTitle);
-//				invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+				// invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
 			}
 
 			public void onDrawerOpened(View drawerView) {
 				getSupportActionBar().setTitle(mDrawerTitle);
-//				invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+				// invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -99,7 +99,7 @@ public class MenuTestActivity extends SherlockFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// The action bar home/up action should open or close the drawer.
 		// ActionBarDrawerToggle will take care of this.
-//		if (mDrawerToggle.onOptionsItemSelected(item)) { return true; }
+		// if (mDrawerToggle.onOptionsItemSelected(item)) { return true; }
 		// Handle action buttons
 		switch (item.getItemId()) {
 			case R.id.action_websearch:
