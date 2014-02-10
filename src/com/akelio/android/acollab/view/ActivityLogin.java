@@ -61,6 +61,6 @@ public class ActivityLogin extends Activity implements android.view.View.OnClick
 			editor.putString("password", p);
 		}
 		editor.commit();
-		startActivity(new Intent(ActivityLogin.this, ActivityStreamActivity.class));
+		startActivity(new Intent(ActivityLogin.this, MainActivity.class));
 	}
 }

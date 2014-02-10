@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 import com.akelio.android.acollab.BuildConfig;
 import com.akelio.android.acollab.R;
 
-public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsFragment extends PreferenceCompatFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 	// TutorialSyncHelper mTutorialSyncHelper;
 

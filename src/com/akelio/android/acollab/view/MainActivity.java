@@ -14,13 +14,14 @@ public class MainActivity extends AbstractNavDrawerActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ActivityStreamFragment()).addToBackStack(null).commit();
 	}
 
 	@Override
 	// test
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
+		
 		return true;
 	}
 
@@ -68,7 +69,7 @@ public class MainActivity extends AbstractNavDrawerActivity {
 					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new UserMainFragment()).addToBackStack(null).commit();
 					break;
 				case -3:
-					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentUserDetails()).addToBackStack(null).commit();
+					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).addToBackStack(null).commit();
 					break;
 				case -4:
 					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ActivityStreamFragment()).addToBackStack(null).commit();

@@ -65,13 +65,6 @@ public class FragmentListUsers extends ListFragment {
 		String idValue = (String) obj.get("textViewInvisible");
 		FragmentUserDetails detailFragment = FragmentUserDetails.newInstance(idValue);
 		if (!this.dualPanel) {
-//			FragmentTransaction ft = getParentFragment().getChildFragmentManager().beginTransaction();
-//			FragmentManager fm = this.getParentFragment().getChildFragmentManager();
-//			Fragment f = fm.findFragmentById(R.id.usermain_fragment);
-//			ft.replace(R.id.usermain_fragment, detailFragment);
-//			ft.addToBackStack(null);
-//			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//			ft.commit();
 			FragmentHelper.initFragmentWithBackstack(detailFragment, R.id.usermain_fragment, this.getParentFragment().getChildFragmentManager());
 
 		} else {
