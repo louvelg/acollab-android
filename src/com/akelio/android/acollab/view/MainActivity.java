@@ -88,13 +88,13 @@ public class MainActivity extends AbstractNavDrawerActivity {
 
 			switch ((int) id) {
 				case -2:
-					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new UserMainFragment()).commit();
+					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new UserMainFragment()).addToBackStack(null).commit();
 					break;
 				case -3:
-					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentUserDetails()).commit();
+					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentUserDetails()).addToBackStack(null).commit();
 					break;
 				case -4:
-					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ActivityStreamFragment()).commit();
+					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ActivityStreamFragment()).addToBackStack(null).commit();
 					break;
 				case -6:
 					Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -113,7 +113,7 @@ public class MainActivity extends AbstractNavDrawerActivity {
 				Bundle args = new Bundle();
 				args.putSerializable("space", space);
 				frag.setArguments(args);
-				getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, frag).commit();
+				getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, frag).addToBackStack(null).commit();
 			}
 		}
 	}
