@@ -3,9 +3,14 @@ package com.akelio.android.acollab.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.dao.SpaceDAO;
 import com.akelio.android.acollab.entity.Space;
+import com.akelio.android.acollab.service.ActivityStreamService;
+import com.akelio.android.acollab.service.ContactService;
 
 public class MainActivity extends AbstractNavDrawerActivity {
 
@@ -24,7 +29,20 @@ public class MainActivity extends AbstractNavDrawerActivity {
 		
 		return true;
 	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	
+	switch (item.getItemId()) {
+		case R.id.news_menuRefresh:
+			this.startRequest();
+			return true;
 
+        }
+		return super.onOptionsItemSelected(item);
+	}
+	private void startRequest() {
+		startService(new Intent(this, ActivityStreamService.class));
+	}
 	@Override
 	protected NavDrawerActivityConfiguration getNavDrawerConfiguration() {
 
