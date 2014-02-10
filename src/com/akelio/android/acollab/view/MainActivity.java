@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.dao.SpaceDAO;
 import com.akelio.android.acollab.entity.Space;
 import com.akelio.android.acollab.service.ActivityStreamService;
 import com.akelio.android.acollab.service.ContactService;
+import com.akelio.android.acollab.service.SpaceService;
 
 public class MainActivity extends AbstractNavDrawerActivity {
 
@@ -42,6 +41,8 @@ public class MainActivity extends AbstractNavDrawerActivity {
 	}
 	private void startRequest() {
 		startService(new Intent(this, ActivityStreamService.class));
+		startService(new Intent(this, SpaceService.class));
+		startService(new Intent(this, ContactService.class));
 	}
 	@Override
 	protected NavDrawerActivityConfiguration getNavDrawerConfiguration() {

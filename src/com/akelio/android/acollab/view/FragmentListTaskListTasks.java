@@ -37,11 +37,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import com.akelio.android.acollab.R;
-import com.akelio.android.acollab.entity.TaskList;
+import com.akelio.android.acollab.entity.Task;
 import de.greenrobot.event.EventBus;
 
-public class FragmentListTaskList extends ListFragment {
-	static final String		URL	= "http://geb.test1.acollab.com/rest/v1/1/project/1/tasklists";
+public class FragmentListTaskListTasks extends ListFragment {
+	static final String		URL	= "http://geb.test1.acollab.com/rest/v1/1/tasklist/{taskListId}/tasks";
 	OnUserSelectedListener	mCallback;
 	private boolean			dualPanel;
 
@@ -49,9 +49,17 @@ public class FragmentListTaskList extends ListFragment {
 		public void onUserSelected(int position, ListView l);
 	}
 
-	public static FragmentListTaskList newInstance() {
-		FragmentListTaskList frag = new FragmentListTaskList();
+	public static FragmentListTaskListTasks newInstance() {
+		FragmentListTaskListTasks frag = new FragmentListTaskListTasks();
 		Bundle args = new Bundle();
+		frag.setArguments(args);
+		return frag;
+	}
+
+	public static FragmentListTaskListTasks newInstance(String idTasklist) {
+		FragmentListTaskListTasks frag = new FragmentListTaskListTasks();
+		Bundle args = new Bundle();
+		args.putString("taskListId", idTasklist);
 		frag.setArguments(args);
 		return frag;
 	}
@@ -66,30 +74,23 @@ public class FragmentListTaskList extends ListFragment {
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		HashMap obj = (HashMap) l.getItemAtPosition(position);
-		System.out.println(obj);
-
-		String idValue = (String) obj.get("textViewId");
-		FragmentListTaskListTasks detailFragment = FragmentListTaskListTasks.newInstance(idValue);
-
-		EventBus.getDefault().postSticky(new String(idValue));
-		if (!this.dualPanel) {
-			getFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentListTaskListTasks()).addToBackStack(null).commit();
-			// FragmentHelper.initFragmentWithBackstack(detailFragment, R.id.usermain_fragment, this.getParentFragment().getChildFragmentManager());
-		} else {
-			// FragmentHelper.initFragment(detailFragment, R.id.userdetail_fragment, this.getParentFragment().getChildFragmentManager());
-		}
+		// HashMap obj = (HashMap) l.getItemAtPosition(position);
+		// String idValue = (String) obj.get("textViewInvisible");
+		// FragmentUserDetails detailFragment = FragmentUserDetails.newInstance(idValue);
+		// if (!this.dualPanel) {
+		// FragmentHelper.initFragmentWithBackstack(detailFragment, R.id.usermain_fragment, this.getParentFragment().getChildFragmentManager());
+		// } else {
+		// FragmentHelper.initFragment(detailFragment, R.id.userdetail_fragment, this.getParentFragment().getChildFragmentManager());
+		// }
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View mainView = inflater.inflate(R.layout.fragment_list_tasklist, container, false);
-		fillData();
-		return mainView;
-	}
+//		EventBus.getDefault().register(this);
 
-	private void fillData() {
-		new BigCalcul().execute();
+		View mainView = inflater.inflate(R.layout.fragment_list_tasklist, container, false);
+		new TaskWS().execute();
+		return mainView;
 	}
 
 	@Override
@@ -98,7 +99,7 @@ public class FragmentListTaskList extends ListFragment {
 		this.dualPanel = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 	}
 
-	private class BigCalcul extends AsyncTask<Void, Integer, Void> {
+	private class TaskWS extends AsyncTask<Void, Integer, Void> {
 
 		ArrayList<HashMap<String, String>>	listItem	= new ArrayList<HashMap<String, String>>();
 
@@ -117,22 +118,12 @@ public class FragmentListTaskList extends ListFragment {
 
 		@Override
 		protected Void doInBackground(Void... arg0) {
-
-			int progress;
-			for (progress = 0; progress <= 100; progress++) {
-				for (int i = 0; i < 1000000; i++) {}
-				// la méthode publishProgress met à jour l'interface en invoquant la méthode onProgressUpdate
-				publishProgress(progress);
-				progress++;
-			}
-
 			HashMap<String, String> map = null;
-			TaskList[] tl = getTaskList();
+			Task[] tl = getTask();
 			if (tl != null) {
-				for (TaskList taskList : tl) {
+				for (Task task : tl) {
 					map = new HashMap<String, String>();
-					map.put("textViewName", taskList.getTitle());
-					map.put("textViewId", taskList.getTaskListIdS());
+					map.put("textViewName", task.getTitle());
 					listItem.add(map);
 				}
 			}
@@ -141,14 +132,13 @@ public class FragmentListTaskList extends ListFragment {
 
 		@Override
 		protected void onPostExecute(Void result) {
-			SimpleAdapter mSchedule = new SimpleAdapter(getActivity(), listItem, R.layout.list_tasklist_item, new String[] { "textViewName", "textViewId" }, new int[] { R.id.textViewName,
-					R.id.textViewId });
+			SimpleAdapter mSchedule = new SimpleAdapter(getActivity(), listItem, R.layout.list_tasks_item, new String[] { "textViewName" }, new int[] { R.id.textViewTaskName });
 			getListView().setAdapter(mSchedule);
 			// FragmentListTaskList.this.setListAdapter(mSchedule);
 			// Toast.makeText(getActivity(), "Le traitement asynchrone est terminé", Toast.LENGTH_LONG).show();
 		}
 
-		public TaskList[] getTaskList() {
+		public Task[] getTask() {
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 			String password = prefs.getString("password", "admin");
 			String login = prefs.getString("login", "admin");
@@ -162,8 +152,8 @@ public class FragmentListTaskList extends ListFragment {
 
 				restTemplate = new RestTemplate();
 				restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
-
-				ResponseEntity<TaskList[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, TaskList[].class);
+				String temp = (String) EventBus.getDefault().getStickyEvent(String.class);
+				ResponseEntity<Task[]> res = restTemplate.exchange(URL.replace("{taskListId}",temp), HttpMethod.GET, requestEntity, Task[].class);
 				return res.getBody();
 
 			} catch (Exception e) {
@@ -173,4 +163,9 @@ public class FragmentListTaskList extends ListFragment {
 		}
 	}
 
+	@Override
+	public void onDestroyView() {
+//		EventBus.getDefault().unregister(this);
+		super.onDestroyView();
+	}
 }

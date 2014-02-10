@@ -18,19 +18,16 @@ package com.akelio.android.acollab.view;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.dao.UserDAO;
 import com.akelio.android.acollab.entity.User;
@@ -49,6 +46,12 @@ public class FragmentListUsers extends ListFragment {
 		Bundle args = new Bundle();
 		frag.setArguments(args);
 		return frag;
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.menu_users, menu);
 	}
 
 	@Override

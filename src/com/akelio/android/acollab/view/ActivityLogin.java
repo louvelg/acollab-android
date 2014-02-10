@@ -22,7 +22,7 @@ public class ActivityLogin extends Activity implements android.view.View.OnClick
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (hasLoginInfo()) {
-			startActivity(new Intent(ActivityLogin.this, ActivityStreamActivity.class));
+			startActivity(new Intent(ActivityLogin.this, MainActivity.class));
 			return;
 		}
 
