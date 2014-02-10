@@ -20,15 +20,16 @@
         <activity
             android:name="com.akelio.android.acollab.view.MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
+        </activity>
+        <activity android:name="com.akelio.android.acollab.NewsActivity"/>
+        <activity android:name="com.akelio.android.acollab.view.ActivityListUsers"/>
+        <activity android:name="com.akelio.android.acollab.view.ActivityLogin" android:noHistory="true">
+        	<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.akelio.android.acollab.NewsActivity"/>
-        <activity android:name="com.akelio.android.acollab.view.ActivityListUsers"/>
-        <activity android:name="com.akelio.android.acollab.view.ActivityLogin" android:noHistory="true"/>
         <activity android:name="com.akelio.android.acollab.view.SettingsActivity" />
         <activity android:name="com.akelio.android.acollab.view.ActivityStreamActivity" />
 		<activity android:name="com.akelio.android.acollab.view.MenuTestActivity" />
