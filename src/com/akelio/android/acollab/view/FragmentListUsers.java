@@ -18,14 +18,19 @@ package com.akelio.android.acollab.view;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.dao.UserDAO;
 import com.akelio.android.acollab.entity.User;
@@ -60,6 +65,13 @@ public class FragmentListUsers extends ListFragment {
 		String idValue = (String) obj.get("textViewInvisible");
 		FragmentUserDetails detailFragment = FragmentUserDetails.newInstance(idValue);
 		if (!this.dualPanel) {
+//			FragmentTransaction ft = getParentFragment().getChildFragmentManager().beginTransaction();
+//			FragmentManager fm = this.getParentFragment().getChildFragmentManager();
+//			Fragment f = fm.findFragmentById(R.id.usermain_fragment);
+//			ft.replace(R.id.usermain_fragment, detailFragment);
+//			ft.addToBackStack(null);
+//			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//			ft.commit();
 			FragmentHelper.initFragmentWithBackstack(detailFragment, R.id.usermain_fragment, this.getParentFragment().getChildFragmentManager());
 
 		} else {

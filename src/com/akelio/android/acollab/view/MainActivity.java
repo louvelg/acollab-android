@@ -15,24 +15,6 @@ public class MainActivity extends AbstractNavDrawerActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// setContentView(R.layout.activity_main);
-
-		// final Button buttonUsers = (Button) findViewById(R.id.buttonUsers);
-		// final Button buttonLogin = (Button) findViewById(R.id.buttonLogin);
-		// final Button buttonMenu = (Button) findViewById(R.id.buttonMenu);
-		// final Button buttonSettings = (Button) findViewById(R.id.buttonSettings);
-		// final Button buttonActivityStream = (Button) findViewById(R.id.buttonActivityStream);
-		// final Button buttonRefreshContactService = (Button) findViewById(R.id.buttonRefrechContactService);
-		// final Button buttonRefreshSpaceService = (Button) findViewById(R.id.buttonRefrechSpaceService);
-		// final Button buttonRefreshActivityStreamService = (Button) findViewById(R.id.buttonRefrechActivityStreamService);
-		// buttonUsers.setOnClickListener(this);
-		// buttonMenu.setOnClickListener(this);
-		// buttonSettings.setOnClickListener(this);
-		// buttonActivityStream.setOnClickListener(this);
-		// buttonRefreshContactService.setOnClickListener(this);
-		// buttonRefreshSpaceService.setOnClickListener(this);
-		// buttonRefreshActivityStreamService.setOnClickListener(this);
-		// buttonLogin.setOnClickListener(this);
 	}
 
 	@Override
@@ -45,11 +27,6 @@ public class MainActivity extends AbstractNavDrawerActivity {
 	@Override
 	protected NavDrawerActivityConfiguration getNavDrawerConfiguration() {
 
-		// NavDrawerItem[] menu = new NavDrawerItem[] { NavMenuSection.create(100, "MENU"), NavMenuItem.create(101, "Login", "navdrawer_friends", false, this),
-		// NavMenuItem.create(102, "Users", "navdrawer_airport", true, this), NavMenuItem.create(103, "Settings", "navdrawer_airport", true, this),
-		// NavMenuItem.create(104, "Activity stream", "navdrawer_airport", true, this), NavMenuSection.create(200, "ESPACE DE TRAVAIL"),
-		// NavMenuItem.create(202, "Espace 1", "navdrawer_rating", false, this), NavMenuItem.create(203, "Espace 2", "navdrawer_eula", false, this),
-		// NavMenuItem.create(204, "Quit", "navdrawer_quit", false, this) };
 		spaceDAO = new SpaceDAO(getApplicationContext());
 		this.spaces = spaceDAO.getSpaces();
 		spaceDAO.close();
