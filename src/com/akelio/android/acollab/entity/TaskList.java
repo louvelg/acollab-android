@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class TaskList implements Serializable {
 
 	private static final long	serialVersionUID	= 1L;
-	private Long				tasklistId;
+	private Long				taskListId;
 	private Long				tenantId;
 	private String				projectId;
 	private String				title;
@@ -19,19 +19,19 @@ public class TaskList implements Serializable {
 
 	public TaskList(String title, String taskListId) {
 		this.title = title;
-		tasklistId = Long.valueOf(tasklistId);
+		this.taskListId = Long.valueOf(taskListId);
 	}
 
 	public Long getTaskListId() {
-		return tasklistId;
+		return taskListId;
 	}
 
 	public String getTaskListIdS() {
-		return String.valueOf(tasklistId);
+		return String.valueOf(taskListId);
 	}
 
 	public void setTaskListId(Long tasklistId) {
-		this.tasklistId = tasklistId;
+		this.taskListId = tasklistId;
 	}
 
 	public String getProjectId() {
