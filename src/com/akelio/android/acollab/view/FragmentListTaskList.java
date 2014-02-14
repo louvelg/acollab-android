@@ -73,12 +73,12 @@ public class FragmentListTaskList extends ListFragment {
 		FragmentListTaskListTasks detailFragment = FragmentListTaskListTasks.newInstance(idValue);
 
 		EventBus.getDefault().postSticky(new String(idValue));
-		if (!this.dualPanel) {
+//		if (!this.dualPanel) {
 			getFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentListTaskListTasks()).addToBackStack(null).commit();
 			// FragmentHelper.initFragmentWithBackstack(detailFragment, R.id.usermain_fragment, this.getParentFragment().getChildFragmentManager());
-		} else {
-			// FragmentHelper.initFragment(detailFragment, R.id.userdetail_fragment, this.getParentFragment().getChildFragmentManager());
-		}
+//		} else {
+//			// FragmentHelper.initFragment(detailFragment, R.id.userdetail_fragment, this.getParentFragment().getChildFragmentManager());
+//		}
 	}
 
 	@Override
