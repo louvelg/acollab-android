@@ -34,13 +34,14 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.entity.Task;
 import de.greenrobot.event.EventBus;
 
-public class FragmentListTaskListTasks extends ListFragment {
+public class FragmentListTaskListTasks extends ListFragment implements android.view.View.OnClickListener {
 	static final String		URL	= "http://geb.test1.acollab.com/rest/v1/1/tasklist/{taskListId}/tasks";
 	OnUserSelectedListener	mCallback;
 	private boolean			dualPanel;
@@ -86,11 +87,22 @@ public class FragmentListTaskListTasks extends ListFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//		EventBus.getDefault().register(this);
+		View view = inflater.inflate(R.layout.fragment_list_tasklist, container, false);
+		Button addButton = (Button) view.findViewById(R.id.addTask);
+		addButton.setOnClickListener(this);
 
-		View mainView = inflater.inflate(R.layout.fragment_list_tasklist, container, false);
 		new TaskWS().execute();
-		return mainView;
+		return view;
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.addTask:
+				System.out.println("clic addTask");
+				getFragmentManager().beginTransaction().replace(R.id.content_frame, new TaskAddFragment()).addToBackStack(null).commit();
+				break;
+		}
 	}
 
 	@Override
@@ -153,7 +165,7 @@ public class FragmentListTaskListTasks extends ListFragment {
 				restTemplate = new RestTemplate();
 				restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 				String temp = (String) EventBus.getDefault().getStickyEvent(String.class);
-				ResponseEntity<Task[]> res = restTemplate.exchange(URL.replace("{taskListId}",temp), HttpMethod.GET, requestEntity, Task[].class);
+				ResponseEntity<Task[]> res = restTemplate.exchange(URL.replace("{taskListId}", temp), HttpMethod.GET, requestEntity, Task[].class);
 				return res.getBody();
 
 			} catch (Exception e) {
@@ -165,7 +177,7 @@ public class FragmentListTaskListTasks extends ListFragment {
 
 	@Override
 	public void onDestroyView() {
-//		EventBus.getDefault().unregister(this);
+		// EventBus.getDefault().unregister(this);
 		super.onDestroyView();
 	}
 }
