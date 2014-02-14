@@ -9,7 +9,10 @@ public class ActivityStreamActivity extends FragmentActivity {
 		System.out.println("start activityStreamActivity");
 		super.onCreate(savedInstanceState);
 		ActivityStreamFragment fragment = new ActivityStreamFragment();
-		getSupportFragmentManager().beginTransaction().add(android.R.id.content, fragment, fragment.getClass().getSimpleName()).commit();
+		getSupportFragmentManager()
+				.beginTransaction()
+				.add(android.R.id.content, fragment,
+						fragment.getClass().getSimpleName()).commit();
 	}
 
 }

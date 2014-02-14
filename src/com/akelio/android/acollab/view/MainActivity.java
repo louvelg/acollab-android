@@ -28,22 +28,7 @@ public class MainActivity extends AbstractNavDrawerActivity {
 		
 		return true;
 	}
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
 	
-	switch (item.getItemId()) {
-		case R.id.news_menuRefresh:
-			this.startRequest();
-			return true;
-
-        }
-		return super.onOptionsItemSelected(item);
-	}
-	private void startRequest() {
-		startService(new Intent(this, ActivityStreamService.class));
-		startService(new Intent(this, SpaceService.class));
-		startService(new Intent(this, ContactService.class));
-	}
 	@Override
 	protected NavDrawerActivityConfiguration getNavDrawerConfiguration() {
 

@@ -24,6 +24,7 @@ import com.akelio.android.acollab.entity.Activity;
 import com.akelio.android.acollab.utils.NetworkUtils;
 import com.akelio.android.acollab.view.ActivityStreamActivity;
 
+
 public class ActivityStreamService extends IntentService {
 
 	static final String	TAG	= "activityStreamService";
