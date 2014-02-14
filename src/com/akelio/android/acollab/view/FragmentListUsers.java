@@ -18,24 +18,32 @@ package com.akelio.android.acollab.view;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.dao.UserDAO;
 import com.akelio.android.acollab.entity.User;
+import com.akelio.android.acollab.service.ContactService;
 
 public class FragmentListUsers extends ListFragment {
 	OnUserSelectedListener	mCallback;
 	private UserDAO			userDAO;
 	private boolean			dualPanel;
+	private SimpleAdapter mSchedule;
+	private FragmentActivity fa;
 
 	public interface OnUserSelectedListener {
 		public void onUserSelected(int position, ListView l);
@@ -47,12 +55,10 @@ public class FragmentListUsers extends ListFragment {
 		frag.setArguments(args);
 		return frag;
 	}
+	
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.menu_users, menu);
-	}
+
+
 
 	@Override
 	public void onStart() {
@@ -77,6 +83,9 @@ public class FragmentListUsers extends ListFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		setHasOptionsMenu(true);
+		fa = super.getActivity();
+		
 		View mainView = inflater.inflate(R.layout.friendlist, container, false);
 		fillData();
 		return mainView;
@@ -98,9 +107,11 @@ public class FragmentListUsers extends ListFragment {
 			listItem.add(map);
 		}
 
-		SimpleAdapter mSchedule = new SimpleAdapter(getActivity(), listItem, R.layout.list_user_item, new String[] { "textViewName", "textViewCompanyName", "textViewNumber", "textViewInvisible" },
+		mSchedule = new SimpleAdapter(getActivity(), listItem, R.layout.list_user_item, new String[] { "textViewName", "textViewCompanyName", "textViewNumber", "textViewInvisible" },
 				new int[] { R.id.textViewName, R.id.textViewCompanyName, R.id.textViewNumber, R.id.textViewInvisible });
 		this.setListAdapter(mSchedule);
+		
+		
 	}
 
 	@Override
@@ -109,4 +120,26 @@ public class FragmentListUsers extends ListFragment {
 		this.dualPanel = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 	}
 
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.menu_users, menu);
+	}
+	private void startRequest() {
+		Intent contactIntent = new Intent(fa, ContactService.class);
+		fa.startService(contactIntent);
+		mSchedule.notifyDataSetInvalidated();
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.news_menuRefreshUsers:
+			this.startRequest();
+			return true;
+
+        }
+		return super.onOptionsItemSelected(item);
+	}
+	
+	
 }
