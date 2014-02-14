@@ -35,6 +35,8 @@ public class ActivityStreamFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_activity_stream, container, false);
 		final ListView listview = (ListView) view.findViewById(R.id.listViewActivityStream);
 		
+		setHasOptionsMenu(true);
+		
 		fa = super.getActivity();
 		activityDAO = new ActivityDAO(getActivity());
 		List<Activity> activitys = activityDAO.getActivitys();
@@ -62,9 +64,10 @@ public class ActivityStreamFragment extends Fragment {
 
 		return view;
 	}
-	
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.activity_stream_menu, menu);
 	}
 	

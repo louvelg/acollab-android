@@ -57,27 +57,8 @@ public class FragmentListUsers extends ListFragment {
 	}
 	
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.menu_users, menu);
-	}
-	private void startRequest() {
-		Intent contactIntent = new Intent(fa, ContactService.class);
-		fa.startService(contactIntent);
-		mSchedule.notifyDataSetChanged();
-		
-	}
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.news_menuRefreshUsers:
-			this.startRequest();
-			return true;
 
-        }
-		return super.onOptionsItemSelected(item);
-	}
+
 
 	@Override
 	public void onStart() {
@@ -102,7 +83,7 @@ public class FragmentListUsers extends ListFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		
+		setHasOptionsMenu(true);
 		fa = super.getActivity();
 		
 		View mainView = inflater.inflate(R.layout.friendlist, container, false);
@@ -139,4 +120,26 @@ public class FragmentListUsers extends ListFragment {
 		this.dualPanel = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 	}
 
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.menu_users, menu);
+	}
+	private void startRequest() {
+		Intent contactIntent = new Intent(fa, ContactService.class);
+		fa.startService(contactIntent);
+		mSchedule.notifyDataSetInvalidated();
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.news_menuRefreshUsers:
+			this.startRequest();
+			return true;
+
+        }
+		return super.onOptionsItemSelected(item);
+	}
+	
+	
 }

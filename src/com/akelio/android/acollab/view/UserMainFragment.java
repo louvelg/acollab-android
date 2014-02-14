@@ -19,15 +19,17 @@ import com.akelio.android.acollab.service.SpaceService;
 public class UserMainFragment extends Fragment {
 
 
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(false);
-		setHasOptionsMenu(true);
+		
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
+
 		
 		View view = inflater.inflate(R.layout.users, container, false);
 
@@ -41,10 +43,5 @@ public class UserMainFragment extends Fragment {
 		return view;
 	}
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.users_menu, menu);
-	}
-	
-	
+
 }
