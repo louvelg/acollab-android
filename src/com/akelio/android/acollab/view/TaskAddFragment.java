@@ -7,7 +7,9 @@ import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import android.content.SharedPreferences;
@@ -85,24 +87,28 @@ public class TaskAddFragment extends Fragment implements android.view.View.OnCli
 			String password = prefs.getString("password", "admin");
 			String login = prefs.getString("login", "admin");
 			try {
-				HttpAuthentication authHeader = new HttpBasicAuthentication(login, password);
-				HttpHeaders requestHeaders = new HttpHeaders();
-				requestHeaders.setAuthorization(authHeader);
-				HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
-
-				RestTemplate restTemplate = new RestTemplate();
-				restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
-//				String temp = (String) EventBus.getDefault().getStickyEvent(String.class);
-//				 ResponseEntity<Task[]> res = restTemplate.exchange("", HttpMethod.GET, requestEntity, Task[].class);
-				// return res.getBody();
 				Task task = new Task();
 				task.setTitle("Une tache test");
 				task.setTenantId(new Long(1));
 				task.setProjectId("1");
 				task.setTasklistId(new Long(8));
 				task.setPriority("1");
-				String result = restTemplate.postForObject("http://geb.test1.acollab.com/rest/v1/1/tasks", task, String.class, requestEntity);
-				System.out.println("Résult : " + result);
+
+				HttpAuthentication authHeader = new HttpBasicAuthentication(login, password);
+				HttpHeaders requestHeaders = new HttpHeaders();
+				requestHeaders.setContentType(new MediaType("application","json"));
+				requestHeaders.setAuthorization(authHeader);
+//				HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+				HttpEntity<Task> requestEntity = new HttpEntity<Task>(task, requestHeaders);
+				RestTemplate restTemplate = new RestTemplate();
+				restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
+				restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+//				String temp = (String) EventBus.getDefault().getStickyEvent(String.class);
+//				 ResponseEntity<Task[]> res = restTemplate.exchange("", HttpMethod.GET, requestEntity, Task[].class);
+				// return res.getBody();
+				ResponseEntity<String> responseEntity = restTemplate.exchange("http://geb.test1.acollab.com/rest/v1/1/tasks", HttpMethod.POST, requestEntity, String.class);
+//				String result = restTemplate.postForObject("http://geb.test1.acollab.com/rest/v1/1/tasks", task, String.class, requestEntity);
+				System.out.println("Résult : " + responseEntity.getBody());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
