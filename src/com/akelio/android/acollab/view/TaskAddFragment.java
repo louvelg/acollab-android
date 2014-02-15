@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.entity.Task;
 
@@ -54,9 +55,14 @@ public class TaskAddFragment extends Fragment implements android.view.View.OnCli
 
 		ArrayList<HashMap<String, String>>	listItem	= new ArrayList<HashMap<String, String>>();
 
+		String								title;
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
+			EditText name = (EditText) getActivity().findViewById(R.id.editTextName);
+			title = name.getText().toString();
+			System.out.println("Text name : " +name.getText().toString());
 			// Toast.makeText(getActivity(), "Début du traitement asynchrone", Toast.LENGTH_LONG).show();
 		}
 
@@ -88,27 +94,27 @@ public class TaskAddFragment extends Fragment implements android.view.View.OnCli
 			String login = prefs.getString("login", "admin");
 			try {
 				Task task = new Task();
-				task.setTitle("Une tache test");
+				task.setTitle(title);
 				task.setTenantId(new Long(1));
 				task.setProjectId("1");
-				task.setTasklistId(new Long(8));
+				task.setTaskListId(new Long(8));
 				task.setPriority("1");
 
 				HttpAuthentication authHeader = new HttpBasicAuthentication(login, password);
 				HttpHeaders requestHeaders = new HttpHeaders();
-				requestHeaders.setContentType(new MediaType("application","json"));
+				// requestHeaders.setContentType(new MediaType("application","json"));
 				requestHeaders.setAuthorization(authHeader);
-//				HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+				// HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
 				HttpEntity<Task> requestEntity = new HttpEntity<Task>(task, requestHeaders);
 				RestTemplate restTemplate = new RestTemplate();
 				restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 				restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-//				String temp = (String) EventBus.getDefault().getStickyEvent(String.class);
-//				 ResponseEntity<Task[]> res = restTemplate.exchange("", HttpMethod.GET, requestEntity, Task[].class);
+				// String temp = (String) EventBus.getDefault().getStickyEvent(String.class);
+				// ResponseEntity<Task[]> res = restTemplate.exchange("", HttpMethod.GET, requestEntity, Task[].class);
 				// return res.getBody();
-				ResponseEntity<String> responseEntity = restTemplate.exchange("http://geb.test1.acollab.com/rest/v1/1/tasks", HttpMethod.POST, requestEntity, String.class);
-//				String result = restTemplate.postForObject("http://geb.test1.acollab.com/rest/v1/1/tasks", task, String.class, requestEntity);
-				System.out.println("Résult : " + responseEntity.getBody());
+				restTemplate.exchange("http://geb.test1.acollab.com/rest/v1/1/tasks", HttpMethod.POST, requestEntity, null);
+				// String result = restTemplate.postForObject("http://geb.test1.acollab.com/rest/v1/1/tasks", task, String.class, requestEntity);
+				System.out.println("Résult : ");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

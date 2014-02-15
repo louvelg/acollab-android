@@ -6,7 +6,7 @@ public class Task implements Serializable {
 
 	private static final long	serialVersionUID	= 1L;
 	private Long				taskId;
-	private Long				tasklistId;
+	private Long				taskListId;
 	private Long				tenantId;
 	private String				projectId;
 	private String				title;
@@ -28,19 +28,19 @@ public class Task implements Serializable {
 
 	public Task(String title, String taskListId) {
 		this.title = title;
-		tasklistId = Long.valueOf(tasklistId);
+		this.taskListId = Long.valueOf(taskListId);
 	}
 
 	public Long getTaskListId() {
-		return tasklistId;
+		return taskListId;
 	}
 
 	public String getTaskListIdS() {
-		return String.valueOf(tasklistId);
+		return String.valueOf(taskListId);
 	}
 
-	public void setTaskListId(Long tasklistId) {
-		this.tasklistId = tasklistId;
+	public void setTaskListId(Long taskListId) {
+		this.taskListId = taskListId;
 	}
 
 	public String getProjectId() {
@@ -89,14 +89,6 @@ public class Task implements Serializable {
 
 	public void setTaskId(Long taskId) {
 		this.taskId = taskId;
-	}
-
-	public Long getTasklistId() {
-		return tasklistId;
-	}
-
-	public void setTasklistId(Long tasklistId) {
-		this.tasklistId = tasklistId;
 	}
 
 	public String getStartDate() {
