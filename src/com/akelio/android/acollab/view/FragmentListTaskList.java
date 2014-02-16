@@ -17,6 +17,7 @@ package com.akelio.android.acollab.view;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
@@ -25,6 +26,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
@@ -32,12 +34,16 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.entity.TaskList;
+
 import de.greenrobot.event.EventBus;
 
 public class FragmentListTaskList extends ListFragment {
@@ -83,6 +89,7 @@ public class FragmentListTaskList extends ListFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		setHasOptionsMenu(true);
 		View mainView = inflater.inflate(R.layout.fragment_list_tasklist, container, false);
 		fillData();
 		return mainView;
@@ -98,6 +105,12 @@ public class FragmentListTaskList extends ListFragment {
 		this.dualPanel = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 	}
 
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.menu_project, menu);
+	}
+	
 	private class BigCalcul extends AsyncTask<Void, Integer, Void> {
 
 		ArrayList<HashMap<String, String>>	listItem	= new ArrayList<HashMap<String, String>>();
@@ -105,13 +118,13 @@ public class FragmentListTaskList extends ListFragment {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			// Toast.makeText(getActivity(), "Début du traitement asynchrone", Toast.LENGTH_LONG).show();
+			// Toast.makeText(getActivity(), "Dï¿½but du traitement asynchrone", Toast.LENGTH_LONG).show();
 		}
 
 		@Override
 		protected void onProgressUpdate(Integer... values) {
 			super.onProgressUpdate(values);
-			// Mise à jour de la ProgressBar
+			// Mise ï¿½ jour de la ProgressBar
 			// mProgressBar.setProgress(values[0]);
 		}
 
@@ -121,7 +134,7 @@ public class FragmentListTaskList extends ListFragment {
 			int progress;
 			for (progress = 0; progress <= 100; progress++) {
 				for (int i = 0; i < 1000000; i++) {}
-				// la méthode publishProgress met à jour l'interface en invoquant la méthode onProgressUpdate
+				// la mï¿½thode publishProgress met ï¿½ jour l'interface en invoquant la mï¿½thode onProgressUpdate
 				publishProgress(progress);
 				progress++;
 			}
@@ -138,6 +151,7 @@ public class FragmentListTaskList extends ListFragment {
 			}
 			return null;
 		}
+		
 
 		@Override
 		protected void onPostExecute(Void result) {
@@ -145,7 +159,7 @@ public class FragmentListTaskList extends ListFragment {
 					R.id.textViewId });
 			getListView().setAdapter(mSchedule);
 			// FragmentListTaskList.this.setListAdapter(mSchedule);
-			// Toast.makeText(getActivity(), "Le traitement asynchrone est terminé", Toast.LENGTH_LONG).show();
+			// Toast.makeText(getActivity(), "Le traitement asynchrone est terminï¿½", Toast.LENGTH_LONG).show();
 		}
 
 		public TaskList[] getTaskList() {

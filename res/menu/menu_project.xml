@@ -7,4 +7,13 @@
           android:orderInCategory="2"
           android:showAsAction="always"/>
     
+    <item android:id="@+id/add"
+          android:title="add" >
+    </item>
+    <item android:id="@+id/modify"
+          android:title="modify" >
+    </item>
+    <item android:id="@+id/delete"
+          android:title="delete" >
+    </item>
 </menu>

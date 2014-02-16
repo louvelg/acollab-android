@@ -30,8 +30,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.dao.UserDAO;
@@ -44,6 +46,7 @@ public class FragmentListUsers extends ListFragment {
 	private boolean			dualPanel;
 	private SimpleAdapter mSchedule;
 	private FragmentActivity fa;
+	private LinearLayout linear;
 
 	public interface OnUserSelectedListener {
 		public void onUserSelected(int position, ListView l);
@@ -85,8 +88,8 @@ public class FragmentListUsers extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		setHasOptionsMenu(true);
 		fa = super.getActivity();
-		
 		View mainView = inflater.inflate(R.layout.friendlist, container, false);
+		linear = (LinearLayout)container.findViewById(R.id.linear);
 		fillData();
 		return mainView;
 	}
@@ -110,7 +113,8 @@ public class FragmentListUsers extends ListFragment {
 		mSchedule = new SimpleAdapter(getActivity(), listItem, R.layout.list_user_item, new String[] { "textViewName", "textViewCompanyName", "textViewNumber", "textViewInvisible" },
 				new int[] { R.id.textViewName, R.id.textViewCompanyName, R.id.textViewNumber, R.id.textViewInvisible });
 		this.setListAdapter(mSchedule);
-		
+
+
 		
 	}
 
@@ -119,7 +123,6 @@ public class FragmentListUsers extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		this.dualPanel = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 	}
-
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
@@ -128,7 +131,8 @@ public class FragmentListUsers extends ListFragment {
 	private void startRequest() {
 		Intent contactIntent = new Intent(fa, ContactService.class);
 		fa.startService(contactIntent);
-		mSchedule.notifyDataSetInvalidated();
+		fillData();
+		getListView().invalidate();
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
