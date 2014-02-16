@@ -144,7 +144,7 @@ public class FragmentListTaskList extends ListFragment {
 			if (tl != null) {
 				for (TaskList taskList : tl) {
 					map = new HashMap<String, String>();
-					map.put("textViewName", taskList.getTitle());
+					map.put("textViewName", taskList.getTitle() + " id: " + taskList.getTaskListIdS());
 					map.put("textViewId", taskList.getTaskListIdS());
 					listItem.add(map);
 				}
