@@ -32,9 +32,9 @@
         <activity android:name="com.akelio.android.acollab.view.SettingsActivity" />
         <activity android:name="com.akelio.android.acollab.core.news.view.NewsActivity" />
         
-        <service android:name="com.akelio.android.acollab.service.ContactService" />
-        <service android:name="com.akelio.android.acollab.service.SpaceService" />
-        <service android:name="com.akelio.android.acollab.service.NewsService" />
+        <service android:name="com.akelio.android.acollab.core.user.service.UserService" />
+        <service android:name="com.akelio.android.acollab.core.space.service.SpaceService" />
+        <service android:name="com.akelio.android.acollab.core.news.service.NewsService" />
 
         <receiver android:name="com.akelio.android.acollab.receiver.NewsReceiver" 
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">

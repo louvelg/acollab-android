@@ -1,4 +1,4 @@
-package com.akelio.android.acollab.service;
+package com.akelio.android.acollab.core.user.service;
 
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
@@ -7,35 +7,32 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import android.app.IntentService;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import com.akelio.android.acollab.core.space.dao.SpaceContract;
-import com.akelio.android.acollab.db.DbHelper;
-import com.akelio.android.acollab.entity.Space;
+import com.akelio.android.acollab.core.user.dao.UserDAO;
+import com.akelio.android.acollab.entity.User;
 import com.akelio.android.acollab.utils.NetworkUtils;
 
-public class SpaceService extends IntentService {
+public class UserService extends IntentService {
 
-	static final String	TAG	= "spaceService";
-	static final String	URL	= "http://geb.test1.acollab.com/rest/v1/1/user/spaces";
+	static final String	TAG	= "contactService";
+	static final String	URL	= "http://geb.test1.acollab.com/rest/v1/1/users";
+	private UserDAO		userDAO;
 
-	public SpaceService() {
+	public UserService() {
 		super(TAG);
-		Log.d(TAG, "spaceService start");
+		Log.d(TAG, "contactService start");
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		Log.d(TAG, "spaceService launched");
-
+		Log.d(TAG, "contactService launched");
 		if (NetworkUtils.isNetworkReachable(getApplicationContext())) {
+			userDAO = new UserDAO(this);
 			String login = "admin";
 			String password = "admin";
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -52,35 +49,39 @@ public class SpaceService extends IntentService {
 				restTemplate = new RestTemplate();
 				restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 
-				ResponseEntity<Space[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, Space[].class);
-				Space[] ulis = res.getBody();
+//				DbHelper dbHelper = new DbHelper(this);
+//				ContentValues values = new ContentValues();
 
-				DbHelper dbHelper = new DbHelper(this);
-				SQLiteDatabase db = dbHelper.getWritableDatabase();
-				ContentValues values = new ContentValues();
+				ResponseEntity<User[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, User[].class);
+				User[] ulis = res.getBody();
+//				SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-				db.execSQL("delete from " + SpaceContract.TABLE);
 				for (int i = 0; i < ulis.length; i++) {
-					Space u = ulis[i];
-					values.clear(); //
-					values.put(SpaceContract.Column.ID, u.getSpaceId());
-					values.put(SpaceContract.Column.NAME, u.getName());
-					values.put(SpaceContract.Column.TENANT_ID, u.getTenantId());
-					values.put(SpaceContract.Column.APPLICATIONS, StringUtils.collectionToCommaDelimitedString(u.getApplications()));
-					db.insertWithOnConflict(SpaceContract.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+					// System.out.println(u.getUsername());
+					userDAO.createUser(ulis[i]);
+//					values.clear();
+//					values.put(UserContract.Column.ID, u.getUserId());
+//					values.put(UserContract.Column.FIRST_NAME, u.getFirstName());
+//					values.put(UserContract.Column.LAST_NAME, u.getLastName());
+//					values.put(UserContract.Column.PHONE1, u.getPhone1());
+//					values.put(UserContract.Column.PHONE2, u.getPhone2());
+//					values.put(UserContract.Column.TENANT_ID, u.getTenantId());
+//					values.put(UserContract.Column.COMPANY, u.getCompany());
+//					db.insertWithOnConflict(UserContract.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
 				}
-				db.close();
+				userDAO.close();
+//				db.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else {
-			Log.d(TAG, "spaceService no network reachable");
+			Log.d(TAG, "contactService no wifi reachable");
 		}
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		Log.d(TAG, "spaceService stop");
+		Log.d(TAG, "contactService stop");
 	}
 }

@@ -7,7 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import com.akelio.android.acollab.service.NewsService;
+import com.akelio.android.acollab.core.news.service.NewsService;
 
 public class NewsReceiver extends BroadcastReceiver {
 	private static final String	TAG					= NewsReceiver.class.getSimpleName();

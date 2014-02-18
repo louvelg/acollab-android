@@ -33,8 +33,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.core.user.dao.UserDAO;
+import com.akelio.android.acollab.core.user.service.UserService;
 import com.akelio.android.acollab.entity.User;
-import com.akelio.android.acollab.service.ContactService;
 import com.akelio.android.acollab.utils.FragmentHelper;
 
 public class UserListFragment extends ListFragment {
@@ -124,7 +124,7 @@ public class UserListFragment extends ListFragment {
 	}
 
 	private void startRequest() {
-		Intent contactIntent = new Intent(fa, ContactService.class);
+		Intent contactIntent = new Intent(fa, UserService.class);
 		fa.startService(contactIntent);
 		fillData();
 		getListView().invalidate();

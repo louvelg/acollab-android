@@ -1,4 +1,4 @@
-package com.akelio.android.acollab.service;
+package com.akelio.android.acollab.core.news.service;
 
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
