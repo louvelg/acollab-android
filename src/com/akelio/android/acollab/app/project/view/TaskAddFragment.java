@@ -1,7 +1,5 @@
 package com.akelio.android.acollab.app.project.view;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
@@ -51,7 +49,7 @@ public class TaskAddFragment extends Fragment implements android.view.View.OnCli
 
 	private class TaskAddWS extends AsyncTask<Void, Integer, Void> {
 
-		ArrayList<HashMap<String, String>>	listItem	= new ArrayList<HashMap<String, String>>();
+//		ArrayList<HashMap<String, String>>	listItem	= new ArrayList<HashMap<String, String>>();
 
 		String								title;
 
@@ -73,7 +71,6 @@ public class TaskAddFragment extends Fragment implements android.view.View.OnCli
 
 		@Override
 		protected Void doInBackground(Void... arg0) {
-			HashMap<String, String> map = null;
 			createTask();
 			return null;
 		}
@@ -94,7 +91,7 @@ public class TaskAddFragment extends Fragment implements android.view.View.OnCli
 			login = "admin";
 			try {
 				Task task = new Task();
-				task.setTitle("tache de test 5");
+				task.setTitle("tache de test 5 : " + title);
 				task.setTenantId(new Long(1));
 				task.setProjectId("1");
 				task.setTaskListId(new Long(8));

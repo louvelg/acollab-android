@@ -25,7 +25,6 @@ public class FragmentHelper {
 	 */
 	public static void initFragmentWithBackstack(Fragment frag, int container, FragmentManager fm) {
 		FragmentTransaction ft = fm.beginTransaction();
-		Fragment f = fm.findFragmentById(container);
 		ft.replace(container, frag);
 		ft.addToBackStack(null);
 		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

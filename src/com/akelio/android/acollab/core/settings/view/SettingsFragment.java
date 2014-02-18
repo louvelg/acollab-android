@@ -2,11 +2,9 @@ package com.akelio.android.acollab.core.settings.view;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
-
 import com.akelio.android.acollab.BuildConfig;
 import com.akelio.android.acollab.R;
 

@@ -26,7 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -44,7 +43,7 @@ import de.greenrobot.event.EventBus;
 public class TaskListFragment extends ListFragment implements android.view.View.OnClickListener {
 	static final String		URL	= "http://geb.test1.acollab.com/rest/v1/1/tasklist/{taskListId}/tasks";
 	OnUserSelectedListener	mCallback;
-	private boolean			dualPanel;
+//	private boolean			dualPanel;
 
 	public interface OnUserSelectedListener {
 		public void onUserSelected(int position, ListView l);
@@ -108,7 +107,7 @@ public class TaskListFragment extends ListFragment implements android.view.View.
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		this.dualPanel = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+//		this.dualPanel = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 	}
 
 	private class TaskWS extends AsyncTask<Void, Integer, Void> {

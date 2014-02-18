@@ -29,7 +29,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import com.akelio.android.acollab.R;
@@ -44,7 +43,7 @@ public class UserListFragment extends ListFragment {
 	private boolean				dualPanel;
 	private SimpleAdapter		mSchedule;
 	private FragmentActivity	fa;
-	private LinearLayout		linear;
+//	private LinearLayout		linear;
 
 	static final String			URL	= "http://geb.test1.acollab.com/rest/v1/1/users";
 
@@ -85,7 +84,7 @@ public class UserListFragment extends ListFragment {
 		setHasOptionsMenu(true);
 		fa = super.getActivity();
 		View mainView = inflater.inflate(R.layout.friendlist, container, false);
-		linear = (LinearLayout) container.findViewById(R.id.linear);
+//		linear = (LinearLayout) container.findViewById(R.id.linear);
 		fillData();
 		return mainView;
 	}

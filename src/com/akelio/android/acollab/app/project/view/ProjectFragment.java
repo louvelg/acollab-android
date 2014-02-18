@@ -26,7 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -45,7 +44,7 @@ import de.greenrobot.event.EventBus;
 public class ProjectFragment extends ListFragment {
 	static final String		URL	= "http://geb.test1.acollab.com/rest/v1/1/project/1/tasklists";
 	OnUserSelectedListener	mCallback;
-	private boolean			dualPanel;
+//	private boolean			dualPanel;
 
 	public interface OnUserSelectedListener {
 		public void onUserSelected(int position, ListView l);
@@ -72,7 +71,7 @@ public class ProjectFragment extends ListFragment {
 		System.out.println(obj);
 
 		String idValue = (String) obj.get("textViewId");
-		TaskListFragment detailFragment = TaskListFragment.newInstance(idValue);
+//		TaskListFragment detailFragment = TaskListFragment.newInstance(idValue);
 
 		EventBus.getDefault().postSticky(new String(idValue));
 //		if (!this.dualPanel) {
@@ -98,7 +97,7 @@ public class ProjectFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		this.dualPanel = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+//		this.dualPanel = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 	}
 
 	@Override
