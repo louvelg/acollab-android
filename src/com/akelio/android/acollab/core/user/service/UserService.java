@@ -56,6 +56,8 @@ public class UserService extends IntentService {
 				ResponseEntity<User[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, User[].class);
 				User[] ulis = res.getBody();
 //				SQLiteDatabase db = dbHelper.getWritableDatabase();
+				userDAO.deleteAllUser();
+				
 				for (int i = 0; i < ulis.length; i++) {
 					// System.out.println(u.getUsername());
 					userDAO.createUser(ulis[i]);

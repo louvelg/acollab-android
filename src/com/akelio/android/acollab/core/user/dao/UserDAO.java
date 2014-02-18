@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
+import com.akelio.android.acollab.core.news.dao.NewsContract;
 import com.akelio.android.acollab.db.DbHelper;
 import com.akelio.android.acollab.entity.User;
 
@@ -77,6 +78,11 @@ public class UserDAO {
 	public void deleteUser(int userId) {
 		db = dbHelper.getWritableDatabase();
 		db.delete(UserContract.TABLE, "_id = " + userId, null);
+	}
+	
+	public void deleteAllUser() {
+		db = dbHelper.getWritableDatabase();
+		db.execSQL("delete from " + UserContract.TABLE);
 	}
 
 	public void close() {

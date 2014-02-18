@@ -130,15 +130,9 @@ public class UserListFragment extends ListFragment {
 		fa.startService(contactIntent);
 	}
 
-	public void onEvent(String event) {
-//		System.out.println("Event = " + event);
-		getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				fillData();
-				getListView().invalidate();
-			}
-		});
+	public void onEventMainThread(String event) {
+		fillData();
+		getListView().invalidate();
 	}
 
 	@Override
