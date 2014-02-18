@@ -7,8 +7,6 @@ import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -92,9 +90,11 @@ public class TaskAddFragment extends Fragment implements android.view.View.OnCli
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 			String password = prefs.getString("password", "admin");
 			String login = prefs.getString("login", "admin");
+			password = "admin";
+			login = "admin";
 			try {
 				Task task = new Task();
-				task.setTitle(title);
+				task.setTitle("tache de test 5");
 				task.setTenantId(new Long(1));
 				task.setProjectId("1");
 				task.setTaskListId(new Long(8));
