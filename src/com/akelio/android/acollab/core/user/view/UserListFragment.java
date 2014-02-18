@@ -36,6 +36,7 @@ import com.akelio.android.acollab.core.user.dao.UserDAO;
 import com.akelio.android.acollab.core.user.service.UserService;
 import com.akelio.android.acollab.entity.User;
 import com.akelio.android.acollab.utils.FragmentHelper;
+import de.greenrobot.event.EventBus;
 
 public class UserListFragment extends ListFragment {
 	OnUserSelectedListener		mCallback;
@@ -43,7 +44,7 @@ public class UserListFragment extends ListFragment {
 	private boolean				dualPanel;
 	private SimpleAdapter		mSchedule;
 	private FragmentActivity	fa;
-//	private LinearLayout		linear;
+	// private LinearLayout linear;
 
 	static final String			URL	= "http://geb.test1.acollab.com/rest/v1/1/users";
 
@@ -61,6 +62,7 @@ public class UserListFragment extends ListFragment {
 	@Override
 	public void onStart() {
 		super.onStart();
+		EventBus.getDefault().register(this);
 		if (getFragmentManager().findFragmentById(R.id.details_fragment) != null) {
 			getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		}
@@ -84,7 +86,7 @@ public class UserListFragment extends ListFragment {
 		setHasOptionsMenu(true);
 		fa = super.getActivity();
 		View mainView = inflater.inflate(R.layout.friendlist, container, false);
-//		linear = (LinearLayout) container.findViewById(R.id.linear);
+		// linear = (LinearLayout) container.findViewById(R.id.linear);
 		fillData();
 		return mainView;
 	}
@@ -126,8 +128,17 @@ public class UserListFragment extends ListFragment {
 	private void startRequest() {
 		Intent contactIntent = new Intent(fa, UserService.class);
 		fa.startService(contactIntent);
-		fillData();
-		getListView().invalidate();
+	}
+
+	public void onEvent(String event) {
+//		System.out.println("Event = " + event);
+		getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				fillData();
+				getListView().invalidate();
+			}
+		});
 	}
 
 	@Override
@@ -141,4 +152,9 @@ public class UserListFragment extends ListFragment {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	public void onDestroyView() {
+		EventBus.getDefault().unregister(this);
+		super.onDestroyView();
+	}
 }

@@ -16,6 +16,7 @@ import android.util.Log;
 import com.akelio.android.acollab.core.user.dao.UserDAO;
 import com.akelio.android.acollab.entity.User;
 import com.akelio.android.acollab.utils.NetworkUtils;
+import de.greenrobot.event.EventBus;
 
 public class UserService extends IntentService {
 
@@ -55,7 +56,6 @@ public class UserService extends IntentService {
 				ResponseEntity<User[]> res = restTemplate.exchange(URL, HttpMethod.GET, requestEntity, User[].class);
 				User[] ulis = res.getBody();
 //				SQLiteDatabase db = dbHelper.getWritableDatabase();
-
 				for (int i = 0; i < ulis.length; i++) {
 					// System.out.println(u.getUsername());
 					userDAO.createUser(ulis[i]);
@@ -70,6 +70,7 @@ public class UserService extends IntentService {
 //					db.insertWithOnConflict(UserContract.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
 				}
 				userDAO.close();
+				EventBus.getDefault().post(new String("refresh user service"));
 //				db.close();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -79,9 +80,18 @@ public class UserService extends IntentService {
 		}
 	}
 
+	
+	
+	@Override
+	public void onCreate() {
+		super.onCreate();
+//		EventBus.getDefault().register(this);
+	}
+
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+//		EventBus.getDefault().unregister(this);
 		Log.d(TAG, "contactService stop");
 	}
 }
