@@ -8,12 +8,7 @@
           android:showAsAction="always"/>
     
     <item android:id="@+id/add"
-          android:title="add" >
-    </item>
-    <item android:id="@+id/modify"
-          android:title="modify" >
-    </item>
-    <item android:id="@+id/delete"
-          android:title="delete" >
+          android:title="add" 
+          android:icon="@drawable/ic_menu_add" >
     </item>
 </menu>

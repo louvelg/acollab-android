@@ -72,8 +72,7 @@ public class ActivityStreamFragment extends Fragment {
 	}
 	
 	private void startRequest() {
-		Toast.makeText(getActivity(), "toto",Toast.LENGTH_LONG).show();
-		Intent explicitIntent = new Intent(fa, ContactService.class);
+		Intent explicitIntent = new Intent(fa, ActivityStreamActivity.class);
 		fa.startService(explicitIntent);
 	}
 	@Override

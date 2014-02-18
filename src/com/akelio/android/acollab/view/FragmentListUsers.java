@@ -19,11 +19,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.http.HttpAuthentication;
+import org.springframework.http.HttpBasicAuthentication;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +51,7 @@ import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.dao.UserDAO;
 import com.akelio.android.acollab.entity.User;
 import com.akelio.android.acollab.service.ContactService;
+import com.akelio.android.acollab.utils.NetworkUtils;
 
 public class FragmentListUsers extends ListFragment {
 	OnUserSelectedListener	mCallback;
@@ -47,6 +60,8 @@ public class FragmentListUsers extends ListFragment {
 	private SimpleAdapter mSchedule;
 	private FragmentActivity fa;
 	private LinearLayout linear;
+	
+	static final String	URL	= "http://geb.test1.acollab.com/rest/v1/1/users";
 
 	public interface OnUserSelectedListener {
 		public void onUserSelected(int position, ListView l);
