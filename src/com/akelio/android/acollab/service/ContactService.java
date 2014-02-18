@@ -13,7 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import com.akelio.android.acollab.dao.UserDAO;
+import com.akelio.android.acollab.core.user.dao.UserDAO;
 import com.akelio.android.acollab.entity.User;
 import com.akelio.android.acollab.utils.NetworkUtils;
 

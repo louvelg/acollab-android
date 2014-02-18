@@ -18,12 +18,11 @@
         android:theme="@style/AppTheme" >
         
         <activity
-            android:name="com.akelio.android.acollab.view.MainActivity"
+            android:name="com.akelio.android.acollab.common.view.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity android:name="com.akelio.android.acollab.NewsActivity"/>
-        <activity android:name="com.akelio.android.acollab.view.ActivityListUsers"/>
-        <activity android:name="com.akelio.android.acollab.view.ActivityLogin" android:noHistory="true">
+        <activity android:name="com.akelio.android.acollab.common.view.LoginActivity" android:noHistory="true">
         	<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,14 +30,13 @@
             </intent-filter>
         </activity>
         <activity android:name="com.akelio.android.acollab.view.SettingsActivity" />
-        <activity android:name="com.akelio.android.acollab.view.ActivityStreamActivity" />
-		<activity android:name="com.akelio.android.acollab.view.MenuTestActivity" />
+        <activity android:name="com.akelio.android.acollab.core.news.view.NewsActivity" />
         
         <service android:name="com.akelio.android.acollab.service.ContactService" />
         <service android:name="com.akelio.android.acollab.service.SpaceService" />
-        <service android:name="com.akelio.android.acollab.service.ActivityStreamService" />
+        <service android:name="com.akelio.android.acollab.service.NewsService" />
 
-        <receiver android:name="com.akelio.android.acollab.receiver.ActivityStreamReceiver" 
+        <receiver android:name="com.akelio.android.acollab.receiver.NewsReceiver" 
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

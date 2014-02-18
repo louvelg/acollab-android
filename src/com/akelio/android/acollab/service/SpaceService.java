@@ -16,7 +16,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import com.akelio.android.acollab.contract.SpaceContract;
+import com.akelio.android.acollab.core.space.dao.SpaceContract;
 import com.akelio.android.acollab.db.DbHelper;
 import com.akelio.android.acollab.entity.Space;
 import com.akelio.android.acollab.utils.NetworkUtils;

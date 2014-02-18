@@ -20,13 +20,13 @@ limitations under the License.
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment android:name="com.akelio.android.acollab.view.FragmentListUsers"
+    <fragment android:name="com.akelio.android.acollab.core.user.view.UserListFragment"
               android:id="@+id/list_fragment"
               android:layout_weight="1"
               android:layout_width="0dp"
               android:layout_height="match_parent" />
 
-    <fragment android:name="com.akelio.android.acollab.view.FragmentUserDetails"
+    <fragment android:name="com.akelio.android.acollab.core.user.view.UserDetailsFragment"
               android:id="@+id/details_fragment"
               android:layout_weight="2"
               android:layout_width="0dp"
