@@ -85,7 +85,7 @@ public class UserListFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		setHasOptionsMenu(true);
 		fa = super.getActivity();
-		View mainView = inflater.inflate(R.layout.friendlist, container, false);
+		View mainView = inflater.inflate(R.layout.userlist, container, false);
 		// linear = (LinearLayout) container.findViewById(R.id.linear);
 		fillData();
 		return mainView;

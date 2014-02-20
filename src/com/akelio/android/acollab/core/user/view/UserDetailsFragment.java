@@ -15,6 +15,7 @@
  */
 package com.akelio.android.acollab.core.user.view;
 
+import org.springframework.util.StringUtils;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ public class UserDetailsFragment extends Fragment implements android.view.View.O
 	private TextView	number;
 
 	private Button		call;
+
+	private User		user;
 
 	public static UserDetailsFragment newInstance() {
 		UserDetailsFragment frag = new UserDetailsFragment();
@@ -78,6 +81,12 @@ public class UserDetailsFragment extends Fragment implements android.view.View.O
 		if (this.idUser != null) {
 			fillData(this.idUser);
 		}
+		
+		if (user != null && StringUtils.hasText(user.getPhone1())) {
+			call.setVisibility(android.view.View.VISIBLE);
+		} else {
+			call.setVisibility(android.view.View.INVISIBLE);
+		}
 
 		return mainView;
 	}
@@ -85,7 +94,7 @@ public class UserDetailsFragment extends Fragment implements android.view.View.O
 	private void fillData(String uri) {
 
 		userDAO = new UserDAO(getActivity());
-		User user = userDAO.getUser(uri);
+		this.user = userDAO.getUser(uri);
 		userDAO.close();
 		name.setText(user.getUsername());
 		number.setText(user.getPhone1());
@@ -97,16 +106,19 @@ public class UserDetailsFragment extends Fragment implements android.view.View.O
 		super.onSaveInstanceState(outState);
 		outState.putInt(ARG_IDVALUE, mCurrentPosition);
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		System.out.println("clic");
-		
+
 		switch (v.getId()) {
 			case R.id.buttonCall:
 				System.out.println("clic buttonCall");
-				Intent callIntent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:0662880308"));
-			    startActivity(callIntent);
+				String phone = "";
+				if (user != null && StringUtils.hasText(user.getPhone1())) {
+					Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + user.getPhone1()));
+					startActivity(callIntent);
+				}
 				break;
 		}
 	}
