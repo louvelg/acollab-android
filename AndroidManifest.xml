@@ -7,23 +7,26 @@
     <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="19" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo_acollab_simple"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
         <activity
             android:name="com.akelio.android.acollab.common.view.MainActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity android:name="com.akelio.android.acollab.NewsActivity"/>
-        <activity android:name="com.akelio.android.acollab.common.view.LoginActivity" android:noHistory="true">
-        	<intent-filter>
+        <activity android:name="com.akelio.android.acollab.NewsActivity" />
+        <activity
+            android:name="com.akelio.android.acollab.common.view.LoginActivity"
+            android:noHistory="true" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -31,13 +34,14 @@
         </activity>
         <activity android:name="com.akelio.android.acollab.view.SettingsActivity" />
         <activity android:name="com.akelio.android.acollab.core.news.view.NewsActivity" />
-        
+
         <service android:name="com.akelio.android.acollab.core.user.service.UserService" />
         <service android:name="com.akelio.android.acollab.core.space.service.SpaceService" />
         <service android:name="com.akelio.android.acollab.core.news.service.NewsService" />
 
-        <receiver android:name="com.akelio.android.acollab.receiver.NewsReceiver" 
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+        <receiver
+            android:name="com.akelio.android.acollab.receiver.NewsReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

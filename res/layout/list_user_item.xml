@@ -36,7 +36,8 @@
         android:layout_alignBottom="@+id/textViewName"
         android:layout_alignParentRight="true"
         android:layout_marginRight="24dp"
-        android:text="TextView3" />
+        android:text="TextView3" 
+        android:visibility="invisible"/>
 
     <TextView
         android:id="@+id/textViewNumber"

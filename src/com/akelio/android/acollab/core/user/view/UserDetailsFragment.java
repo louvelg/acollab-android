@@ -15,17 +15,20 @@
  */
 package com.akelio.android.acollab.core.user.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.core.user.dao.UserDAO;
 import com.akelio.android.acollab.entity.User;
 
-public class UserDetailsFragment extends Fragment {
+public class UserDetailsFragment extends Fragment implements android.view.View.OnClickListener {
 	final static String	ARG_IDVALUE			= "idValue";
 	int					mCurrentPosition	= -1;
 
@@ -38,6 +41,8 @@ public class UserDetailsFragment extends Fragment {
 	private TextView	company;
 
 	private TextView	number;
+
+	private Button		call;
 
 	public static UserDetailsFragment newInstance() {
 		UserDetailsFragment frag = new UserDetailsFragment();
@@ -60,7 +65,8 @@ public class UserDetailsFragment extends Fragment {
 		name = (TextView) mainView.findViewById(R.id.textViewFirstname);
 		company = (TextView) mainView.findViewById(R.id.textViewCompanyName);
 		number = (TextView) mainView.findViewById(R.id.textViewNumber);
-
+		call = (Button) mainView.findViewById(R.id.buttonCall);
+		call.setOnClickListener(this);
 		this.idUser = (savedInstanceState == null) ? null : (String) savedInstanceState.getString("idUser");
 
 		Bundle extras = getArguments();
@@ -90,5 +96,18 @@ public class UserDetailsFragment extends Fragment {
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putInt(ARG_IDVALUE, mCurrentPosition);
+	}
+	
+	@Override
+	public void onClick(View v) {
+		System.out.println("clic");
+		
+		switch (v.getId()) {
+			case R.id.buttonCall:
+				System.out.println("clic buttonCall");
+				Intent callIntent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:0662880308"));
+			    startActivity(callIntent);
+				break;
+		}
 	}
 }

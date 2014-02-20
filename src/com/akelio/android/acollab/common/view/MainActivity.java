@@ -46,16 +46,16 @@ public class MainActivity extends AbstractNavDrawerActivity {
 
 		NavDrawerItem[] menuSpaces = new NavDrawerItem[this.spaces.size() + nbFixMenu];
 		menuSpaces[0] = NavMenuSection.create(-1, "MENU");
-		menuSpaces[1] = NavMenuItem.create(-2, "Users", "navdrawer_airport", true, this);
-		menuSpaces[2] = NavMenuItem.create(-3, "Settings", "navdrawer_airport", true, this);
-		menuSpaces[3] = NavMenuItem.create(-4, "Activity stream", "navdrawer_airport", true, this);
+		menuSpaces[1] = NavMenuItem.create(-2, "Actualités", "navdrawer_airport", true, this);
+		menuSpaces[2] = NavMenuItem.create(-3, "Utilisateurs", "navdrawer_airport", true, this);
+		menuSpaces[3] = NavMenuItem.create(-4, "Paramètres", "navdrawer_airport", true, this);
 		menuSpaces[4] = NavMenuSection.create(-5, "MES ESPACES");
 		int i = nbFixMenu - 1;
 		for (Space space : this.spaces) {
 			menuSpaces[i] = NavMenuItem.create(Integer.valueOf(space.getSpaceId()), space.getName(), "navdrawer_rating", true, this);
 			i++;
 		}
-		menuSpaces[i] = NavMenuItem.create(-nbFixMenu, "Quit", "navdrawer_quit", false, this);
+		menuSpaces[i] = NavMenuItem.create(-nbFixMenu, "Fermer", "navdrawer_quit", false, this);
 
 		NavDrawerActivityConfiguration navDrawerActivityConfiguration = new NavDrawerActivityConfiguration();
 		navDrawerActivityConfiguration.setMainLayout(R.layout.activity_main);
@@ -76,13 +76,13 @@ public class MainActivity extends AbstractNavDrawerActivity {
 
 			switch ((int) id) {
 				case -2:
-					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new UserMainFragment()).addToBackStack(null).commit();
+					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new NewsFragment()).addToBackStack(null).commit();
 					break;
 				case -3:
-					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).addToBackStack(null).commit();
+					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new UserMainFragment()).addToBackStack(null).commit();
 					break;
 				case -4:
-					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new NewsFragment()).addToBackStack(null).commit();
+					getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).addToBackStack(null).commit();
 					break;
 				case -6:
 					Intent intent = new Intent(Intent.ACTION_MAIN);

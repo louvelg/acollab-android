@@ -39,5 +39,12 @@
         android:layout_marginTop="57dp"
         android:text="TextViewNumber" />
 
+    <Button
+        android:id="@+id/buttonCall"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_alignLeft="@+id/textViewCompanyName"
+        android:layout_below="@+id/textViewNumber"
+        android:text="Appel" />
     
 </RelativeLayout>
