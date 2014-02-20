@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.akelio.android.acollab.R;
 import com.akelio.android.acollab.core.user.dao.UserDAO;
@@ -43,7 +44,7 @@ public class UserDetailsFragment extends Fragment implements android.view.View.O
 
 	private TextView	number;
 
-	private Button		call;
+	private ImageView	callView;
 
 	private User		user;
 
@@ -68,8 +69,9 @@ public class UserDetailsFragment extends Fragment implements android.view.View.O
 		name = (TextView) mainView.findViewById(R.id.textViewFirstname);
 		company = (TextView) mainView.findViewById(R.id.textViewCompanyName);
 		number = (TextView) mainView.findViewById(R.id.textViewNumber);
-		call = (Button) mainView.findViewById(R.id.buttonCall);
-		call.setOnClickListener(this);
+		callView = (ImageView) mainView.findViewById(R.id.imageCall);
+		
+		callView.setOnClickListener(this);
 		this.idUser = (savedInstanceState == null) ? null : (String) savedInstanceState.getString("idUser");
 
 		Bundle extras = getArguments();
@@ -81,11 +83,11 @@ public class UserDetailsFragment extends Fragment implements android.view.View.O
 		if (this.idUser != null) {
 			fillData(this.idUser);
 		}
-		
+
 		if (user != null && StringUtils.hasText(user.getPhone1())) {
-			call.setVisibility(android.view.View.VISIBLE);
+			callView.setVisibility(android.view.View.VISIBLE);
 		} else {
-			call.setVisibility(android.view.View.INVISIBLE);
+			callView.setVisibility(android.view.View.INVISIBLE);
 		}
 
 		return mainView;
@@ -112,9 +114,8 @@ public class UserDetailsFragment extends Fragment implements android.view.View.O
 		System.out.println("clic");
 
 		switch (v.getId()) {
-			case R.id.buttonCall:
-				System.out.println("clic buttonCall");
-				String phone = "";
+			case R.id.imageCall:
+				System.out.println("clic imageCall");
 				if (user != null && StringUtils.hasText(user.getPhone1())) {
 					Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + user.getPhone1()));
 					startActivity(callIntent);

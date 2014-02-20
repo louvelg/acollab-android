@@ -39,12 +39,14 @@
         android:layout_marginTop="57dp"
         android:text="TextViewNumber" />
 
-    <Button
-        android:id="@+id/buttonCall"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_alignLeft="@+id/textViewCompanyName"
+    <ImageView
+        android:id="@+id/imageCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewNumber"
         android:layout_below="@+id/textViewNumber"
-        android:text="Appel" />
+        android:clickable="true"
+        android:padding="30dp"
+        android:src="@drawable/ic_action_call" />
     
 </RelativeLayout>
