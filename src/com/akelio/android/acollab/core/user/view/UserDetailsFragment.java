@@ -23,7 +23,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.akelio.android.acollab.R;
@@ -42,9 +41,11 @@ public class UserDetailsFragment extends Fragment implements android.view.View.O
 
 	private TextView	company;
 
-	private TextView	number;
+	private TextView	phone1;
+	private TextView	phone2;
 
-	private ImageView	callView;
+	private ImageView	callPhone1;
+	private ImageView	callPhone2;
 
 	private User		user;
 
@@ -56,7 +57,6 @@ public class UserDetailsFragment extends Fragment implements android.view.View.O
 	public static UserDetailsFragment newInstance(String idUser) {
 		UserDetailsFragment frag = new UserDetailsFragment();
 		Bundle args = new Bundle();
-
 		args.putString("idUser", idUser);
 		frag.setArguments(args);
 		return frag;
@@ -66,17 +66,20 @@ public class UserDetailsFragment extends Fragment implements android.view.View.O
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View mainView = inflater.inflate(R.layout.fragment_details_user, container, false);
-		name = (TextView) mainView.findViewById(R.id.textViewFirstname);
+		name = (TextView) mainView.findViewById(R.id.textViewName);
 		company = (TextView) mainView.findViewById(R.id.textViewCompanyName);
-		number = (TextView) mainView.findViewById(R.id.textViewNumber);
-		callView = (ImageView) mainView.findViewById(R.id.imageCall);
-		
-		callView.setOnClickListener(this);
+		phone1 = (TextView) mainView.findViewById(R.id.textViewNumber);
+		phone2 = (TextView) mainView.findViewById(R.id.textViewNumber2);
+		callPhone1 = (ImageView) mainView.findViewById(R.id.imageCall);
+		callPhone2 = (ImageView) mainView.findViewById(R.id.imageCallPhone2);
+
+		callPhone1.setOnClickListener(this);
+		callPhone2.setOnClickListener(this);
+
 		this.idUser = (savedInstanceState == null) ? null : (String) savedInstanceState.getString("idUser");
 
 		Bundle extras = getArguments();
 		if (extras != null && this.idUser == null) {
-
 			this.idUser = extras.getString("idUser");
 		}
 
@@ -85,21 +88,27 @@ public class UserDetailsFragment extends Fragment implements android.view.View.O
 		}
 
 		if (user != null && StringUtils.hasText(user.getPhone1())) {
-			callView.setVisibility(android.view.View.VISIBLE);
+			callPhone1.setVisibility(android.view.View.VISIBLE);
 		} else {
-			callView.setVisibility(android.view.View.INVISIBLE);
+			callPhone1.setVisibility(android.view.View.INVISIBLE);
+		}
+
+		if (user != null && StringUtils.hasText(user.getPhone2())) {
+			callPhone2.setVisibility(android.view.View.VISIBLE);
+		} else {
+			callPhone2.setVisibility(android.view.View.INVISIBLE);
 		}
 
 		return mainView;
 	}
 
 	private void fillData(String uri) {
-
 		userDAO = new UserDAO(getActivity());
 		this.user = userDAO.getUser(uri);
 		userDAO.close();
 		name.setText(user.getUsername());
-		number.setText(user.getPhone1());
+		phone1.setText(user.getPhone1());
+		phone2.setText(user.getPhone2());
 		company.setText(user.getCompany());
 	}
 
@@ -112,12 +121,18 @@ public class UserDetailsFragment extends Fragment implements android.view.View.O
 	@Override
 	public void onClick(View v) {
 		System.out.println("clic");
-
 		switch (v.getId()) {
 			case R.id.imageCall:
 				System.out.println("clic imageCall");
 				if (user != null && StringUtils.hasText(user.getPhone1())) {
 					Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + user.getPhone1()));
+					startActivity(callIntent);
+				}
+				break;
+			case R.id.imageCallPhone2:
+				System.out.println("clic imageCall phone2");
+				if (user != null && StringUtils.hasText(user.getPhone2())) {
+					Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + user.getPhone2()));
 					startActivity(callIntent);
 				}
 				break;

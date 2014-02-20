@@ -2,51 +2,101 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <TextView
-        android:id="@+id/textViewFirstname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="23dp"
-        android:layout_marginTop="14dp"
-        android:layout_toRightOf="@+id/imageView1"
-        android:text="TextViewName" />
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/textViewFirstname"
+        android:layout_alignTop="@+id/textViewName"
         android:layout_marginLeft="26dp"
         android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@+id/imageView1" 
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <TextView
         android:id="@+id/textViewCompanyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewNumber"
         android:layout_alignLeft="@+id/imageView1"
-        android:layout_marginBottom="22dp"
-        android:text="TextViewCompany" />
+        android:layout_below="@+id/imageView1" 
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/imageView1"
+        android:background="@android:color/darker_gray" />
+    
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:background="@android:color/darker_gray" />
+    
+    <TextView
+        android:id="@+id/textViewPhone1Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_below="@+id/textViewCompanyName"
+        android:text="Téléphone (fixe):"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/textViewNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewCompanyName"
-        android:layout_below="@+id/imageView1"
-        android:layout_marginTop="57dp"
-        android:text="TextViewNumber" />
+        android:layout_alignBottom="@+id/textViewPhone1Label"
+        android:layout_toRightOf="@+id/textViewPhone1Label"
+        android:paddingLeft="5dp"
+        android:text="TextViewNumber"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView
         android:id="@+id/imageCall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewNumber"
-        android:layout_below="@+id/textViewNumber"
+        android:layout_alignBottom="@+id/textViewNumber"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textViewNumber"
         android:clickable="true"
-        android:padding="30dp"
         android:src="@drawable/ic_action_call" />
-    
+
+    <TextView
+        android:id="@+id/textViewPhone2Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_below="@+id/textViewPhone1Label"
+        android:text="Téléphone (mobile):"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textViewNumber2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewPhone2Label"
+        android:layout_toRightOf="@+id/textViewPhone2Label"
+        android:paddingLeft="5dp"
+        android:text="TextViewNumber"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/imageCallPhone2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewNumber2"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:layout_toRightOf="@+id/textViewNumber2"
+        android:clickable="true"
+        android:src="@drawable/ic_action_call" />
+
 </RelativeLayout>
